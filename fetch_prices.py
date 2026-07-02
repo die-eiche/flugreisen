@@ -30,22 +30,22 @@ CONFIG_FILE = ROOT / "config.yaml"
 
 ALLOWED_ORIGINS = {"HAM", "CPH"}
 
-SEATGURU_AIRLINE = {
-    "SQ": "Singapore_Airlines",
-    "CX": "Cathay_Pacific",
-    "TG": "Thai_Airways",
-    "LH": "Lufthansa",
-    "AF": "Air_France",
-    "KL": "KLM",
-    "TK": "Turkish_Airlines",
-    "QR": "Qatar_Airways",
-    "EK": "Emirates",
-    "EY": "Etihad_Airways",
-    "AY": "Finnair",
-    "SK": "SAS",
-    "BA": "British_Airways",
-    "LX": "Swiss",
-    "OS": "Austrian_Airlines",
+AEROLOPA_AIRLINE = {
+    "SQ": "sq",
+    "CX": "cx",
+    "TG": "tg",
+    "LH": "lh",
+    "AF": "af",
+    "KL": "kl",
+    "TK": "tk",
+    "QR": "qr",
+    "EK": "ek",
+    "EY": "ey",
+    "AY": "ay",
+    "SK": "sk",
+    "BA": "ba",
+    "LX": "lx",
+    "OS": "os",
 }
 
 
@@ -94,18 +94,11 @@ def build_google_flights_url(
 
 
 def build_aircraft_review_url(airline_code: str, aircraft: str | None) -> str:
-    """SeatGuru: Sitzpläne, Kabinenlayout und Flugzeug-Bewertungen."""
-    slug = SEATGURU_AIRLINE.get(airline_code)
-    if slug and aircraft:
-        ac = (
-            aircraft.replace(" Passenger", "")
-            .replace(" ", "_")
-            .replace("/", "-")
-        )
-        return f"https://www.seatguru.com/airlines/{slug}/{slug}_{ac}.php"
+    """AeroLOPA: maßstabsgetreue Sitzpläne und Kabinenbewertungen."""
+    slug = AEROLOPA_AIRLINE.get(airline_code)
     if slug:
-        return f"https://www.seatguru.com/airlines/{slug}/"
-    return "https://www.seatguru.com/"
+        return f"https://www.aerolopa.com/{slug}"
+    return "https://www.aerolopa.com/"
 
 
 def _serialize_flight_details(
@@ -548,8 +541,36 @@ def main() -> int:
             {
                 "date": today,
                 "fetched_at_utc": fetched_at,
+                "record_type": "combination",
                 **row,
                 "price_eur_total": row["price_eur_per_person"],
+            }
+        )
+
+    leg_keys: set[tuple] = set()
+    for leg in legs:
+        if leg.get("from") not in ALLOWED_ORIGINS and leg.get("to") not in ALLOWED_ORIGINS:
+            continue
+        key = (leg["direction"], leg["from"], leg["to"], leg["cabin"], leg.get("airline_filter"))
+        if key in leg_keys:
+            continue
+        leg_keys.add(key)
+        append_history(
+            {
+                "date": today,
+                "fetched_at_utc": fetched_at,
+                "record_type": "leg",
+                "direction": leg["direction"],
+                "from": leg["from"],
+                "to": leg["to"],
+                "origin": leg["from"] if leg["direction"] == "outbound" else leg["to"],
+                "route_label": f"{leg['from']}→{leg['to']}",
+                "travel_date": leg["date"],
+                "cabin": leg["cabin"],
+                "airline_filter": leg.get("airline_filter"),
+                "airlines": leg.get("airlines", []),
+                "price_eur_per_person": leg["price_eur_per_person"],
+                "price_eur_total": leg["price_eur_per_person"],
             }
         )
 

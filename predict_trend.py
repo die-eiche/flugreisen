@@ -111,6 +111,14 @@ def linear_trend(dated_prices: list[tuple[date, float]]) -> TrendStats:
     return TrendStats(slope, round(weekly_pct, 2), n, direction)
 
 
+ALLOWED_ORIGINS = {"HAM", "CPH"}
+ORIGIN_LABELS = {"HAM": "Hamburg", "CPH": "Kopenhagen"}
+DIRECTION_LABELS = {
+    "outbound": "Hinflug",
+    "inbound": "Rückflug",
+}
+
+
 def _route_price(row: dict) -> float | None:
     for key in ("price_eur_per_person", "price_eur_total"):
         if key in row:
@@ -121,16 +129,76 @@ def _route_price(row: dict) -> float | None:
     return None
 
 
+def history_for_leg(
+    history: list[dict],
+    direction: str,
+    from_code: str,
+    to_code: str,
+    cabin: str,
+) -> list[tuple[date, float]]:
+    rows: list[tuple[date, float]] = []
+    for h in history:
+        price = _route_price(h)
+        if price is None or "date" not in h:
+            continue
+
+        if h.get("record_type") == "leg" or h.get("direction"):
+            if h.get("direction") != direction:
+                continue
+            if h.get("from") != from_code or h.get("to") != to_code:
+                continue
+            if h.get("cabin") != cabin:
+                continue
+            leg_price = price
+        else:
+            if h.get("cabin") != cabin:
+                continue
+            origin = h.get("origin")
+            if origin not in ALLOWED_ORIGINS:
+                continue
+            if direction == "outbound":
+                if origin != from_code or to_code != "BKK":
+                    continue
+                leg_price = h.get("outbound_price_eur")
+            elif direction == "inbound":
+                if origin != to_code or from_code != "HKT":
+                    continue
+                leg_price = h.get("inbound_price_eur")
+            else:
+                continue
+            if leg_price is None:
+                continue
+            try:
+                leg_price = float(leg_price)
+            except (TypeError, ValueError):
+                continue
+            price = leg_price
+
+        try:
+            rows.append((date.fromisoformat(h["date"]), price))
+        except (ValueError, TypeError):
+            continue
+
+    by_day: dict[str, float] = {}
+    for d, p in rows:
+        key = d.isoformat()
+        by_day[key] = min(by_day.get(key, p), p)
+    return sorted((date.fromisoformat(k), v) for k, v in by_day.items())
+
+
 def history_for_route(
     history: list[dict],
     origin: str,
     cabin: str,
 ) -> list[tuple[date, float]]:
+    """Abwärtskompatibel – Kombinations-Historie."""
     rows: list[tuple[date, float]] = []
     for h in history:
         if h.get("origin") != origin or h.get("cabin") != cabin:
             continue
-        if h.get("origin") not in (None, "HAM", "CPH"):
+        if h.get("origin") not in ALLOWED_ORIGINS:
+            continue
+        if h.get("record_type") == "leg":
             continue
         price = _route_price(h)
         if price is None or "date" not in h:
@@ -235,8 +303,12 @@ def build_projection_curve(
 
 
 def analyze_route(
+    direction: str,
     origin: str,
     origin_label: str,
+    route_label: str,
+    from_code: str,
+    to_code: str,
     cabin: str,
     departure: str,
     current_price: float,
@@ -244,7 +316,7 @@ def analyze_route(
     as_of: date,
 ) -> dict:
     dtd = days_until(departure, as_of)
-    hist = history_for_route(history, origin, cabin)
+    hist = history_for_leg(history, direction, from_code, to_code, cabin)
     trend = linear_trend(hist)
     curve_now = booking_curve_factor(dtd)
 
@@ -258,8 +330,13 @@ def analyze_route(
     change_to_dep = round((at_dep["expected"] - current_price) / current_price * 100, 1)
 
     return {
+        "direction": direction,
+        "direction_label": DIRECTION_LABELS.get(direction, direction),
         "origin": origin,
         "origin_label": origin_label,
+        "route_label": route_label,
+        "from": from_code,
+        "to": to_code,
         "cabin": cabin,
         "departure": departure,
         "days_until_departure": dtd,
@@ -300,80 +377,135 @@ def _phase_label(days: int) -> str:
     return "spät – Preisanstieg wahrscheinlich"
 
 
+def _best_legs_by_route(legs: list[dict], cabin: str = "PREMIUM_ECONOMY") -> dict[tuple, dict]:
+    best: dict[tuple, dict] = {}
+    for leg in legs:
+        if leg.get("cabin") != cabin:
+            continue
+        direction = leg.get("direction")
+        if direction not in DIRECTION_LABELS:
+            continue
+        airport = leg["from"] if direction == "outbound" else leg["to"]
+        if airport not in ALLOWED_ORIGINS:
+            continue
+        if direction == "outbound" and leg.get("to") != "BKK":
+            continue
+        if direction == "inbound" and leg.get("from") != "HKT":
+            continue
+        key = (direction, airport)
+        price = _route_price(leg)
+        if price is None:
+            continue
+        current = best.get(key)
+        if not current or price < _route_price(current):
+            best[key] = leg
+    return best
+
+
+def _leg_route_label(leg: dict) -> str:
+    return f"{leg['from']}→{leg['to']}"
+
+
+def _leg_origin_label(leg: dict) -> str:
+    airport = leg["from"] if leg["direction"] == "outbound" else leg["to"]
+    city = ORIGIN_LABELS.get(airport, airport)
+    if leg["direction"] == "outbound":
+        return f"{city} → Bangkok (BKK)"
+    return f"Phuket (HKT) → {city}"
+
+
 def run_forecast(as_of: date | None = None) -> dict:
     as_of = as_of or date.today()
     cfg = load_config()
     history = load_json(HISTORY_FILE, [])
     latest = load_json(LATEST_FILE, {})
-    combinations = latest.get("combinations") or []
-
-    # Primäres Abflugdatum aus Config
-    dep_date = cfg["date_pairs"][0]["departure"]
+    legs = latest.get("legs") or []
 
     routes: list[dict] = []
-    for combo in combinations:
-        if combo.get("cabin") != "PREMIUM_ECONOMY":
-            continue
-        if combo.get("origin") not in ("HAM", "CPH"):
-            continue
-        price = _route_price(combo)
+    for (_direction, _airport), leg in sorted(_best_legs_by_route(legs).items()):
+        price = _route_price(leg)
         if price is None:
             continue
         routes.append(
             analyze_route(
-                origin=combo["origin"],
-                origin_label=combo.get("origin_label", combo["origin"]),
-                cabin=combo["cabin"],
-                departure=combo.get("departure", dep_date),
+                direction=leg["direction"],
+                origin=leg["from"] if leg["direction"] == "outbound" else leg["to"],
+                origin_label=_leg_origin_label(leg),
+                route_label=_leg_route_label(leg),
+                from_code=leg["from"],
+                to_code=leg["to"],
+                cabin=leg["cabin"],
+                departure=leg["date"],
                 current_price=price,
                 history=history,
                 as_of=as_of,
             )
         )
 
-    routes.sort(key=lambda r: r["current_price_eur"])
+    routes.sort(key=lambda r: (r["direction"], r["current_price_eur"]))
 
-    best = routes[0] if routes else None
+    outbound = [r for r in routes if r["direction"] == "outbound"]
+    inbound = [r for r in routes if r["direction"] == "inbound"]
+    best = outbound[0] if outbound else (inbound[0] if inbound else None)
     forecast = {
         "generated_at": as_of.isoformat(),
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "methodology": {
             "sources": [
-                "Eigene Preishistorie (tägliche Tracker-Daten, lineare Regression)",
+                "Eigene Preishistorie je Einzelstrecke (tägliche Tracker-Daten, lineare Regression)",
+                "Getrennte Prognosen für Hinflug (HAM/CPH→BKK) und Rückflug (HKT→HAM/CPH)",
                 "Buchungsfenster-Heuristik für Langstrecken (EU→Asien, 8–16 Wo. vor Abflug)",
             ],
             "disclaimer": (
                 "Schätzung ohne Garantie. Keine Finanzberatung. "
                 "Tatsächliche Preise hängen von Verfügbarkeit, Sales und Airline ab."
             ),
-            "model_version": "1.0",
+            "model_version": "1.1",
         },
-        "summary": _build_summary(best, as_of, dep_date),
+        "summary": _build_summary(best, outbound, inbound, as_of),
         "routes": routes,
+        "outbound_routes": outbound,
+        "inbound_routes": inbound,
     }
     return forecast
 
 
-def _build_summary(best: dict | None, as_of: date, dep_date: str) -> dict:
+def _build_summary(
+    best: dict | None,
+    outbound: list[dict],
+    inbound: list[dict],
+    as_of: date,
+) -> dict:
     if not best:
         return {
             "headline_de": "Noch zu wenig Daten für eine Prognose.",
             "recommendation_de": "Nach einigen Tagen Preistracking wird die Prognose genauer.",
         }
-    dtd = days_until(dep_date, as_of)
+
+    best_out = outbound[0] if outbound else None
+    best_in = inbound[0] if inbound else None
+    parts = []
+    if best_out:
+        parts.append(
+            f"Hinflug {best_out['route_label']}: {best_out['current_price_eur']:,.0f} €".replace(",", ".")
+        )
+    if best_in:
+        parts.append(
+            f"Rückflug {best_in['route_label']}: {best_in['current_price_eur']:,.0f} €".replace(",", ".")
+        )
+
     f = best["forecast"]
     return {
-        "headline_de": (
-            f"Günstigste Option: {best['origin_label']} – aktuell "
-            f"{best['current_price_eur']:,.0f} €".replace(",", ".")
-        ),
+        "headline_de": " · ".join(parts) if parts else best["origin_label"],
+        "best_outbound": best_out["route_label"] if best_out else None,
+        "best_inbound": best_in["route_label"] if best_in else None,
         "expected_in_30_days": f["in_30_days"]["expected"],
         "expected_change_30d_pct": f["change_30d_pct"],
         "expected_at_departure": f["at_departure_if_wait"]["expected"],
         "recommendation": best["recommendation"],
         "recommendation_de": best["recommendation_de"],
         "confidence": best["confidence"],
-        "days_until_departure": dtd,
+        "days_until_departure": best["days_until_departure"],
     }
 
 
@@ -389,7 +521,7 @@ def main() -> int:
         with LATEST_FILE.open("w", encoding="utf-8") as f:
             json.dump(latest, f, indent=2, ensure_ascii=False)
 
-    print(f"Prognose gespeichert → {FORECAST_FILE}")
+    print(f"Prognose gespeichert -> {FORECAST_FILE}")
     if forecast.get("summary"):
         print(f"Empfehlung: {forecast['summary'].get('recommendation_de', '–')}")
     return 0
