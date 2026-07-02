@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thailand Flugpreis-Tracker · Ahrensbök</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --card: #1a2332;
+      --text: #e8edf4;
+      --muted: #8b9cb3;
+      --accent: #3d9cf0;
+      --accent2: #5dd39e;
+      --border: #2a3544;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    h1 { font-size: 1.75rem; margin: 0 0 0.5rem; }
+    .sub { color: var(--muted); margin-bottom: 2rem; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+    }
+    .card .label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    .card .value { font-size: 1.6rem; font-weight: 700; margin-top: 0.25rem; }
+    .card .value small { font-size: 0.9rem; font-weight: 400; color: var(--muted); }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    section h2 { margin: 0 0 1rem; font-size: 1.1rem; }
+    .chart-wrap { position: relative; height: 380px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { padding: 0.65rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; }
+    tr:hover td { background: rgba(61, 156, 240, 0.06); }
+    .badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(61, 156, 240, 0.15);
+      color: var(--accent);
+    }
+    .badge.warn { background: rgba(255, 193, 7, 0.15); color: #ffc107; }
+    .badge.buy { background: rgba(255, 99, 99, 0.15); color: #ff7b7b; }
+    .forecast-box {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.75rem;
+      background: rgba(61, 156, 240, 0.06);
+      border-radius: 0 8px 8px 0;
+    }
+    .forecast-box h3 { margin: 0 0 0.35rem; font-size: 1rem; }
+    .filters { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
+    .filters select {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.45rem 0.75rem;
+    }
+    .note { font-size: 0.85rem; color: var(--muted); margin-top: 1rem; }
+    .empty { color: var(--muted); padding: 2rem; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Thailand-Reise · Getrennte Flüge ab Ahrensbök</h1>
+    <p class="sub">
+      Hinflug: Abflughafen → Bangkok (BKK) · Rückflug: Phuket (HKT) → Abflughafen ·
+      Abflug frühestens 03.02.2027, bevorzugt 04.02.2027 · 2 Erwachsene ·
+      Premium Economy · Gesamtpreis inkl. Anreise (Bahn/Auto) · Wunsch-Airlines: SQ, CX, TG
+    </p>
+
+    <div class="cards" id="summary-cards"></div>
+
+    <section id="forecast-section">
+      <h2>Preisprognose & Buchungsempfehlung</h2>
+      <div id="forecast-content"></div>
+      <p class="note" id="forecast-note"></p>
+    </section>
+
+    <section>
+      <h2>Preisverlauf & Prognose-Kurve</h2>
+      <div class="filters">
+        <select id="chart-origin"><option value="">Alle Abflughäfen</option></select>
+        <select id="chart-cabin">
+          <option value="PREMIUM_ECONOMY">Premium Economy</option>
+          <option value="ECONOMY">Economy</option>
+        </select>
+        <select id="chart-airline">
+          <option value="">Alle Airlines</option>
+          <option value="SQ">Singapore Airlines (SQ)</option>
+          <option value="CX">Cathay Pacific (CX)</option>
+          <option value="TG">Thai Airways (TG)</option>
+        </select>
+      </div>
+      <div class="chart-wrap"><canvas id="price-chart"></canvas></div>
+      <p class="note" id="chart-note"></p>
+    </section>
+
+    <section>
+      <h2>Gesamtkosten inkl. Anreise (beste Kombinationen)</h2>
+      <div class="filters">
+        <select id="table-cabin">
+          <option value="">Alle Kabinen</option>
+          <option value="PREMIUM_ECONOMY" selected>Premium Economy</option>
+          <option value="ECONOMY">Economy</option>
+        </select>
+        <select id="table-sort">
+          <option value="price">Gesamtpreis aufsteigend</option>
+          <option value="origin">Abflughafen</option>
+        </select>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>Abflughafen</th>
+              <th>Anreise</th>
+              <th>Hinflug</th>
+              <th>Rückflug</th>
+              <th>Kabine</th>
+              <th>Flüge</th>
+              <th>Boden</th>
+              <th>Gesamt (2 Pers.)</th>
+              <th>Pro Person</th>
+            </tr>
+          </thead>
+          <tbody id="offers-body"></tbody>
+        </table>
+      </div>
+      <p class="note" id="updated-note"></p>
+    </section>
+
+    <section>
+      <h2>Einzelne Flugstrecken</h2>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>Richtung</th>
+              <th>Strecke</th>
+              <th>Datum</th>
+              <th>Kabine</th>
+              <th>Airlines</th>
+              <th>Preis (2 Pers.)</th>
+            </tr>
+          </thead>
+          <tbody id="legs-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const AIRLINE_NAMES = { SQ: 'Singapore Airlines', CX: 'Cathay Pacific', TG: 'Thai Airways' };
+    const ORIGIN_NAMES = {
+      HAM: 'Hamburg', CPH: 'Kopenhagen', FRA: 'Frankfurt', MUC: 'München',
+      BER: 'Berlin', BLL: 'Billund', LBC: 'Lübeck'
+    };
+    const GROUND_INFO = {
+      HAM: 'ca. 1 h Auto/Bahn',
+      LBC: 'ca. 20 min',
+      CPH: 'ca. 6 h Bahn (Lübeck Hbf)',
+      BLL: 'ca. 3,5 h Auto'
+    };
+
+    let latest = { combinations: [], legs: [], results: [], forecast: null };
+    let history = [];
+    let chart;
+    let selectedForecastOrigin = '';
+
+    const REC_LABELS = {
+      wait: { text: 'Abwarten', cls: '' },
+      buy_soon: { text: 'Bald buchen', cls: 'warn' },
+      buy_now: { text: 'Jetzt buchen', cls: 'buy' },
+      monitor: { text: 'Beobachten', cls: '' }
+    };
+
+    async function loadData() {
+      const [latestRes, historyRes, forecastRes] = await Promise.all([
+        fetch('data/latest.json').then(r => r.json()).catch(() => ({ results: [] })),
+        fetch('data/history.json').then(r => r.json()).catch(() => []),
+        fetch('data/forecast.json').then(r => r.json()).catch(() => null)
+      ]);
+      latest = latestRes;
+      history = historyRes;
+      if (!latest.forecast && forecastRes) latest.forecast = forecastRes;
+      if (!latest.combinations?.length && latest.results?.length) {
+        latest.combinations = latest.results.filter(r => r.type === 'combination' || r.ground_cost_eur != null);
+      }
+      populateOriginFilter();
+      renderSummary();
+      renderForecast();
+      renderTable();
+      renderLegs();
+      renderChart();
+      document.getElementById('updated-note').textContent =
+        latest.fetched_at
+          ? `Stand: ${latest.fetched_at} (täglich aktualisiert via GitHub Actions)`
+          : 'Noch keine Daten – fetch_prices.py ausführen.';
+    }
+
+    function formatAirlines(codes) {
+      return (codes || []).map(c => AIRLINE_NAMES[c] || c).join(', ') || '–';
+    }
+
+    function renderSummary() {
+      const combos = latest.combinations || [];
+      const pe = combos.filter(r => r.cabin === 'PREMIUM_ECONOMY');
+      const bestPe = pe.length ? pe.reduce((a, b) => a.price_eur_total < b.price_eur_total ? a : b) : null;
+      const bestHam = pe.find(r => r.origin === 'HAM');
+      const bestCph = pe.find(r => r.origin === 'CPH');
+
+      const cards = [
+        {
+          label: 'Günstigste Gesamtreise (PE)',
+          value: bestPe
+            ? `${bestPe.price_eur_total.toLocaleString('de-DE')} € <small>ab ${bestPe.origin_label || ORIGIN_NAMES[bestPe.origin]} inkl. Anreise</small>`
+            : '–'
+        },
+        {
+          label: 'Hamburg (PE + Anreise)',
+          value: bestHam
+            ? `${bestHam.price_eur_total.toLocaleString('de-DE')} € <small>kein Übernachten nötig</small>`
+            : '–'
+        },
+        {
+          label: 'Kopenhagen per Bahn (PE)',
+          value: bestCph
+            ? `${bestCph.price_eur_total.toLocaleString('de-DE')} € <small>+${bestCph.ground_cost_eur} € Bahn</small>`
+            : '–'
+        }
+      ];
+
+      document.getElementById('summary-cards').innerHTML = cards.map(c => `
+        <div class="card">
+          <div class="label">${c.label}</div>
+          <div class="value">${c.value}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderForecast() {
+      const fc = latest.forecast;
+      const el = document.getElementById('forecast-content');
+      const note = document.getElementById('forecast-note');
+      if (!fc || !fc.routes?.length) {
+        el.innerHTML = '<p class="empty">Prognose ab morgen verfügbar, sobald mehr Tagespreise vorliegen.</p>';
+        note.textContent = '';
+        return;
+      }
+
+      const summary = fc.summary || {};
+      const routes = fc.routes;
+      if (!selectedForecastOrigin && routes.length) {
+        selectedForecastOrigin = routes[0].origin;
+      }
+      const active = routes.find(r => r.origin === selectedForecastOrigin) || routes[0];
+      const rec = REC_LABELS[active.recommendation] || REC_LABELS.monitor;
+      const f = active.forecast;
+
+      el.innerHTML = `
+        <div class="forecast-box">
+          <h3>${summary.headline_de || active.origin_label}</h3>
+          <p>
+            <span class="badge ${rec.cls}">${rec.text}</span>
+            &nbsp; ${active.recommendation_de}
+          </p>
+          <p style="color:var(--muted);font-size:0.9rem;margin:0.5rem 0 0">
+            Noch ${active.days_until_departure} Tage bis Abflug · Phase: ${active.booking_window.phase}
+            · Konfidenz: ${active.confidence === 'high' ? 'hoch' : active.confidence === 'medium' ? 'mittel' : 'niedrig'}
+            (${active.trend.data_points} Messpunkte)
+          </p>
+        </div>
+        <div class="filters">
+          ${routes.map(r => `<button type="button" data-origin="${r.origin}" style="background:${r.origin===active.origin?'var(--accent)':'var(--bg)'};color:var(--text);border:1px solid var(--border);border-radius:8px;padding:0.4rem 0.75rem;cursor:pointer">${r.origin_label}</button>`).join('')}
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Szenario</th>
+              <th>In 30 Tagen</th>
+              <th>In 60 Tagen</th>
+              <th>Bei Abflug (wenn gewartet)</th>
+              <th>Trend</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Erwartung</td>
+              <td>${f.in_30_days.expected.toLocaleString('de-DE')} € <small>(${f.change_30d_pct > 0 ? '+' : ''}${f.change_30d_pct}%)</small></td>
+              <td>${f.in_60_days.expected.toLocaleString('de-DE')} €</td>
+              <td>${f.at_departure_if_wait.expected.toLocaleString('de-DE')} € <small>(${f.change_to_departure_pct > 0 ? '+' : ''}${f.change_to_departure_pct}%)</small></td>
+              <td>${active.trend.direction === 'falling' ? '↓ fallend' : active.trend.direction === 'rising' ? '↑ steigend' : '→ stabil'} (${active.trend.weekly_change_pct}%/Wo.)</td>
+            </tr>
+            <tr>
+              <td>Bandbreite (30 T.)</td>
+              <td colspan="4">${f.in_30_days.low.toLocaleString('de-DE')} – ${f.in_30_days.high.toLocaleString('de-DE')} €</td>
+            </tr>
+          </tbody>
+        </table>
+      `;
+
+      el.querySelectorAll('button[data-origin]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          selectedForecastOrigin = btn.dataset.origin;
+          renderForecast();
+          renderChart();
+        });
+      });
+
+      note.textContent = fc.methodology?.disclaimer || '';
+    }
+
+    function populateOriginFilter() {
+      const origins = [...new Set((latest.combinations || []).map(r => r.origin))].sort();
+      const sel = document.getElementById('chart-origin');
+      sel.innerHTML = '<option value="">Alle Abflughäfen</option>' +
+        origins.map(o => `<option value="${o}">${ORIGIN_NAMES[o] || o}</option>`).join('');
+    }
+
+    function filterHistory() {
+      const origin = document.getElementById('chart-origin').value;
+      const cabin = document.getElementById('chart-cabin').value;
+      const airline = document.getElementById('chart-airline').value;
+
+      return history.filter(h => {
+        if (origin && h.origin !== origin) return false;
+        if (cabin && h.cabin !== cabin) return false;
+        if (airline && !(h.airlines || []).includes(airline) && h.airline_filter !== airline) return false;
+        return true;
+      });
+    }
+
+    function renderChart() {
+      const filtered = filterHistory();
+      const byDate = {};
+      filtered.forEach(h => {
+        const key = h.date;
+        if (!byDate[key] || h.price_eur_total < byDate[key]) {
+          byDate[key] = h.price_eur_total;
+        }
+      });
+      const histLabels = Object.keys(byDate).sort();
+      const histData = histLabels.map(d => byDate[d]);
+
+      const fc = latest.forecast;
+      const routeFc = fc?.routes?.find(r => r.origin === (selectedForecastOrigin || document.getElementById('chart-origin')?.value)) 
+        || fc?.routes?.[0];
+      const proj = routeFc?.projection_curve || [];
+      const projLabels = proj.map(p => p.date);
+      const projExpected = proj.map(p => p.price_expected);
+      const projLow = proj.map(p => p.price_low);
+      const projHigh = proj.map(p => p.price_high);
+
+      const allLabels = [...new Set([...histLabels, ...projLabels])].sort();
+      const actualSeries = allLabels.map(l => histLabels.includes(l) ? byDate[l] : null);
+      const forecastSeries = allLabels.map(l => {
+        const idx = projLabels.indexOf(l);
+        return idx >= 0 ? projExpected[idx] : null;
+      });
+      const bandLow = allLabels.map(l => {
+        const idx = projLabels.indexOf(l);
+        return idx >= 0 ? projLow[idx] : null;
+      });
+      const bandHigh = allLabels.map(l => {
+        const idx = projLabels.indexOf(l);
+        return idx >= 0 ? projHigh[idx] : null;
+      });
+
+      const ctx = document.getElementById('price-chart');
+      if (chart) chart.destroy();
+
+      if (!histLabels.length && !proj.length) {
+        document.getElementById('chart-note').textContent =
+          'Noch kein Verlauf – nach dem ersten täglichen Lauf erscheint hier die Kurve.';
+        chart = new Chart(ctx, {
+          type: 'line',
+          data: { labels: [new Date().toISOString().slice(0,10)], datasets: [{ label: 'Preis (EUR)', data: [] }] },
+          options: { responsive: true, maintainAspectRatio: false }
+        });
+        return;
+      }
+
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: allLabels,
+          datasets: [
+            {
+              label: 'Gemessene Preise',
+              data: actualSeries,
+              borderColor: '#3d9cf0',
+              backgroundColor: 'rgba(61, 156, 240, 0.12)',
+              fill: false,
+              tension: 0.25,
+              pointRadius: 5,
+              spanGaps: false
+            },
+            {
+              label: 'Prognose (erwartet)',
+              data: forecastSeries,
+              borderColor: '#5dd39e',
+              borderDash: [6, 4],
+              fill: false,
+              tension: 0.25,
+              pointRadius: 3,
+              spanGaps: false
+            },
+            {
+              label: 'Prognose-Band (oben)',
+              data: bandHigh,
+              borderColor: 'rgba(93, 211, 158, 0.25)',
+              backgroundColor: 'rgba(93, 211, 158, 0.08)',
+              fill: '+1',
+              tension: 0.25,
+              pointRadius: 0,
+              spanGaps: false
+            },
+            {
+              label: 'Prognose-Band (unten)',
+              data: bandLow,
+              borderColor: 'rgba(93, 211, 158, 0.25)',
+              fill: false,
+              tension: 0.25,
+              pointRadius: 0,
+              spanGaps: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              ticks: { callback: v => v.toLocaleString('de-DE') + ' €' },
+              grid: { color: 'rgba(255,255,255,0.06)' }
+            },
+            x: { grid: { display: false } }
+          },
+          plugins: {
+            legend: { labels: { color: '#e8edf4' } },
+            tooltip: {
+              callbacks: {
+                label: ctx => {
+                  if (ctx.parsed.y == null) return null;
+                  return ` ${ctx.parsed.y.toLocaleString('de-DE')} €`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      const noteParts = [];
+      if (histData.length) {
+        noteParts.push(`Historie: ${Math.min(...histData).toLocaleString('de-DE')} – ${Math.max(...histData).toLocaleString('de-DE')} € (${histLabels.length} Tage)`);
+      }
+      if (routeFc) {
+        noteParts.push(`Prognose basiert auf ${routeFc.trend.data_points} Messpunkten + Buchungsfenster-Modell`);
+      }
+      document.getElementById('chart-note').textContent = noteParts.join(' · ');
+    }
+
+    function renderTable() {
+      const cabin = document.getElementById('table-cabin').value;
+      const sort = document.getElementById('table-sort').value;
+      let rows = [...(latest.combinations || [])];
+      if (cabin) rows = rows.filter(r => r.cabin === cabin);
+      if (sort === 'price') rows.sort((a, b) => a.price_eur_total - b.price_eur_total);
+      else rows.sort((a, b) => a.origin.localeCompare(b.origin));
+
+      const tbody = document.getElementById('offers-body');
+      if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="9" class="empty">Keine Kombinationen für die gewählten Filter.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = rows.map(r => `
+        <tr>
+          <td><strong>${r.origin_label || ORIGIN_NAMES[r.origin] || r.origin}</strong></td>
+          <td>${GROUND_INFO[r.origin] || r.ground_mode || '–'}</td>
+          <td>${r.departure}</td>
+          <td>${r.return}</td>
+          <td><span class="badge ${r.cabin === 'PREMIUM_ECONOMY' ? 'pe' : ''}">${r.cabin === 'PREMIUM_ECONOMY' ? 'Premium Eco' : 'Economy'}</span></td>
+          <td>${formatAirlines([...(r.outbound_airlines||[]), ...(r.inbound_airlines||[])])}</td>
+          <td>${(r.ground_cost_eur||0).toLocaleString('de-DE')} €</td>
+          <td><strong>${r.price_eur_total.toLocaleString('de-DE')} €</strong></td>
+          <td>${r.price_eur_per_person.toLocaleString('de-DE')} €</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderLegs() {
+      const tbody = document.getElementById('legs-body');
+      const legs = latest.legs || [];
+      if (!legs.length) {
+        tbody.innerHTML = '<tr><td colspan="6" class="empty">Noch keine Einzelstrecken geladen.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = legs.map(l => `
+        <tr>
+          <td>${l.direction === 'outbound' ? 'Hinflug' : 'Rückflug'}</td>
+          <td>${l.from} → ${l.to}</td>
+          <td>${l.date}</td>
+          <td><span class="badge ${l.cabin === 'PREMIUM_ECONOMY' ? 'pe' : ''}">${l.cabin === 'PREMIUM_ECONOMY' ? 'PE' : 'Eco'}</span></td>
+          <td>${formatAirlines(l.airlines)}</td>
+          <td>${l.price_eur_total.toLocaleString('de-DE')} €</td>
+        </tr>
+      `).join('');
+    }
+
+    ['chart-origin', 'chart-cabin', 'chart-airline'].forEach(id => {
+      document.getElementById(id).addEventListener('change', renderChart);
+    });
+    ['table-cabin', 'table-sort'].forEach(id => {
+      document.getElementById(id).addEventListener('change', renderTable);
+    });
+
+    loadData();
+  </script>
+</body>
+</html>
