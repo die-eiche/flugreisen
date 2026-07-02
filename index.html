@@ -93,8 +93,7 @@
     .flight-meta { font-size: 0.82rem; color: var(--muted); margin-top: 0.15rem; }
     th.sortable { cursor: pointer; user-select: none; white-space: nowrap; }
     th.sortable:hover { color: var(--text); }
-    th.sortable.sorted-asc::after { content: ' ▲'; font-size: 0.65rem; }
-    th.sortable.sorted-desc::after { content: ' ▼'; font-size: 0.65rem; }
+    th .sort-indicator { margin-left: 0.35rem; font-size: 0.65rem; opacity: 0.9; }
     .segment-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
     .segment-tabs button {
       background: var(--bg);
@@ -190,16 +189,16 @@
         <table id="legs-table">
           <thead>
             <tr>
-              <th class="sortable" data-sort="direction">Richtung</th>
-              <th class="sortable" data-sort="route">Strecke</th>
-              <th class="sortable" data-sort="date">Datum</th>
-              <th class="sortable" data-sort="departure_time">Abflug</th>
-              <th class="sortable" data-sort="arrival_time">Ankunft</th>
-              <th class="sortable" data-sort="duration_minutes">Dauer</th>
-              <th class="sortable" data-sort="aircraft">Fluggerät</th>
-              <th class="sortable" data-sort="cabin">Kabine</th>
-              <th class="sortable" data-sort="airlines">Airlines</th>
-              <th class="sortable" data-sort="price">Preis / Person</th>
+              <th class="sortable" data-sort="direction" data-label="Richtung">Richtung</th>
+              <th class="sortable" data-sort="route" data-label="Strecke">Strecke</th>
+              <th class="sortable" data-sort="date" data-label="Datum">Datum</th>
+              <th class="sortable" data-sort="departure_time" data-label="Abflug">Abflug</th>
+              <th class="sortable" data-sort="arrival_time" data-label="Ankunft">Ankunft</th>
+              <th class="sortable" data-sort="duration_minutes" data-label="Dauer">Dauer</th>
+              <th class="sortable" data-sort="aircraft" data-label="Fluggerät">Fluggerät</th>
+              <th class="sortable" data-sort="cabin" data-label="Kabine">Kabine</th>
+              <th class="sortable" data-sort="airline" data-label="Airline">Airline</th>
+              <th class="sortable" data-sort="price" data-label="Preis / Person">Preis / Person</th>
               <th>Links</th>
             </tr>
           </thead>
@@ -211,7 +210,14 @@
   </div>
 
   <script>
-    const AIRLINE_NAMES = { SQ: 'Singapore Airlines', CX: 'Cathay Pacific', TG: 'Thai Airways' };
+    const AIRLINE_NAMES = {
+      SQ: 'Singapore Airlines', CX: 'Cathay Pacific', TG: 'Thai Airways',
+      LH: 'Lufthansa', AF: 'Air France', KL: 'KLM', TK: 'Turkish Airlines',
+      QR: 'Qatar Airways', EK: 'Emirates', EY: 'Etihad', AY: 'Finnair',
+      SK: 'SAS', BA: 'British Airways', LX: 'Swiss', OS: 'Austrian',
+      GF: 'Gulf Air', MU: 'China Eastern', CA: 'Air China', NH: 'ANA',
+      OZ: 'Asiana', VN: 'Vietnam Airlines'
+    };
     const ALLOWED_ORIGINS = new Set(['HAM', 'CPH']);
     const DIRECTION_LABELS = { outbound: 'Hinflug', inbound: 'Rückflug' };
     const ORIGIN_NAMES = { HAM: 'Hamburg', CPH: 'Kopenhagen' };
@@ -339,6 +345,21 @@
 
     function formatAirlines(codes) {
       return (codes || []).map(c => AIRLINE_NAMES[c] || c).join(', ') || '–';
+    }
+
+    function legAirlineCodes(leg) {
+      if (leg.airlines?.length) return leg.airlines;
+      return [...new Set((leg.segments || []).map(s => s.airline).filter(Boolean))];
+    }
+
+    function formatLegAirline(leg) {
+      const codes = legAirlineCodes(leg);
+      const primary = leg.primary_airline || codes[0];
+      if (!primary) return '–';
+      const name = AIRLINE_NAMES[primary] || primary;
+      if (codes.length <= 1) return `${name} (${primary})`;
+      const others = codes.filter(c => c !== primary).map(c => AIRLINE_NAMES[c] || c).join(', ');
+      return `${name} (${primary})<div class="flight-meta">+ ${others}</div>`;
     }
 
     function renderSummary() {
@@ -745,8 +766,8 @@
           return leg.aircraft || '';
         case 'cabin':
           return leg.cabin || '';
-        case 'airlines':
-          return formatAirlines(leg.airlines);
+        case 'airline':
+          return leg.primary_airline || legAirlineCodes(leg)[0] || '';
         case 'price':
           return pricePerPerson(leg);
         default:
@@ -770,9 +791,12 @@
 
     function updateLegSortHeaders() {
       document.querySelectorAll('#legs-table th.sortable').forEach(th => {
+        const label = th.dataset.label || th.textContent.trim();
         th.classList.remove('sorted-asc', 'sorted-desc');
+        th.innerHTML = label;
         if (th.dataset.sort === legsSort.key) {
           th.classList.add(legsSort.asc ? 'sorted-asc' : 'sorted-desc');
+          th.innerHTML = `${label}<span class="sort-indicator">${legsSort.asc ? '▲' : '▼'}</span>`;
         }
       });
     }
@@ -801,11 +825,26 @@
           <td>${l.duration || '–'}</td>
           <td>${l.aircraft || '–'}</td>
           <td><span class="badge ${l.cabin === 'PREMIUM_ECONOMY' ? 'pe' : ''}">${l.cabin === 'PREMIUM_ECONOMY' ? 'PE' : 'Eco'}</span></td>
-          <td>${formatAirlines(l.airlines)}</td>
+          <td>${formatLegAirline(l)}</td>
           <td>${pricePerPerson(l).toLocaleString('de-DE')} €</td>
           <td>${linkCell(l.booking_url, l.aircraft_review_url, l.direction === 'outbound' ? 'Hin' : 'Rück')}</td>
         </tr>
       `).join('');
+    }
+
+    function initLegSortHandlers() {
+      document.getElementById('legs-table').addEventListener('click', (event) => {
+        const th = event.target.closest('th.sortable');
+        if (!th) return;
+        event.preventDefault();
+        const key = th.dataset.sort;
+        if (legsSort.key === key) {
+          legsSort.asc = !legsSort.asc;
+        } else {
+          legsSort = { key, asc: true };
+        }
+        renderLegs();
+      });
     }
 
     ['chart-direction', 'chart-origin', 'chart-cabin', 'chart-airline'].forEach(id => {
@@ -821,18 +860,7 @@
       document.getElementById(id).addEventListener('change', renderTable);
     });
 
-    document.querySelectorAll('#legs-table th.sortable').forEach(th => {
-      th.addEventListener('click', () => {
-        const key = th.dataset.sort;
-        if (legsSort.key === key) {
-          legsSort.asc = !legsSort.asc;
-        } else {
-          legsSort = { key, asc: true };
-        }
-        renderLegs();
-      });
-    });
-
+    initLegSortHandlers();
     loadData();
   </script>
 </body>

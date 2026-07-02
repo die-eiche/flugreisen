@@ -168,15 +168,21 @@ def _serialize_flight_details(
 def _airlines_from_result(item) -> set[str]:
     airlines: set[str] = set()
     if isinstance(item, tuple):
-        legs = item
+        flight_legs = item
     else:
-        legs = getattr(item, "legs", []) or [item]
-    for leg in legs:
-        for seg in getattr(leg, "segments", []) or []:
-            code = getattr(seg, "airline_code", "") or ""
-            if code:
-                airlines.add(code[:2])
+        flight_legs = getattr(item, "legs", []) or [item]
+    for leg in flight_legs:
+        code = _airline_code(leg)
+        if code:
+            airlines.add(code)
     return airlines
+
+
+def _primary_airline_from_segments(segments: list[dict]) -> str | None:
+    if not segments:
+        return None
+    main = max(segments, key=lambda s: s.get("duration_minutes") or 0)
+    return main.get("airline") or None
 
 
 def _price_from_result(item) -> float:
@@ -245,6 +251,10 @@ def search_one_way(
     details = _serialize_flight_details(
         best_flight, currency, language, country
     )
+    segment_airlines = sorted(
+        {s["airline"] for s in details.get("segments", []) if s.get("airline")}
+    )
+    airlines_list = segment_airlines or sorted(best_airlines)
 
     return {
         "type": "leg",
@@ -254,7 +264,9 @@ def search_one_way(
         "date": travel_date,
         "cabin": cabin,
         "airline_filter": airline_code,
-        "airlines": sorted(best_airlines),
+        "airlines": airlines_list,
+        "primary_airline": _primary_airline_from_segments(details.get("segments", []))
+            or (airlines_list[0] if airlines_list else None),
         "price_eur_total": round(best_price, 2),
         "price_eur_per_person": round(best_price / adults, 2),
         **details,
