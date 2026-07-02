@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <title>Thailand Flugpreis-Tracker · Ahrensbök</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
@@ -251,10 +252,11 @@
     };
 
     async function loadData() {
+      const cacheBust = `?v=${Date.now()}`;
       const [latestRes, historyRes, forecastRes] = await Promise.all([
-        fetch('data/latest.json').then(r => r.json()).catch(() => ({ results: [] })),
-        fetch('data/history.json').then(r => r.json()).catch(() => []),
-        fetch('data/forecast.json').then(r => r.json()).catch(() => null)
+        fetch(`data/latest.json${cacheBust}`).then(r => r.json()).catch(() => ({ results: [] })),
+        fetch(`data/history.json${cacheBust}`).then(r => r.json()).catch(() => []),
+        fetch(`data/forecast.json${cacheBust}`).then(r => r.json()).catch(() => null)
       ]);
       latest = latestRes;
       history = historyRes;
