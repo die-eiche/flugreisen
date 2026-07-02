@@ -83,6 +83,14 @@
     }
     .note { font-size: 0.85rem; color: var(--muted); margin-top: 1rem; }
     .empty { color: var(--muted); padding: 2rem; text-align: center; }
+    a.link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    a.link:hover { text-decoration: underline; }
+    .flight-meta { font-size: 0.82rem; color: var(--muted); margin-top: 0.15rem; }
+    .link-stack { display: flex; flex-direction: column; gap: 0.25rem; }
   </style>
 </head>
 <body>
@@ -90,8 +98,9 @@
     <h1>Thailand-Reise · Getrennte Flüge ab Ahrensbök</h1>
     <p class="sub">
       Hinflug: Abflughafen → Bangkok (BKK) · Rückflug: Phuket (HKT) → Abflughafen ·
-      Abflug frühestens 03.02.2027, bevorzugt 04.02.2027 · 2 Erwachsene ·
-      Premium Economy · Gesamtpreis inkl. Anreise (Bahn/Auto) · Wunsch-Airlines: SQ, CX, TG
+      Abflug frühestens 03.02.2027, bevorzugt 04.02.2027 · 1 Person ·
+      Premium Economy · Preise pro Person inkl. Anreise (Bahn/Auto) ·
+      Abflughäfen: Hamburg & Kopenhagen · Wunsch-Airlines: SQ, CX, TG
     </p>
 
     <div class="cards" id="summary-cards"></div>
@@ -105,7 +114,11 @@
     <section>
       <h2>Preisverlauf & Prognose-Kurve</h2>
       <div class="filters">
-        <select id="chart-origin"><option value="">Alle Abflughäfen</option></select>
+        <select id="chart-origin">
+          <option value="">Alle Abflughäfen</option>
+          <option value="HAM">Hamburg</option>
+          <option value="CPH">Kopenhagen</option>
+        </select>
         <select id="chart-cabin">
           <option value="PREMIUM_ECONOMY">Premium Economy</option>
           <option value="ECONOMY">Economy</option>
@@ -130,7 +143,7 @@
           <option value="ECONOMY">Economy</option>
         </select>
         <select id="table-sort">
-          <option value="price">Gesamtpreis aufsteigend</option>
+          <option value="price">Preis pro Person aufsteigend</option>
           <option value="origin">Abflughafen</option>
         </select>
       </div>
@@ -145,14 +158,14 @@
               <th>Kabine</th>
               <th>Flüge</th>
               <th>Boden</th>
-              <th>Gesamt (2 Pers.)</th>
-              <th>Pro Person</th>
+              <th>Preis / Person</th>
+              <th>Fluggerät</th>
+              <th>Links</th>
             </tr>
           </thead>
           <tbody id="offers-body"></tbody>
         </table>
       </div>
-      <p class="note" id="updated-note"></p>
     </section>
 
     <section>
@@ -164,29 +177,66 @@
               <th>Richtung</th>
               <th>Strecke</th>
               <th>Datum</th>
+              <th>Abflug</th>
+              <th>Dauer</th>
+              <th>Fluggerät</th>
               <th>Kabine</th>
               <th>Airlines</th>
-              <th>Preis (2 Pers.)</th>
+              <th>Preis / Person</th>
+              <th>Links</th>
             </tr>
           </thead>
           <tbody id="legs-body"></tbody>
         </table>
       </div>
+      <p class="note" id="updated-note"></p>
     </section>
   </div>
 
   <script>
     const AIRLINE_NAMES = { SQ: 'Singapore Airlines', CX: 'Cathay Pacific', TG: 'Thai Airways' };
-    const ORIGIN_NAMES = {
-      HAM: 'Hamburg', CPH: 'Kopenhagen', FRA: 'Frankfurt', MUC: 'München',
-      BER: 'Berlin', BLL: 'Billund', LBC: 'Lübeck'
-    };
+    const ALLOWED_ORIGINS = new Set(['HAM', 'CPH']);
+    const ORIGIN_NAMES = { HAM: 'Hamburg', CPH: 'Kopenhagen' };
     const GROUND_INFO = {
       HAM: 'ca. 1 h Auto/Bahn',
-      LBC: 'ca. 20 min',
-      CPH: 'ca. 6 h Bahn (Lübeck Hbf)',
-      BLL: 'ca. 3,5 h Auto'
+      CPH: 'ca. 6 h Bahn (Lübeck Hbf)'
     };
+
+    function pricePerPerson(row) {
+      return row.price_eur_per_person ?? row.price_eur_total ?? 0;
+    }
+
+    function filterAllowed(rows) {
+      return rows.filter(r => ALLOWED_ORIGINS.has(r.origin || r.from));
+    }
+
+    function formatFlightCell(time, duration) {
+      if (!time && !duration) return '–';
+      const parts = [];
+      if (time) parts.push(`Abflug ${time}`);
+      if (duration) parts.push(duration);
+      return parts.join(' · ');
+    }
+
+    function formatAircraft(outAircraft, inAircraft) {
+      const parts = [];
+      if (outAircraft) parts.push(`Hin: ${outAircraft}`);
+      if (inAircraft) parts.push(`Rück: ${inAircraft}`);
+      return parts.length ? parts.join('<br>') : '–';
+    }
+
+    function linkCell(bookingUrl, reviewUrl, label) {
+      const links = [];
+      if (bookingUrl) {
+        links.push(`<a class="link" href="${bookingUrl}" target="_blank" rel="noopener">Buchen${label ? ' (' + label + ')' : ''}</a>`);
+      }
+      if (reviewUrl) {
+        links.push(`<a class="link" href="${reviewUrl}" target="_blank" rel="noopener">Fluggerät (SeatGuru)</a>`);
+      }
+      return links.length
+        ? `<div class="link-stack">${links.join('')}</div>`
+        : '–';
+    }
 
     let latest = { combinations: [], legs: [], results: [], forecast: null };
     let history = [];
@@ -212,6 +262,8 @@
       if (!latest.combinations?.length && latest.results?.length) {
         latest.combinations = latest.results.filter(r => r.type === 'combination' || r.ground_cost_eur != null);
       }
+      latest.combinations = filterAllowed(latest.combinations || []);
+      latest.legs = filterAllowed(latest.legs || []);
       populateOriginFilter();
       renderSummary();
       renderForecast();
@@ -220,7 +272,7 @@
       renderChart();
       document.getElementById('updated-note').textContent =
         latest.fetched_at
-          ? `Stand: ${latest.fetched_at} (täglich aktualisiert via GitHub Actions)`
+          ? `Stand: ${latest.fetched_at} · alle Preise pro Person · Abflughäfen: Hamburg & Kopenhagen (täglich via GitHub Actions)`
           : 'Noch keine Daten – fetch_prices.py ausführen.';
     }
 
@@ -231,27 +283,29 @@
     function renderSummary() {
       const combos = latest.combinations || [];
       const pe = combos.filter(r => r.cabin === 'PREMIUM_ECONOMY');
-      const bestPe = pe.length ? pe.reduce((a, b) => a.price_eur_total < b.price_eur_total ? a : b) : null;
-      const bestHam = pe.find(r => r.origin === 'HAM');
-      const bestCph = pe.find(r => r.origin === 'CPH');
+      const bestPe = pe.length
+        ? pe.reduce((a, b) => pricePerPerson(a) < pricePerPerson(b) ? a : b)
+        : null;
+      const bestHam = pe.filter(r => r.origin === 'HAM').sort((a, b) => pricePerPerson(a) - pricePerPerson(b))[0];
+      const bestCph = pe.filter(r => r.origin === 'CPH').sort((a, b) => pricePerPerson(a) - pricePerPerson(b))[0];
 
       const cards = [
         {
           label: 'Günstigste Gesamtreise (PE)',
           value: bestPe
-            ? `${bestPe.price_eur_total.toLocaleString('de-DE')} € <small>ab ${bestPe.origin_label || ORIGIN_NAMES[bestPe.origin]} inkl. Anreise</small>`
+            ? `${pricePerPerson(bestPe).toLocaleString('de-DE')} € <small>pro Person ab ${bestPe.origin_label || ORIGIN_NAMES[bestPe.origin]} inkl. Anreise</small>`
             : '–'
         },
         {
           label: 'Hamburg (PE + Anreise)',
           value: bestHam
-            ? `${bestHam.price_eur_total.toLocaleString('de-DE')} € <small>kein Übernachten nötig</small>`
+            ? `${pricePerPerson(bestHam).toLocaleString('de-DE')} € <small>pro Person · kein Übernachten nötig</small>`
             : '–'
         },
         {
           label: 'Kopenhagen per Bahn (PE)',
           value: bestCph
-            ? `${bestCph.price_eur_total.toLocaleString('de-DE')} € <small>+${bestCph.ground_cost_eur} € Bahn</small>`
+            ? `${pricePerPerson(bestCph).toLocaleString('de-DE')} € <small>pro Person · +${bestCph.ground_cost_eur} € Bahn</small>`
             : '–'
         }
       ];
@@ -274,8 +328,14 @@
         return;
       }
 
+      const routes = fc.routes.filter(r => ALLOWED_ORIGINS.has(r.origin));
+      if (!routes.length) {
+        el.innerHTML = '<p class="empty">Prognose ab morgen verfügbar, sobald mehr Tagespreise vorliegen.</p>';
+        note.textContent = '';
+        return;
+      }
+
       const summary = fc.summary || {};
-      const routes = fc.routes;
       if (!selectedForecastOrigin && routes.length) {
         selectedForecastOrigin = routes[0].origin;
       }
@@ -337,10 +397,11 @@
     }
 
     function populateOriginFilter() {
-      const origins = [...new Set((latest.combinations || []).map(r => r.origin))].sort();
       const sel = document.getElementById('chart-origin');
+      const current = sel.value;
       sel.innerHTML = '<option value="">Alle Abflughäfen</option>' +
-        origins.map(o => `<option value="${o}">${ORIGIN_NAMES[o] || o}</option>`).join('');
+        ['HAM', 'CPH'].map(o => `<option value="${o}">${ORIGIN_NAMES[o]}</option>`).join('');
+      if (current) sel.value = current;
     }
 
     function filterHistory() {
@@ -349,6 +410,7 @@
       const airline = document.getElementById('chart-airline').value;
 
       return history.filter(h => {
+        if (!ALLOWED_ORIGINS.has(h.origin)) return false;
         if (origin && h.origin !== origin) return false;
         if (cabin && h.cabin !== cabin) return false;
         if (airline && !(h.airlines || []).includes(airline) && h.airline_filter !== airline) return false;
@@ -361,8 +423,8 @@
       const byDate = {};
       filtered.forEach(h => {
         const key = h.date;
-        if (!byDate[key] || h.price_eur_total < byDate[key]) {
-          byDate[key] = h.price_eur_total;
+        if (!byDate[key] || pricePerPerson(h) < byDate[key]) {
+          byDate[key] = pricePerPerson(h);
         }
       });
       const histLabels = Object.keys(byDate).sort();
@@ -400,7 +462,7 @@
           'Noch kein Verlauf – nach dem ersten täglichen Lauf erscheint hier die Kurve.';
         chart = new Chart(ctx, {
           type: 'line',
-          data: { labels: [new Date().toISOString().slice(0,10)], datasets: [{ label: 'Preis (EUR)', data: [] }] },
+          data: { labels: [new Date().toISOString().slice(0,10)], datasets: [{ label: 'Preis pro Person (EUR)', data: [] }] },
           options: { responsive: true, maintainAspectRatio: false }
         });
         return;
@@ -412,7 +474,7 @@
           labels: allLabels,
           datasets: [
             {
-              label: 'Gemessene Preise',
+              label: 'Gemessene Preise (pro Person)',
               data: actualSeries,
               borderColor: '#3d9cf0',
               backgroundColor: 'rgba(61, 156, 240, 0.12)',
@@ -491,12 +553,12 @@
       const sort = document.getElementById('table-sort').value;
       let rows = [...(latest.combinations || [])];
       if (cabin) rows = rows.filter(r => r.cabin === cabin);
-      if (sort === 'price') rows.sort((a, b) => a.price_eur_total - b.price_eur_total);
+      if (sort === 'price') rows.sort((a, b) => pricePerPerson(a) - pricePerPerson(b));
       else rows.sort((a, b) => a.origin.localeCompare(b.origin));
 
       const tbody = document.getElementById('offers-body');
       if (!rows.length) {
-        tbody.innerHTML = '<tr><td colspan="9" class="empty">Keine Kombinationen für die gewählten Filter.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="10" class="empty">Keine Kombinationen für die gewählten Filter.</td></tr>';
         return;
       }
 
@@ -504,13 +566,27 @@
         <tr>
           <td><strong>${r.origin_label || ORIGIN_NAMES[r.origin] || r.origin}</strong></td>
           <td>${GROUND_INFO[r.origin] || r.ground_mode || '–'}</td>
-          <td>${r.departure}</td>
-          <td>${r.return}</td>
+          <td>
+            ${r.departure}
+            <div class="flight-meta">${formatFlightCell(r.outbound_departure_time, r.outbound_duration)}</div>
+          </td>
+          <td>
+            ${r.return}
+            <div class="flight-meta">${formatFlightCell(r.inbound_departure_time, r.inbound_duration)}</div>
+          </td>
           <td><span class="badge ${r.cabin === 'PREMIUM_ECONOMY' ? 'pe' : ''}">${r.cabin === 'PREMIUM_ECONOMY' ? 'Premium Eco' : 'Economy'}</span></td>
           <td>${formatAirlines([...(r.outbound_airlines||[]), ...(r.inbound_airlines||[])])}</td>
           <td>${(r.ground_cost_eur||0).toLocaleString('de-DE')} €</td>
-          <td><strong>${r.price_eur_total.toLocaleString('de-DE')} €</strong></td>
-          <td>${r.price_eur_per_person.toLocaleString('de-DE')} €</td>
+          <td><strong>${pricePerPerson(r).toLocaleString('de-DE')} €</strong></td>
+          <td>${formatAircraft(r.outbound_aircraft, r.inbound_aircraft)}</td>
+          <td>
+            <div class="link-stack">
+              ${r.outbound_booking_url ? `<a class="link" href="${r.outbound_booking_url}" target="_blank" rel="noopener">Hin buchen</a>` : ''}
+              ${r.inbound_booking_url ? `<a class="link" href="${r.inbound_booking_url}" target="_blank" rel="noopener">Rück buchen</a>` : ''}
+              ${r.outbound_aircraft_review_url ? `<a class="link" href="${r.outbound_aircraft_review_url}" target="_blank" rel="noopener">Hin · SeatGuru</a>` : ''}
+              ${r.inbound_aircraft_review_url ? `<a class="link" href="${r.inbound_aircraft_review_url}" target="_blank" rel="noopener">Rück · SeatGuru</a>` : ''}
+            </div>
+          </td>
         </tr>
       `).join('');
     }
@@ -519,7 +595,7 @@
       const tbody = document.getElementById('legs-body');
       const legs = latest.legs || [];
       if (!legs.length) {
-        tbody.innerHTML = '<tr><td colspan="6" class="empty">Noch keine Einzelstrecken geladen.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="10" class="empty">Noch keine Einzelstrecken geladen.</td></tr>';
         return;
       }
       tbody.innerHTML = legs.map(l => `
@@ -527,9 +603,13 @@
           <td>${l.direction === 'outbound' ? 'Hinflug' : 'Rückflug'}</td>
           <td>${l.from} → ${l.to}</td>
           <td>${l.date}</td>
+          <td>${l.departure_time || '–'}</td>
+          <td>${l.duration || '–'}</td>
+          <td>${l.aircraft || '–'}</td>
           <td><span class="badge ${l.cabin === 'PREMIUM_ECONOMY' ? 'pe' : ''}">${l.cabin === 'PREMIUM_ECONOMY' ? 'PE' : 'Eco'}</span></td>
           <td>${formatAirlines(l.airlines)}</td>
-          <td>${l.price_eur_total.toLocaleString('de-DE')} €</td>
+          <td>${pricePerPerson(l).toLocaleString('de-DE')} €</td>
+          <td>${linkCell(l.booking_url, l.aircraft_review_url, l.direction === 'outbound' ? 'Hin' : 'Rück')}</td>
         </tr>
       `).join('');
     }

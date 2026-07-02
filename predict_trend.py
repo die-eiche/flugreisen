@@ -111,6 +111,16 @@ def linear_trend(dated_prices: list[tuple[date, float]]) -> TrendStats:
     return TrendStats(slope, round(weekly_pct, 2), n, direction)
 
 
+def _route_price(row: dict) -> float | None:
+    for key in ("price_eur_per_person", "price_eur_total"):
+        if key in row:
+            try:
+                return float(row[key])
+            except (TypeError, ValueError):
+                continue
+    return None
+
+
 def history_for_route(
     history: list[dict],
     origin: str,
@@ -120,10 +130,13 @@ def history_for_route(
     for h in history:
         if h.get("origin") != origin or h.get("cabin") != cabin:
             continue
-        if "price_eur_total" not in h or "date" not in h:
+        if h.get("origin") not in (None, "HAM", "CPH"):
+            continue
+        price = _route_price(h)
+        if price is None or "date" not in h:
             continue
         try:
-            rows.append((date.fromisoformat(h["date"]), float(h["price_eur_total"])))
+            rows.append((date.fromisoformat(h["date"]), price))
         except (ValueError, TypeError):
             continue
     # pro Tag nur günstigsten Preis
@@ -301,13 +314,18 @@ def run_forecast(as_of: date | None = None) -> dict:
     for combo in combinations:
         if combo.get("cabin") != "PREMIUM_ECONOMY":
             continue
+        if combo.get("origin") not in ("HAM", "CPH"):
+            continue
+        price = _route_price(combo)
+        if price is None:
+            continue
         routes.append(
             analyze_route(
                 origin=combo["origin"],
                 origin_label=combo.get("origin_label", combo["origin"]),
                 cabin=combo["cabin"],
                 departure=combo.get("departure", dep_date),
-                current_price=float(combo["price_eur_total"]),
+                current_price=price,
                 history=history,
                 as_of=as_of,
             )

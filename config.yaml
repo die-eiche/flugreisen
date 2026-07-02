@@ -1,5 +1,5 @@
 # Getrennte Hin- und Rückflüge + Bodenanbindung ab Ahrensbök/Lübeck
-passengers: 2
+passengers: 1
 currency: EUR
 language: de
 country: DE
@@ -26,21 +26,11 @@ flight_origins:
     ground_from_home_eur: 25      # Auto/Bahn RE nach HAM, pro Person (Schätzung)
     ground_hours: 1.0
     overnight_needed: false
-  - code: LBC
-    label: Lübeck
-    ground_from_home_eur: 15      # sehr nah Ahrensbök
-    ground_hours: 0.3
-    overnight_needed: false
   - code: CPH
     label: Kopenhagen
     ground_from_home_eur: 45      # Bahn Lübeck Hbf → København H (Super Sparpreis)
     ground_hours: 6.0
     ground_mode: Bahn
-    overnight_needed: false
-  - code: BLL
-    label: Billund
-    ground_from_home_eur: 55      # Auto + Fähre/Brücke oder Bahn+Bus
-    ground_hours: 3.5
     overnight_needed: false
 
 cabins:

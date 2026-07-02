@@ -6,6 +6,7 @@ from __future__ import annotations
 import itertools
 import json
 import time
+import urllib.parse
 from datetime import date, datetime, timezone
 from pathlib import Path
 
@@ -27,10 +28,148 @@ HISTORY_FILE = DATA_DIR / "history.json"
 LATEST_FILE = DATA_DIR / "latest.json"
 CONFIG_FILE = ROOT / "config.yaml"
 
+ALLOWED_ORIGINS = {"HAM", "CPH"}
+
+SEATGURU_AIRLINE = {
+    "SQ": "Singapore_Airlines",
+    "CX": "Cathay_Pacific",
+    "TG": "Thai_Airways",
+    "LH": "Lufthansa",
+    "AF": "Air_France",
+    "KL": "KLM",
+    "TK": "Turkish_Airlines",
+    "QR": "Qatar_Airways",
+    "EK": "Emirates",
+    "EY": "Etihad_Airways",
+    "AY": "Finnair",
+    "SK": "SAS",
+    "BA": "British_Airways",
+    "LX": "Swiss",
+    "OS": "Austrian_Airlines",
+}
+
 
 def load_config() -> dict:
     with CONFIG_FILE.open(encoding="utf-8") as f:
         return yaml.safe_load(f)
+
+
+def _airline_code(leg) -> str:
+    airline = getattr(leg, "airline", None)
+    if airline is None:
+        return ""
+    name = getattr(airline, "name", "") or str(airline)
+    return name.removeprefix("_")[:2] if name else ""
+
+
+def _airport_code(airport) -> str:
+    if airport is None:
+        return ""
+    name = getattr(airport, "name", "") or str(airport)
+    return name.removeprefix("_")
+
+
+def format_duration(minutes: int | None) -> str | None:
+    if not minutes:
+        return None
+    hours, mins = divmod(int(minutes), 60)
+    if mins:
+        return f"{hours}h {mins}min"
+    return f"{hours}h"
+
+
+def build_google_flights_url(
+    origin: str,
+    destination: str,
+    travel_date: str,
+    currency: str,
+    language: str,
+    country: str,
+) -> str:
+    query = urllib.parse.quote(f"Flights to {destination} from {origin} on {travel_date}")
+    return (
+        f"https://www.google.com/travel/flights"
+        f"?q={query}&curr={currency}&hl={language}&gl={country}"
+    )
+
+
+def build_aircraft_review_url(airline_code: str, aircraft: str | None) -> str:
+    """SeatGuru: Sitzpläne, Kabinenlayout und Flugzeug-Bewertungen."""
+    slug = SEATGURU_AIRLINE.get(airline_code)
+    if slug and aircraft:
+        ac = (
+            aircraft.replace(" Passenger", "")
+            .replace(" ", "_")
+            .replace("/", "-")
+        )
+        return f"https://www.seatguru.com/airlines/{slug}/{slug}_{ac}.php"
+    if slug:
+        return f"https://www.seatguru.com/airlines/{slug}/"
+    return "https://www.seatguru.com/"
+
+
+def _serialize_flight_details(
+    flight,
+    currency: str,
+    language: str,
+    country: str,
+) -> dict:
+    segments: list[dict] = []
+    aircraft_all: list[str] = []
+    primary_airline = ""
+
+    for leg in getattr(flight, "legs", []) or []:
+        dep_dt = getattr(leg, "departure_datetime", None)
+        arr_dt = getattr(leg, "arrival_datetime", None)
+        airline = _airline_code(leg)
+        if airline and not primary_airline:
+            primary_airline = airline
+        aircraft = getattr(leg, "aircraft", None)
+        if aircraft:
+            aircraft_all.append(aircraft)
+        segments.append(
+            {
+                "airline": airline,
+                "flight_number": getattr(leg, "flight_number", None),
+                "from": _airport_code(getattr(leg, "departure_airport", None)),
+                "to": _airport_code(getattr(leg, "arrival_airport", None)),
+                "departure_time": dep_dt.strftime("%H:%M") if dep_dt else None,
+                "arrival_time": arr_dt.strftime("%H:%M") if arr_dt else None,
+                "departure_datetime": dep_dt.isoformat() if dep_dt else None,
+                "arrival_datetime": arr_dt.isoformat() if arr_dt else None,
+                "duration_minutes": getattr(leg, "duration", None),
+                "duration": format_duration(getattr(leg, "duration", None)),
+                "aircraft": aircraft,
+            }
+        )
+
+    primary_aircraft = aircraft_all[0] if aircraft_all else None
+    origin = segments[0]["from"] if segments else ""
+    destination = segments[-1]["to"] if segments else ""
+    travel_date = (
+        segments[0]["departure_datetime"][:10]
+        if segments and segments[0].get("departure_datetime")
+        else None
+    )
+
+    return {
+        "departure_time": segments[0]["departure_time"] if segments else None,
+        "arrival_time": segments[-1]["arrival_time"] if segments else None,
+        "duration_minutes": getattr(flight, "duration", None),
+        "duration": format_duration(getattr(flight, "duration", None)),
+        "stops": getattr(flight, "stops", 0),
+        "aircraft": primary_aircraft,
+        "aircraft_all": list(dict.fromkeys(aircraft_all)),
+        "segments": segments,
+        "booking_url": (
+            build_google_flights_url(
+                origin, destination, travel_date, currency, language, country
+            )
+            if origin and destination and travel_date
+            else None
+        ),
+        "aircraft_review_url": build_aircraft_review_url(primary_airline, primary_aircraft),
+    }
 
 
 def _airlines_from_result(item) -> set[str]:
@@ -93,6 +232,7 @@ def search_one_way(
 
     best_price = float("inf")
     best_airlines: set[str] = set()
+    best_flight = None
 
     for item in data[:10]:
         price = _price_from_result(item)
@@ -104,9 +244,14 @@ def search_one_way(
         if price < best_price:
             best_price = price
             best_airlines = airlines_found
+            best_flight = item if not isinstance(item, tuple) else item[0]
 
-    if best_price == float("inf"):
+    if best_price == float("inf") or best_flight is None:
         return None
+
+    details = _serialize_flight_details(
+        best_flight, currency, language, country
+    )
 
     return {
         "type": "leg",
@@ -119,6 +264,7 @@ def search_one_way(
         "airlines": sorted(best_airlines),
         "price_eur_total": round(best_price, 2),
         "price_eur_per_person": round(best_price / adults, 2),
+        **details,
     }
 
 
@@ -216,7 +362,7 @@ def build_combinations(
         ground = origin_map.get(out_origin, {})
         ground_pp = float(ground.get("ground_from_home_eur", 0))
         ground_total = round(ground_pp * adults, 2)
-        flight_total = out_leg["price_eur_total"] + in_leg["price_eur_total"]
+        flight_total = out_leg["price_eur_per_person"] + in_leg["price_eur_per_person"]
         grand_total = round(flight_total + ground_total, 2)
 
         combos.append(
@@ -229,14 +375,24 @@ def build_combinations(
                 "cabin": out_leg["cabin"],
                 "outbound_airlines": out_leg["airlines"],
                 "inbound_airlines": in_leg["airlines"],
-                "outbound_price_eur": out_leg["price_eur_total"],
-                "inbound_price_eur": in_leg["price_eur_total"],
+                "outbound_price_eur": out_leg["price_eur_per_person"],
+                "inbound_price_eur": in_leg["price_eur_per_person"],
+                "outbound_departure_time": out_leg.get("departure_time"),
+                "outbound_duration": out_leg.get("duration"),
+                "outbound_aircraft": out_leg.get("aircraft"),
+                "outbound_aircraft_review_url": out_leg.get("aircraft_review_url"),
+                "outbound_booking_url": out_leg.get("booking_url"),
+                "inbound_departure_time": in_leg.get("departure_time"),
+                "inbound_duration": in_leg.get("duration"),
+                "inbound_aircraft": in_leg.get("aircraft"),
+                "inbound_aircraft_review_url": in_leg.get("aircraft_review_url"),
+                "inbound_booking_url": in_leg.get("booking_url"),
                 "ground_mode": ground.get("ground_mode", "Auto/Bahn"),
                 "ground_hours": ground.get("ground_hours"),
                 "ground_cost_eur": ground_total,
                 "overnight_needed": ground.get("overnight_needed", False),
                 "price_eur_total": grand_total,
-                "price_eur_per_person": round(grand_total / adults, 2),
+                "price_eur_per_person": grand_total,
                 "route": (
                     f"Zuhause → {out_origin} → BKK  |  "
                     f"HKT → {in_dest} → Zuhause"
@@ -265,10 +421,16 @@ def main() -> int:
     currency = cfg.get("currency", "EUR")
     language = cfg.get("language", "de")
     country = cfg.get("country", "DE")
-    origins_cfg = cfg.get("flight_origins") or [
-        {"code": c, "label": c, "ground_from_home_eur": 0}
-        for c in cfg.get("origins", [])
+    origins_cfg = [
+        o for o in (cfg.get("flight_origins") or [])
+        if o.get("code") in ALLOWED_ORIGINS
     ]
+    if not origins_cfg:
+        origins_cfg = [
+            {"code": c, "label": c, "ground_from_home_eur": 0}
+            for c in cfg.get("origins", [])
+            if c in ALLOWED_ORIGINS
+        ]
     origin_codes = [o["code"] for o in origins_cfg]
     date_pairs = cfg["date_pairs"]
     cabins = cfg["cabins"]
@@ -382,7 +544,14 @@ def main() -> int:
         json.dump(snapshot, f, indent=2, ensure_ascii=False)
 
     for row in combinations[:20]:
-        append_history({"date": today, "fetched_at_utc": fetched_at, **row})
+        append_history(
+            {
+                "date": today,
+                "fetched_at_utc": fetched_at,
+                **row,
+                "price_eur_total": row["price_eur_per_person"],
+            }
+        )
 
     print(f"\n{len(legs)} Einzelflüge, {len(combinations)} Kombinationen → {LATEST_FILE}")
 
