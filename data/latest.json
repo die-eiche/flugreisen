@@ -1,9 +1,9 @@
 {
   "fetched_at": "2026-07-02",
-  "fetched_at_utc": "2026-07-02T07:00:35.773447+00:00",
+  "fetched_at_utc": "2026-07-02T13:25:39.134596+00:00",
   "home_location": "Ahrensbök / Lübeck (23623)",
   "route_description": "Getrennte Flüge: Europa → Bangkok (BKK), Phuket (HKT) → Europa (inkl. Bodenkosten ab Zuhause)",
-  "passengers": 2,
+  "passengers": 1,
   "preferred_airlines": [
     "SQ",
     "CX",
@@ -13,6 +13,58 @@
   "legs": [
     {
       "type": "leg",
+      "direction": "outbound",
+      "from": "HAM",
+      "to": "BKK",
+      "date": "2027-02-04",
+      "cabin": "PREMIUM_ECONOMY",
+      "airline_filter": null,
+      "airlines": [],
+      "price_eur_total": 1045.0,
+      "price_eur_per_person": 1045.0,
+      "departure_time": "06:00",
+      "arrival_time": "09:30",
+      "duration_minutes": 1290,
+      "duration": "21h 30min",
+      "stops": 1,
+      "aircraft": "Airbus A220-300 Passenger",
+      "aircraft_all": [
+        "Airbus A220-300 Passenger",
+        "Airbus A350"
+      ],
+      "segments": [
+        {
+          "airline": "AF",
+          "flight_number": "1611",
+          "from": "HAM",
+          "to": "CDG",
+          "departure_time": "06:00",
+          "arrival_time": "07:40",
+          "departure_datetime": "2027-02-04T06:00:00",
+          "arrival_datetime": "2027-02-04T07:40:00",
+          "duration_minutes": 100,
+          "duration": "1h 40min",
+          "aircraft": "Airbus A220-300 Passenger"
+        },
+        {
+          "airline": "AF",
+          "flight_number": "198",
+          "from": "CDG",
+          "to": "BKK",
+          "departure_time": "16:10",
+          "arrival_time": "09:30",
+          "departure_datetime": "2027-02-04T16:10:00",
+          "arrival_datetime": "2027-02-05T09:30:00",
+          "duration_minutes": 680,
+          "duration": "11h 20min",
+          "aircraft": "Airbus A350"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-04&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Air_France/Air_France_Airbus_A220-300.php"
+    },
+    {
+      "type": "leg",
       "direction": "inbound",
       "from": "HKT",
       "to": "HAM",
@@ -20,8 +72,48 @@
       "cabin": "PREMIUM_ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 2052.0,
-      "price_eur_per_person": 1026.0
+      "price_eur_total": 1024.0,
+      "price_eur_per_person": 1024.0,
+      "departure_time": "09:20",
+      "arrival_time": "19:05",
+      "duration_minutes": 945,
+      "duration": "15h 45min",
+      "stops": 1,
+      "aircraft": "Airbus A350",
+      "aircraft_all": [
+        "Airbus A350",
+        "Boeing 777"
+      ],
+      "segments": [
+        {
+          "airline": "EK",
+          "flight_number": "391",
+          "from": "HKT",
+          "to": "DXB",
+          "departure_time": "09:20",
+          "arrival_time": "12:55",
+          "departure_datetime": "2027-03-04T09:20:00",
+          "arrival_datetime": "2027-03-04T12:55:00",
+          "duration_minutes": 395,
+          "duration": "6h 35min",
+          "aircraft": "Airbus A350"
+        },
+        {
+          "airline": "EK",
+          "flight_number": "61",
+          "from": "DXB",
+          "to": "HAM",
+          "departure_time": "15:00",
+          "arrival_time": "19:05",
+          "departure_datetime": "2027-03-04T15:00:00",
+          "arrival_datetime": "2027-03-04T19:05:00",
+          "duration_minutes": 425,
+          "duration": "7h 5min",
+          "aircraft": "Boeing 777"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-04&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Airbus_A350.php"
     },
     {
       "type": "leg",
@@ -32,8 +124,62 @@
       "cabin": "ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 1088.0,
-      "price_eur_per_person": 544.0
+      "price_eur_total": 544.0,
+      "price_eur_per_person": 544.0,
+      "departure_time": "06:15",
+      "arrival_time": "09:45",
+      "duration_minutes": 1290,
+      "duration": "21h 30min",
+      "stops": 2,
+      "aircraft": "Airbus A321",
+      "aircraft_all": [
+        "Airbus A321",
+        "Airbus A321neo",
+        "Boeing 787"
+      ],
+      "segments": [
+        {
+          "airline": "LH",
+          "flight_number": "2085",
+          "from": "HAM",
+          "to": "MUC",
+          "departure_time": "06:15",
+          "arrival_time": "07:30",
+          "departure_datetime": "2027-02-04T06:15:00",
+          "arrival_datetime": "2027-02-04T07:30:00",
+          "duration_minutes": 75,
+          "duration": "1h 15min",
+          "aircraft": "Airbus A321"
+        },
+        {
+          "airline": "GF",
+          "flight_number": "86",
+          "from": "MUC",
+          "to": "BAH",
+          "departure_time": "12:10",
+          "arrival_time": "19:00",
+          "departure_datetime": "2027-02-04T12:10:00",
+          "arrival_datetime": "2027-02-04T19:00:00",
+          "duration_minutes": 290,
+          "duration": "4h 50min",
+          "aircraft": "Airbus A321neo"
+        },
+        {
+          "airline": "GF",
+          "flight_number": "152",
+          "from": "BAH",
+          "to": "BKK",
+          "departure_time": "22:35",
+          "arrival_time": "09:45",
+          "departure_datetime": "2027-02-04T22:35:00",
+          "arrival_datetime": "2027-02-05T09:45:00",
+          "duration_minutes": 430,
+          "duration": "7h 10min",
+          "aircraft": "Boeing 787"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-04&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Lufthansa/Lufthansa_Airbus_A321.php"
     },
     {
       "type": "leg",
@@ -44,8 +190,62 @@
       "cabin": "ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 1209.0,
-      "price_eur_per_person": 604.5
+      "price_eur_total": 603.0,
+      "price_eur_per_person": 603.0,
+      "departure_time": "10:30",
+      "arrival_time": "09:35",
+      "duration_minutes": 1745,
+      "duration": "29h 5min",
+      "stops": 2,
+      "aircraft": "Boeing 737MAX 8 Passenger",
+      "aircraft_all": [
+        "Boeing 737MAX 8 Passenger",
+        "Airbus A350",
+        "Airbus A321 (Sharklets)"
+      ],
+      "segments": [
+        {
+          "airline": "MH",
+          "flight_number": "787",
+          "from": "HKT",
+          "to": "KUL",
+          "departure_time": "10:30",
+          "arrival_time": "13:00",
+          "departure_datetime": "2027-03-04T10:30:00",
+          "arrival_datetime": "2027-03-04T13:00:00",
+          "duration_minutes": 90,
+          "duration": "1h 30min",
+          "aircraft": "Boeing 737MAX 8 Passenger"
+        },
+        {
+          "airline": "TK",
+          "flight_number": "61",
+          "from": "KUL",
+          "to": "IST",
+          "departure_time": "23:45",
+          "arrival_time": "06:10",
+          "departure_datetime": "2027-03-04T23:45:00",
+          "arrival_datetime": "2027-03-05T06:10:00",
+          "duration_minutes": 685,
+          "duration": "11h 25min",
+          "aircraft": "Airbus A350"
+        },
+        {
+          "airline": "TK",
+          "flight_number": "1661",
+          "from": "IST",
+          "to": "HAM",
+          "departure_time": "08:20",
+          "arrival_time": "09:35",
+          "departure_datetime": "2027-03-05T08:20:00",
+          "arrival_datetime": "2027-03-05T09:35:00",
+          "duration_minutes": 195,
+          "duration": "3h 15min",
+          "aircraft": "Airbus A321 (Sharklets)"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-04&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/"
     },
     {
       "type": "leg",
@@ -56,8 +256,48 @@
       "cabin": "PREMIUM_ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 1367.0,
-      "price_eur_per_person": 683.5
+      "price_eur_total": 684.0,
+      "price_eur_per_person": 684.0,
+      "departure_time": "20:05",
+      "arrival_time": "15:30",
+      "duration_minutes": 805,
+      "duration": "13h 25min",
+      "stops": 1,
+      "aircraft": "Airbus A321",
+      "aircraft_all": [
+        "Airbus A321",
+        "Boeing 777"
+      ],
+      "segments": [
+        {
+          "airline": "OS",
+          "flight_number": "998",
+          "from": "CPH",
+          "to": "VIE",
+          "departure_time": "20:05",
+          "arrival_time": "21:50",
+          "departure_datetime": "2027-02-04T20:05:00",
+          "arrival_datetime": "2027-02-04T21:50:00",
+          "duration_minutes": 105,
+          "duration": "1h 45min",
+          "aircraft": "Airbus A321"
+        },
+        {
+          "airline": "OS",
+          "flight_number": "7",
+          "from": "VIE",
+          "to": "BKK",
+          "departure_time": "23:25",
+          "arrival_time": "15:30",
+          "departure_datetime": "2027-02-04T23:25:00",
+          "arrival_datetime": "2027-02-05T15:30:00",
+          "duration_minutes": 605,
+          "duration": "10h 5min",
+          "aircraft": "Boeing 777"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-04&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Austrian_Airlines/Austrian_Airlines_Airbus_A321.php"
     },
     {
       "type": "leg",
@@ -68,56 +308,151 @@
       "cabin": "PREMIUM_ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 1890.0,
-      "price_eur_per_person": 945.0
-    },
-    {
-      "type": "leg",
-      "direction": "inbound",
-      "from": "HKT",
-      "to": "CPH",
-      "date": "2027-03-04",
-      "cabin": "ECONOMY",
-      "airline_filter": null,
-      "airlines": [],
-      "price_eur_total": 1006.0,
-      "price_eur_per_person": 503.0
+      "price_eur_total": 943.0,
+      "price_eur_per_person": 943.0,
+      "departure_time": "09:20",
+      "arrival_time": "18:50",
+      "duration_minutes": 930,
+      "duration": "15h 30min",
+      "stops": 1,
+      "aircraft": "Airbus A350",
+      "aircraft_all": [
+        "Airbus A350"
+      ],
+      "segments": [
+        {
+          "airline": "EK",
+          "flight_number": "391",
+          "from": "HKT",
+          "to": "DXB",
+          "departure_time": "09:20",
+          "arrival_time": "12:55",
+          "departure_datetime": "2027-03-04T09:20:00",
+          "arrival_datetime": "2027-03-04T12:55:00",
+          "duration_minutes": 395,
+          "duration": "6h 35min",
+          "aircraft": "Airbus A350"
+        },
+        {
+          "airline": "EK",
+          "flight_number": "153",
+          "from": "DXB",
+          "to": "CPH",
+          "departure_time": "14:50",
+          "arrival_time": "18:50",
+          "departure_datetime": "2027-03-04T14:50:00",
+          "arrival_datetime": "2027-03-04T18:50:00",
+          "duration_minutes": 420,
+          "duration": "7h",
+          "aircraft": "Airbus A350"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-04&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Airbus_A350.php"
     },
     {
       "type": "leg",
       "direction": "outbound",
-      "from": "BLL",
+      "from": "CPH",
       "to": "BKK",
       "date": "2027-02-04",
-      "cabin": "PREMIUM_ECONOMY",
+      "cabin": "ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 2502.0,
-      "price_eur_per_person": 1251.0
+      "price_eur_total": 421.0,
+      "price_eur_per_person": 421.0,
+      "departure_time": "19:55",
+      "arrival_time": "10:45",
+      "duration_minutes": 1970,
+      "duration": "32h 50min",
+      "stops": 1,
+      "aircraft": "Airbus A320neo",
+      "aircraft_all": [
+        "Airbus A320neo",
+        "Boeing 777"
+      ],
+      "segments": [
+        {
+          "airline": "LX",
+          "flight_number": "1273",
+          "from": "CPH",
+          "to": "ZRH",
+          "departure_time": "19:55",
+          "arrival_time": "21:45",
+          "departure_datetime": "2027-02-04T19:55:00",
+          "arrival_datetime": "2027-02-04T21:45:00",
+          "duration_minutes": 110,
+          "duration": "1h 50min",
+          "aircraft": "Airbus A320neo"
+        },
+        {
+          "airline": "LX",
+          "flight_number": "180",
+          "from": "ZRH",
+          "to": "BKK",
+          "departure_time": "18:00",
+          "arrival_time": "10:45",
+          "departure_datetime": "2027-02-05T18:00:00",
+          "arrival_datetime": "2027-02-06T10:45:00",
+          "duration_minutes": 645,
+          "duration": "10h 45min",
+          "aircraft": "Boeing 777"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-04&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Swiss/Swiss_Airbus_A320neo.php"
     },
     {
       "type": "leg",
       "direction": "inbound",
       "from": "HKT",
-      "to": "BLL",
-      "date": "2027-03-04",
-      "cabin": "PREMIUM_ECONOMY",
-      "airline_filter": null,
-      "airlines": [],
-      "price_eur_total": 2357.0,
-      "price_eur_per_person": 1178.5
-    },
-    {
-      "type": "leg",
-      "direction": "inbound",
-      "from": "HKT",
-      "to": "BLL",
+      "to": "CPH",
       "date": "2027-03-04",
       "cabin": "ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 1265.0,
-      "price_eur_per_person": 632.5
+      "price_eur_total": 462.0,
+      "price_eur_per_person": 462.0,
+      "departure_time": "23:50",
+      "arrival_time": "12:30",
+      "duration_minutes": 1120,
+      "duration": "18h 40min",
+      "stops": 1,
+      "aircraft": "Boeing 777",
+      "aircraft_all": [
+        "Boeing 777",
+        "Airbus A380"
+      ],
+      "segments": [
+        {
+          "airline": "EK",
+          "flight_number": "397",
+          "from": "HKT",
+          "to": "DXB",
+          "departure_time": "23:50",
+          "arrival_time": "03:25",
+          "departure_datetime": "2027-03-04T23:50:00",
+          "arrival_datetime": "2027-03-05T03:25:00",
+          "duration_minutes": 395,
+          "duration": "6h 35min",
+          "aircraft": "Boeing 777"
+        },
+        {
+          "airline": "EK",
+          "flight_number": "151",
+          "from": "DXB",
+          "to": "CPH",
+          "departure_time": "08:30",
+          "arrival_time": "12:30",
+          "departure_datetime": "2027-03-05T08:30:00",
+          "arrival_datetime": "2027-03-05T12:30:00",
+          "duration_minutes": 420,
+          "duration": "7h",
+          "aircraft": "Airbus A380"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-04&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Boeing_777.php"
     },
     {
       "type": "leg",
@@ -128,8 +463,48 @@
       "cabin": "PREMIUM_ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 2090.0,
-      "price_eur_per_person": 1045.0
+      "price_eur_total": 1045.0,
+      "price_eur_per_person": 1045.0,
+      "departure_time": "14:45",
+      "arrival_time": "10:05",
+      "duration_minutes": 800,
+      "duration": "13h 20min",
+      "stops": 1,
+      "aircraft": "Embraer 175",
+      "aircraft_all": [
+        "Embraer 175",
+        "Boeing 777"
+      ],
+      "segments": [
+        {
+          "airline": "KL",
+          "flight_number": "1756",
+          "from": "HAM",
+          "to": "AMS",
+          "departure_time": "14:45",
+          "arrival_time": "15:50",
+          "departure_datetime": "2027-02-03T14:45:00",
+          "arrival_datetime": "2027-02-03T15:50:00",
+          "duration_minutes": 65,
+          "duration": "1h 5min",
+          "aircraft": "Embraer 175"
+        },
+        {
+          "airline": "KL",
+          "flight_number": "843",
+          "from": "AMS",
+          "to": "BKK",
+          "departure_time": "16:55",
+          "arrival_time": "10:05",
+          "departure_datetime": "2027-02-03T16:55:00",
+          "arrival_datetime": "2027-02-04T10:05:00",
+          "duration_minutes": 670,
+          "duration": "11h 10min",
+          "aircraft": "Boeing 777"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-03&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/KLM/KLM_Embraer_175.php"
     },
     {
       "type": "leg",
@@ -140,8 +515,48 @@
       "cabin": "PREMIUM_ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 2052.0,
-      "price_eur_per_person": 1026.0
+      "price_eur_total": 1024.0,
+      "price_eur_per_person": 1024.0,
+      "departure_time": "09:20",
+      "arrival_time": "19:05",
+      "duration_minutes": 945,
+      "duration": "15h 45min",
+      "stops": 1,
+      "aircraft": "Airbus A350",
+      "aircraft_all": [
+        "Airbus A350",
+        "Boeing 777"
+      ],
+      "segments": [
+        {
+          "airline": "EK",
+          "flight_number": "391",
+          "from": "HKT",
+          "to": "DXB",
+          "departure_time": "09:20",
+          "arrival_time": "12:55",
+          "departure_datetime": "2027-03-03T09:20:00",
+          "arrival_datetime": "2027-03-03T12:55:00",
+          "duration_minutes": 395,
+          "duration": "6h 35min",
+          "aircraft": "Airbus A350"
+        },
+        {
+          "airline": "EK",
+          "flight_number": "61",
+          "from": "DXB",
+          "to": "HAM",
+          "departure_time": "15:00",
+          "arrival_time": "19:05",
+          "departure_datetime": "2027-03-03T15:00:00",
+          "arrival_datetime": "2027-03-03T19:05:00",
+          "duration_minutes": 425,
+          "duration": "7h 5min",
+          "aircraft": "Boeing 777"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-03&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Airbus_A350.php"
     },
     {
       "type": "leg",
@@ -152,8 +567,48 @@
       "cabin": "ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 905.0,
-      "price_eur_per_person": 452.5
+      "price_eur_total": 453.0,
+      "price_eur_per_person": 453.0,
+      "departure_time": "14:50",
+      "arrival_time": "15:25",
+      "duration_minutes": 1115,
+      "duration": "18h 35min",
+      "stops": 1,
+      "aircraft": "Airbus A320neo",
+      "aircraft_all": [
+        "Airbus A320neo",
+        "Boeing 787"
+      ],
+      "segments": [
+        {
+          "airline": "RJ",
+          "flight_number": "148",
+          "from": "HAM",
+          "to": "AMM",
+          "departure_time": "14:50",
+          "arrival_time": "21:30",
+          "departure_datetime": "2027-02-03T14:50:00",
+          "arrival_datetime": "2027-02-03T21:30:00",
+          "duration_minutes": 280,
+          "duration": "4h 40min",
+          "aircraft": "Airbus A320neo"
+        },
+        {
+          "airline": "RJ",
+          "flight_number": "182",
+          "from": "AMM",
+          "to": "BKK",
+          "departure_time": "03:05",
+          "arrival_time": "15:25",
+          "departure_datetime": "2027-02-04T03:05:00",
+          "arrival_datetime": "2027-02-04T15:25:00",
+          "duration_minutes": 500,
+          "duration": "8h 20min",
+          "aircraft": "Boeing 787"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-03&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/"
     },
     {
       "type": "leg",
@@ -164,8 +619,62 @@
       "cabin": "ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 1209.0,
-      "price_eur_per_person": 604.5
+      "price_eur_total": 603.0,
+      "price_eur_per_person": 603.0,
+      "departure_time": "10:30",
+      "arrival_time": "09:35",
+      "duration_minutes": 1745,
+      "duration": "29h 5min",
+      "stops": 2,
+      "aircraft": "Boeing 737",
+      "aircraft_all": [
+        "Boeing 737",
+        "Airbus A350",
+        "Airbus A321 (Sharklets)"
+      ],
+      "segments": [
+        {
+          "airline": "MH",
+          "flight_number": "787",
+          "from": "HKT",
+          "to": "KUL",
+          "departure_time": "10:30",
+          "arrival_time": "13:00",
+          "departure_datetime": "2027-03-03T10:30:00",
+          "arrival_datetime": "2027-03-03T13:00:00",
+          "duration_minutes": 90,
+          "duration": "1h 30min",
+          "aircraft": "Boeing 737"
+        },
+        {
+          "airline": "TK",
+          "flight_number": "61",
+          "from": "KUL",
+          "to": "IST",
+          "departure_time": "23:45",
+          "arrival_time": "06:10",
+          "departure_datetime": "2027-03-03T23:45:00",
+          "arrival_datetime": "2027-03-04T06:10:00",
+          "duration_minutes": 685,
+          "duration": "11h 25min",
+          "aircraft": "Airbus A350"
+        },
+        {
+          "airline": "TK",
+          "flight_number": "1661",
+          "from": "IST",
+          "to": "HAM",
+          "departure_time": "08:20",
+          "arrival_time": "09:35",
+          "departure_datetime": "2027-03-04T08:20:00",
+          "arrival_datetime": "2027-03-04T09:35:00",
+          "duration_minutes": 195,
+          "duration": "3h 15min",
+          "aircraft": "Airbus A321 (Sharklets)"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-03&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/"
     },
     {
       "type": "leg",
@@ -176,8 +685,48 @@
       "cabin": "PREMIUM_ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 1367.0,
-      "price_eur_per_person": 683.5
+      "price_eur_total": 684.0,
+      "price_eur_per_person": 684.0,
+      "departure_time": "17:35",
+      "arrival_time": "12:20",
+      "duration_minutes": 765,
+      "duration": "12h 45min",
+      "stops": 1,
+      "aircraft": "Airbus A320",
+      "aircraft_all": [
+        "Airbus A320",
+        "Boeing 777"
+      ],
+      "segments": [
+        {
+          "airline": "OS",
+          "flight_number": "996",
+          "from": "CPH",
+          "to": "VIE",
+          "departure_time": "17:35",
+          "arrival_time": "19:20",
+          "departure_datetime": "2027-02-03T17:35:00",
+          "arrival_datetime": "2027-02-03T19:20:00",
+          "duration_minutes": 105,
+          "duration": "1h 45min",
+          "aircraft": "Airbus A320"
+        },
+        {
+          "airline": "OS",
+          "flight_number": "5",
+          "from": "VIE",
+          "to": "BKK",
+          "departure_time": "20:15",
+          "arrival_time": "12:20",
+          "departure_datetime": "2027-02-03T20:15:00",
+          "arrival_datetime": "2027-02-04T12:20:00",
+          "duration_minutes": 605,
+          "duration": "10h 5min",
+          "aircraft": "Boeing 777"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-03&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Austrian_Airlines/Austrian_Airlines_Airbus_A320.php"
     },
     {
       "type": "leg",
@@ -188,8 +737,47 @@
       "cabin": "PREMIUM_ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 1890.0,
-      "price_eur_per_person": 945.0
+      "price_eur_total": 943.0,
+      "price_eur_per_person": 943.0,
+      "departure_time": "09:20",
+      "arrival_time": "18:50",
+      "duration_minutes": 930,
+      "duration": "15h 30min",
+      "stops": 1,
+      "aircraft": "Airbus A350",
+      "aircraft_all": [
+        "Airbus A350"
+      ],
+      "segments": [
+        {
+          "airline": "EK",
+          "flight_number": "391",
+          "from": "HKT",
+          "to": "DXB",
+          "departure_time": "09:20",
+          "arrival_time": "12:55",
+          "departure_datetime": "2027-03-03T09:20:00",
+          "arrival_datetime": "2027-03-03T12:55:00",
+          "duration_minutes": 395,
+          "duration": "6h 35min",
+          "aircraft": "Airbus A350"
+        },
+        {
+          "airline": "EK",
+          "flight_number": "153",
+          "from": "DXB",
+          "to": "CPH",
+          "departure_time": "14:50",
+          "arrival_time": "18:50",
+          "departure_datetime": "2027-03-03T14:50:00",
+          "arrival_datetime": "2027-03-03T18:50:00",
+          "duration_minutes": 420,
+          "duration": "7h",
+          "aircraft": "Airbus A350"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-03&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Airbus_A350.php"
     },
     {
       "type": "leg",
@@ -200,44 +788,100 @@
       "cabin": "ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 810.0,
-      "price_eur_per_person": 405.0
-    },
-    {
-      "type": "leg",
-      "direction": "outbound",
-      "from": "BLL",
-      "to": "BKK",
-      "date": "2027-02-03",
-      "cabin": "PREMIUM_ECONOMY",
-      "airline_filter": null,
-      "airlines": [],
-      "price_eur_total": 2922.0,
-      "price_eur_per_person": 1461.0
+      "price_eur_total": 365.0,
+      "price_eur_per_person": 365.0,
+      "departure_time": "15:00",
+      "arrival_time": "10:45",
+      "duration_minutes": 825,
+      "duration": "13h 45min",
+      "stops": 1,
+      "aircraft": "Airbus A220-300 Passenger",
+      "aircraft_all": [
+        "Airbus A220-300 Passenger",
+        "Boeing 777"
+      ],
+      "segments": [
+        {
+          "airline": "LX",
+          "flight_number": "1271",
+          "from": "CPH",
+          "to": "ZRH",
+          "departure_time": "15:00",
+          "arrival_time": "16:45",
+          "departure_datetime": "2027-02-03T15:00:00",
+          "arrival_datetime": "2027-02-03T16:45:00",
+          "duration_minutes": 105,
+          "duration": "1h 45min",
+          "aircraft": "Airbus A220-300 Passenger"
+        },
+        {
+          "airline": "LX",
+          "flight_number": "180",
+          "from": "ZRH",
+          "to": "BKK",
+          "departure_time": "18:00",
+          "arrival_time": "10:45",
+          "departure_datetime": "2027-02-03T18:00:00",
+          "arrival_datetime": "2027-02-04T10:45:00",
+          "duration_minutes": 645,
+          "duration": "10h 45min",
+          "aircraft": "Boeing 777"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-03&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Swiss/Swiss_Airbus_A220-300.php"
     },
     {
       "type": "leg",
       "direction": "inbound",
       "from": "HKT",
-      "to": "BLL",
-      "date": "2027-03-03",
-      "cabin": "PREMIUM_ECONOMY",
-      "airline_filter": null,
-      "airlines": [],
-      "price_eur_total": 2357.0,
-      "price_eur_per_person": 1178.5
-    },
-    {
-      "type": "leg",
-      "direction": "inbound",
-      "from": "HKT",
-      "to": "BLL",
+      "to": "CPH",
       "date": "2027-03-03",
       "cabin": "ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 1351.0,
-      "price_eur_per_person": 675.5
+      "price_eur_total": 462.0,
+      "price_eur_per_person": 462.0,
+      "departure_time": "23:50",
+      "arrival_time": "12:30",
+      "duration_minutes": 1120,
+      "duration": "18h 40min",
+      "stops": 1,
+      "aircraft": "Boeing 777",
+      "aircraft_all": [
+        "Boeing 777",
+        "Airbus A380"
+      ],
+      "segments": [
+        {
+          "airline": "EK",
+          "flight_number": "397",
+          "from": "HKT",
+          "to": "DXB",
+          "departure_time": "23:50",
+          "arrival_time": "03:25",
+          "departure_datetime": "2027-03-03T23:50:00",
+          "arrival_datetime": "2027-03-04T03:25:00",
+          "duration_minutes": 395,
+          "duration": "6h 35min",
+          "aircraft": "Boeing 777"
+        },
+        {
+          "airline": "EK",
+          "flight_number": "151",
+          "from": "DXB",
+          "to": "CPH",
+          "departure_time": "08:30",
+          "arrival_time": "12:30",
+          "departure_datetime": "2027-03-04T08:30:00",
+          "arrival_datetime": "2027-03-04T12:30:00",
+          "duration_minutes": 420,
+          "duration": "7h",
+          "aircraft": "Airbus A380"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-03&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Boeing_777.php"
     },
     {
       "type": "leg",
@@ -248,8 +892,152 @@
       "cabin": "PREMIUM_ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 2260.0,
-      "price_eur_per_person": 1130.0
+      "price_eur_total": 1130.0,
+      "price_eur_per_person": 1130.0,
+      "departure_time": "16:50",
+      "arrival_time": "14:15",
+      "duration_minutes": 925,
+      "duration": "15h 25min",
+      "stops": 1,
+      "aircraft": "Airbus A320",
+      "aircraft_all": [
+        "Airbus A320",
+        "Airbus A330-900neo"
+      ],
+      "segments": [
+        {
+          "airline": "DE",
+          "flight_number": "4035",
+          "from": "HAM",
+          "to": "FRA",
+          "departure_time": "16:50",
+          "arrival_time": "18:00",
+          "departure_datetime": "2027-02-06T16:50:00",
+          "arrival_datetime": "2027-02-06T18:00:00",
+          "duration_minutes": 70,
+          "duration": "1h 10min",
+          "aircraft": "Airbus A320"
+        },
+        {
+          "airline": "DE",
+          "flight_number": "2574",
+          "from": "FRA",
+          "to": "BKK",
+          "departure_time": "21:10",
+          "arrival_time": "14:15",
+          "departure_datetime": "2027-02-06T21:10:00",
+          "arrival_datetime": "2027-02-07T14:15:00",
+          "duration_minutes": 665,
+          "duration": "11h 5min",
+          "aircraft": "Airbus A330-900neo"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-06&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/"
+    },
+    {
+      "type": "leg",
+      "direction": "inbound",
+      "from": "HKT",
+      "to": "HAM",
+      "date": "2027-03-06",
+      "cabin": "PREMIUM_ECONOMY",
+      "airline_filter": null,
+      "airlines": [],
+      "price_eur_total": 1150.0,
+      "price_eur_per_person": 1150.0,
+      "departure_time": "10:30",
+      "arrival_time": "21:10",
+      "duration_minutes": 1000,
+      "duration": "16h 40min",
+      "stops": 1,
+      "aircraft": "Airbus A330-900neo",
+      "aircraft_all": [
+        "Airbus A330-900neo",
+        "Airbus A320"
+      ],
+      "segments": [
+        {
+          "airline": "DE",
+          "flight_number": "2369",
+          "from": "HKT",
+          "to": "FRA",
+          "departure_time": "10:30",
+          "arrival_time": "17:20",
+          "departure_datetime": "2027-03-06T10:30:00",
+          "arrival_datetime": "2027-03-06T17:20:00",
+          "duration_minutes": 770,
+          "duration": "12h 50min",
+          "aircraft": "Airbus A330-900neo"
+        },
+        {
+          "airline": "DE",
+          "flight_number": "4030",
+          "from": "FRA",
+          "to": "HAM",
+          "departure_time": "20:05",
+          "arrival_time": "21:10",
+          "departure_datetime": "2027-03-06T20:05:00",
+          "arrival_datetime": "2027-03-06T21:10:00",
+          "duration_minutes": 65,
+          "duration": "1h 5min",
+          "aircraft": "Airbus A320"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-06&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/"
+    },
+    {
+      "type": "leg",
+      "direction": "outbound",
+      "from": "HAM",
+      "to": "BKK",
+      "date": "2027-02-06",
+      "cabin": "ECONOMY",
+      "airline_filter": null,
+      "airlines": [],
+      "price_eur_total": 453.0,
+      "price_eur_per_person": 453.0,
+      "departure_time": "14:50",
+      "arrival_time": "15:25",
+      "duration_minutes": 1115,
+      "duration": "18h 35min",
+      "stops": 1,
+      "aircraft": "Airbus A320neo",
+      "aircraft_all": [
+        "Airbus A320neo",
+        "Boeing 787"
+      ],
+      "segments": [
+        {
+          "airline": "RJ",
+          "flight_number": "148",
+          "from": "HAM",
+          "to": "AMM",
+          "departure_time": "14:50",
+          "arrival_time": "21:30",
+          "departure_datetime": "2027-02-06T14:50:00",
+          "arrival_datetime": "2027-02-06T21:30:00",
+          "duration_minutes": 280,
+          "duration": "4h 40min",
+          "aircraft": "Airbus A320neo"
+        },
+        {
+          "airline": "RJ",
+          "flight_number": "182",
+          "from": "AMM",
+          "to": "BKK",
+          "departure_time": "03:05",
+          "arrival_time": "15:25",
+          "departure_datetime": "2027-02-07T03:05:00",
+          "arrival_datetime": "2027-02-07T15:25:00",
+          "duration_minutes": 500,
+          "duration": "8h 20min",
+          "aircraft": "Boeing 787"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-06&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/"
     },
     {
       "type": "leg",
@@ -260,8 +1048,100 @@
       "cabin": "ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 2143.0,
-      "price_eur_per_person": 1071.5
+      "price_eur_total": 1070.0,
+      "price_eur_per_person": 1070.0,
+      "departure_time": "10:30",
+      "arrival_time": "21:10",
+      "duration_minutes": 1000,
+      "duration": "16h 40min",
+      "stops": 1,
+      "aircraft": "Airbus A330-900neo",
+      "aircraft_all": [
+        "Airbus A330-900neo",
+        "Airbus A320"
+      ],
+      "segments": [
+        {
+          "airline": "DE",
+          "flight_number": "2369",
+          "from": "HKT",
+          "to": "FRA",
+          "departure_time": "10:30",
+          "arrival_time": "17:20",
+          "departure_datetime": "2027-03-06T10:30:00",
+          "arrival_datetime": "2027-03-06T17:20:00",
+          "duration_minutes": 770,
+          "duration": "12h 50min",
+          "aircraft": "Airbus A330-900neo"
+        },
+        {
+          "airline": "DE",
+          "flight_number": "4030",
+          "from": "FRA",
+          "to": "HAM",
+          "departure_time": "20:05",
+          "arrival_time": "21:10",
+          "departure_datetime": "2027-03-06T20:05:00",
+          "arrival_datetime": "2027-03-06T21:10:00",
+          "duration_minutes": 65,
+          "duration": "1h 5min",
+          "aircraft": "Airbus A320"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-06&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/"
+    },
+    {
+      "type": "leg",
+      "direction": "outbound",
+      "from": "CPH",
+      "to": "BKK",
+      "date": "2027-02-06",
+      "cabin": "PREMIUM_ECONOMY",
+      "airline_filter": null,
+      "airlines": [],
+      "price_eur_total": 686.0,
+      "price_eur_per_person": 686.0,
+      "departure_time": "18:20",
+      "arrival_time": "14:50",
+      "duration_minutes": 870,
+      "duration": "14h 30min",
+      "stops": 1,
+      "aircraft": "Airbus A319",
+      "aircraft_all": [
+        "Airbus A319",
+        "Airbus A380"
+      ],
+      "segments": [
+        {
+          "airline": "LH",
+          "flight_number": "2443",
+          "from": "CPH",
+          "to": "MUC",
+          "departure_time": "18:20",
+          "arrival_time": "19:55",
+          "departure_datetime": "2027-02-06T18:20:00",
+          "arrival_datetime": "2027-02-06T19:55:00",
+          "duration_minutes": 95,
+          "duration": "1h 35min",
+          "aircraft": "Airbus A319"
+        },
+        {
+          "airline": "LH",
+          "flight_number": "772",
+          "from": "MUC",
+          "to": "BKK",
+          "departure_time": "22:10",
+          "arrival_time": "14:50",
+          "departure_datetime": "2027-02-06T22:10:00",
+          "arrival_datetime": "2027-02-07T14:50:00",
+          "duration_minutes": 640,
+          "duration": "10h 40min",
+          "aircraft": "Airbus A380"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-06&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Lufthansa/Lufthansa_Airbus_A319.php"
     },
     {
       "type": "leg",
@@ -272,25 +1152,257 @@
       "cabin": "PREMIUM_ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 1890.0,
-      "price_eur_per_person": 945.0
+      "price_eur_total": 943.0,
+      "price_eur_per_person": 943.0,
+      "departure_time": "09:20",
+      "arrival_time": "18:50",
+      "duration_minutes": 930,
+      "duration": "15h 30min",
+      "stops": 1,
+      "aircraft": "Airbus A350",
+      "aircraft_all": [
+        "Airbus A350"
+      ],
+      "segments": [
+        {
+          "airline": "EK",
+          "flight_number": "391",
+          "from": "HKT",
+          "to": "DXB",
+          "departure_time": "09:20",
+          "arrival_time": "12:55",
+          "departure_datetime": "2027-03-06T09:20:00",
+          "arrival_datetime": "2027-03-06T12:55:00",
+          "duration_minutes": 395,
+          "duration": "6h 35min",
+          "aircraft": "Airbus A350"
+        },
+        {
+          "airline": "EK",
+          "flight_number": "153",
+          "from": "DXB",
+          "to": "CPH",
+          "departure_time": "14:50",
+          "arrival_time": "18:50",
+          "departure_datetime": "2027-03-06T14:50:00",
+          "arrival_datetime": "2027-03-06T18:50:00",
+          "duration_minutes": 420,
+          "duration": "7h",
+          "aircraft": "Airbus A350"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-06&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Airbus_A350.php"
+    },
+    {
+      "type": "leg",
+      "direction": "outbound",
+      "from": "CPH",
+      "to": "BKK",
+      "date": "2027-02-06",
+      "cabin": "ECONOMY",
+      "airline_filter": null,
+      "airlines": [],
+      "price_eur_total": 505.0,
+      "price_eur_per_person": 505.0,
+      "departure_time": "08:55",
+      "arrival_time": "09:00",
+      "duration_minutes": 1085,
+      "duration": "18h 5min",
+      "stops": 2,
+      "aircraft": "Airbus A320",
+      "aircraft_all": [
+        "Airbus A320",
+        "Airbus A380",
+        "Boeing 787"
+      ],
+      "segments": [
+        {
+          "airline": "LH",
+          "flight_number": "2439",
+          "from": "CPH",
+          "to": "MUC",
+          "departure_time": "08:55",
+          "arrival_time": "10:30",
+          "departure_datetime": "2027-02-06T08:55:00",
+          "arrival_datetime": "2027-02-06T10:30:00",
+          "duration_minutes": 95,
+          "duration": "1h 35min",
+          "aircraft": "Airbus A320"
+        },
+        {
+          "airline": "LH",
+          "flight_number": "762",
+          "from": "MUC",
+          "to": "DEL",
+          "departure_time": "12:10",
+          "arrival_time": "00:05",
+          "departure_datetime": "2027-02-06T12:10:00",
+          "arrival_datetime": "2027-02-07T00:05:00",
+          "duration_minutes": 445,
+          "duration": "7h 25min",
+          "aircraft": "Airbus A380"
+        },
+        {
+          "airline": "TG",
+          "flight_number": "332",
+          "from": "DEL",
+          "to": "BKK",
+          "departure_time": "03:30",
+          "arrival_time": "09:00",
+          "departure_datetime": "2027-02-07T03:30:00",
+          "arrival_datetime": "2027-02-07T09:00:00",
+          "duration_minutes": 240,
+          "duration": "4h",
+          "aircraft": "Boeing 787"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-06&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Lufthansa/Lufthansa_Airbus_A320.php"
     },
     {
       "type": "leg",
       "direction": "inbound",
       "from": "HKT",
-      "to": "BLL",
+      "to": "CPH",
       "date": "2027-03-06",
-      "cabin": "PREMIUM_ECONOMY",
+      "cabin": "ECONOMY",
       "airline_filter": null,
       "airlines": [],
-      "price_eur_total": 2357.0,
-      "price_eur_per_person": 1178.5
+      "price_eur_total": 462.0,
+      "price_eur_per_person": 462.0,
+      "departure_time": "23:50",
+      "arrival_time": "12:30",
+      "duration_minutes": 1120,
+      "duration": "18h 40min",
+      "stops": 1,
+      "aircraft": "Boeing 777",
+      "aircraft_all": [
+        "Boeing 777",
+        "Airbus A380"
+      ],
+      "segments": [
+        {
+          "airline": "EK",
+          "flight_number": "397",
+          "from": "HKT",
+          "to": "DXB",
+          "departure_time": "23:50",
+          "arrival_time": "03:25",
+          "departure_datetime": "2027-03-06T23:50:00",
+          "arrival_datetime": "2027-03-07T03:25:00",
+          "duration_minutes": 395,
+          "duration": "6h 35min",
+          "aircraft": "Boeing 777"
+        },
+        {
+          "airline": "EK",
+          "flight_number": "151",
+          "from": "DXB",
+          "to": "CPH",
+          "departure_time": "08:30",
+          "arrival_time": "12:30",
+          "departure_datetime": "2027-03-07T08:30:00",
+          "arrival_datetime": "2027-03-07T12:30:00",
+          "duration_minutes": 420,
+          "duration": "7h",
+          "aircraft": "Airbus A380"
+        }
+      ],
+      "booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-06&curr=EUR&hl=de&gl=DE",
+      "aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Boeing_777.php"
     }
   ],
   "combinations": [
     {
       "type": "combination",
+      "origin": "CPH",
+      "origin_label": "Kopenhagen",
+      "departure": "2027-02-03",
+      "return": "2027-03-03",
+      "cabin": "ECONOMY",
+      "outbound_airlines": [],
+      "inbound_airlines": [],
+      "outbound_price_eur": 365.0,
+      "inbound_price_eur": 462.0,
+      "outbound_departure_time": "15:00",
+      "outbound_duration": "13h 45min",
+      "outbound_aircraft": "Airbus A220-300 Passenger",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Swiss/Swiss_Airbus_A220-300.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-03&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "23:50",
+      "inbound_duration": "18h 40min",
+      "inbound_aircraft": "Boeing 777",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Boeing_777.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-03&curr=EUR&hl=de&gl=DE",
+      "ground_mode": "Bahn",
+      "ground_hours": 6.0,
+      "ground_cost_eur": 45.0,
+      "overnight_needed": false,
+      "price_eur_total": 872.0,
+      "price_eur_per_person": 872.0,
+      "route": "Zuhause → CPH → BKK  |  HKT → CPH → Zuhause"
+    },
+    {
+      "type": "combination",
+      "origin": "CPH",
+      "origin_label": "Kopenhagen",
+      "departure": "2027-02-04",
+      "return": "2027-03-04",
+      "cabin": "ECONOMY",
+      "outbound_airlines": [],
+      "inbound_airlines": [],
+      "outbound_price_eur": 421.0,
+      "inbound_price_eur": 462.0,
+      "outbound_departure_time": "19:55",
+      "outbound_duration": "32h 50min",
+      "outbound_aircraft": "Airbus A320neo",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Swiss/Swiss_Airbus_A320neo.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-04&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "23:50",
+      "inbound_duration": "18h 40min",
+      "inbound_aircraft": "Boeing 777",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Boeing_777.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-04&curr=EUR&hl=de&gl=DE",
+      "ground_mode": "Bahn",
+      "ground_hours": 6.0,
+      "ground_cost_eur": 45.0,
+      "overnight_needed": false,
+      "price_eur_total": 928.0,
+      "price_eur_per_person": 928.0,
+      "route": "Zuhause → CPH → BKK  |  HKT → CPH → Zuhause"
+    },
+    {
+      "type": "combination",
+      "origin": "CPH",
+      "origin_label": "Kopenhagen",
+      "departure": "2027-02-06",
+      "return": "2027-03-06",
+      "cabin": "ECONOMY",
+      "outbound_airlines": [],
+      "inbound_airlines": [],
+      "outbound_price_eur": 505.0,
+      "inbound_price_eur": 462.0,
+      "outbound_departure_time": "08:55",
+      "outbound_duration": "18h 5min",
+      "outbound_aircraft": "Airbus A320",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Lufthansa/Lufthansa_Airbus_A320.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-06&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "23:50",
+      "inbound_duration": "18h 40min",
+      "inbound_aircraft": "Boeing 777",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Boeing_777.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-06&curr=EUR&hl=de&gl=DE",
+      "ground_mode": "Bahn",
+      "ground_hours": 6.0,
+      "ground_cost_eur": 45.0,
+      "overnight_needed": false,
+      "price_eur_total": 1012.0,
+      "price_eur_per_person": 1012.0,
+      "route": "Zuhause → CPH → BKK  |  HKT → CPH → Zuhause"
+    },
+    {
+      "type": "combination",
       "origin": "HAM",
       "origin_label": "Hamburg",
       "departure": "2027-02-03",
@@ -298,14 +1410,24 @@
       "cabin": "ECONOMY",
       "outbound_airlines": [],
       "inbound_airlines": [],
-      "outbound_price_eur": 905.0,
-      "inbound_price_eur": 1209.0,
+      "outbound_price_eur": 453.0,
+      "inbound_price_eur": 603.0,
+      "outbound_departure_time": "14:50",
+      "outbound_duration": "18h 35min",
+      "outbound_aircraft": "Airbus A320neo",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-03&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "10:30",
+      "inbound_duration": "29h 5min",
+      "inbound_aircraft": "Boeing 737",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-03&curr=EUR&hl=de&gl=DE",
       "ground_mode": "Auto/Bahn",
       "ground_hours": 1.0,
-      "ground_cost_eur": 50.0,
+      "ground_cost_eur": 25.0,
       "overnight_needed": false,
-      "price_eur_total": 2164.0,
-      "price_eur_per_person": 1082.0,
+      "price_eur_total": 1081.0,
+      "price_eur_per_person": 1081.0,
       "route": "Zuhause → HAM → BKK  |  HKT → HAM → Zuhause"
     },
     {
@@ -317,14 +1439,53 @@
       "cabin": "ECONOMY",
       "outbound_airlines": [],
       "inbound_airlines": [],
-      "outbound_price_eur": 1088.0,
-      "inbound_price_eur": 1209.0,
+      "outbound_price_eur": 544.0,
+      "inbound_price_eur": 603.0,
+      "outbound_departure_time": "06:15",
+      "outbound_duration": "21h 30min",
+      "outbound_aircraft": "Airbus A321",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Lufthansa/Lufthansa_Airbus_A321.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-04&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "10:30",
+      "inbound_duration": "29h 5min",
+      "inbound_aircraft": "Boeing 737MAX 8 Passenger",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-04&curr=EUR&hl=de&gl=DE",
       "ground_mode": "Auto/Bahn",
       "ground_hours": 1.0,
-      "ground_cost_eur": 50.0,
+      "ground_cost_eur": 25.0,
       "overnight_needed": false,
-      "price_eur_total": 2347.0,
-      "price_eur_per_person": 1173.5,
+      "price_eur_total": 1172.0,
+      "price_eur_per_person": 1172.0,
+      "route": "Zuhause → HAM → BKK  |  HKT → HAM → Zuhause"
+    },
+    {
+      "type": "combination",
+      "origin": "HAM",
+      "origin_label": "Hamburg",
+      "departure": "2027-02-06",
+      "return": "2027-03-06",
+      "cabin": "ECONOMY",
+      "outbound_airlines": [],
+      "inbound_airlines": [],
+      "outbound_price_eur": 453.0,
+      "inbound_price_eur": 1070.0,
+      "outbound_departure_time": "14:50",
+      "outbound_duration": "18h 35min",
+      "outbound_aircraft": "Airbus A320neo",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-06&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "10:30",
+      "inbound_duration": "16h 40min",
+      "inbound_aircraft": "Airbus A330-900neo",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-06&curr=EUR&hl=de&gl=DE",
+      "ground_mode": "Auto/Bahn",
+      "ground_hours": 1.0,
+      "ground_cost_eur": 25.0,
+      "overnight_needed": false,
+      "price_eur_total": 1548.0,
+      "price_eur_per_person": 1548.0,
       "route": "Zuhause → HAM → BKK  |  HKT → HAM → Zuhause"
     },
     {
@@ -336,14 +1497,24 @@
       "cabin": "PREMIUM_ECONOMY",
       "outbound_airlines": [],
       "inbound_airlines": [],
-      "outbound_price_eur": 1367.0,
-      "inbound_price_eur": 1890.0,
+      "outbound_price_eur": 684.0,
+      "inbound_price_eur": 943.0,
+      "outbound_departure_time": "20:05",
+      "outbound_duration": "13h 25min",
+      "outbound_aircraft": "Airbus A321",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Austrian_Airlines/Austrian_Airlines_Airbus_A321.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-04&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "09:20",
+      "inbound_duration": "15h 30min",
+      "inbound_aircraft": "Airbus A350",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Airbus_A350.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-04&curr=EUR&hl=de&gl=DE",
       "ground_mode": "Bahn",
       "ground_hours": 6.0,
-      "ground_cost_eur": 90.0,
+      "ground_cost_eur": 45.0,
       "overnight_needed": false,
-      "price_eur_total": 3347.0,
-      "price_eur_per_person": 1673.5,
+      "price_eur_total": 1672.0,
+      "price_eur_per_person": 1672.0,
       "route": "Zuhause → CPH → BKK  |  HKT → CPH → Zuhause"
     },
     {
@@ -355,15 +1526,83 @@
       "cabin": "PREMIUM_ECONOMY",
       "outbound_airlines": [],
       "inbound_airlines": [],
-      "outbound_price_eur": 1367.0,
-      "inbound_price_eur": 1890.0,
+      "outbound_price_eur": 684.0,
+      "inbound_price_eur": 943.0,
+      "outbound_departure_time": "17:35",
+      "outbound_duration": "12h 45min",
+      "outbound_aircraft": "Airbus A320",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Austrian_Airlines/Austrian_Airlines_Airbus_A320.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-03&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "09:20",
+      "inbound_duration": "15h 30min",
+      "inbound_aircraft": "Airbus A350",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Airbus_A350.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-03&curr=EUR&hl=de&gl=DE",
       "ground_mode": "Bahn",
       "ground_hours": 6.0,
-      "ground_cost_eur": 90.0,
+      "ground_cost_eur": 45.0,
       "overnight_needed": false,
-      "price_eur_total": 3347.0,
-      "price_eur_per_person": 1673.5,
+      "price_eur_total": 1672.0,
+      "price_eur_per_person": 1672.0,
       "route": "Zuhause → CPH → BKK  |  HKT → CPH → Zuhause"
+    },
+    {
+      "type": "combination",
+      "origin": "CPH",
+      "origin_label": "Kopenhagen",
+      "departure": "2027-02-06",
+      "return": "2027-03-06",
+      "cabin": "PREMIUM_ECONOMY",
+      "outbound_airlines": [],
+      "inbound_airlines": [],
+      "outbound_price_eur": 686.0,
+      "inbound_price_eur": 943.0,
+      "outbound_departure_time": "18:20",
+      "outbound_duration": "14h 30min",
+      "outbound_aircraft": "Airbus A319",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Lufthansa/Lufthansa_Airbus_A319.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-06&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "09:20",
+      "inbound_duration": "15h 30min",
+      "inbound_aircraft": "Airbus A350",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Airbus_A350.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-06&curr=EUR&hl=de&gl=DE",
+      "ground_mode": "Bahn",
+      "ground_hours": 6.0,
+      "ground_cost_eur": 45.0,
+      "overnight_needed": false,
+      "price_eur_total": 1674.0,
+      "price_eur_per_person": 1674.0,
+      "route": "Zuhause → CPH → BKK  |  HKT → CPH → Zuhause"
+    },
+    {
+      "type": "combination",
+      "origin": "HAM",
+      "origin_label": "Hamburg",
+      "departure": "2027-02-04",
+      "return": "2027-03-04",
+      "cabin": "PREMIUM_ECONOMY",
+      "outbound_airlines": [],
+      "inbound_airlines": [],
+      "outbound_price_eur": 1045.0,
+      "inbound_price_eur": 1024.0,
+      "outbound_departure_time": "06:00",
+      "outbound_duration": "21h 30min",
+      "outbound_aircraft": "Airbus A220-300 Passenger",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Air_France/Air_France_Airbus_A220-300.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-04&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "09:20",
+      "inbound_duration": "15h 45min",
+      "inbound_aircraft": "Airbus A350",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Airbus_A350.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-04&curr=EUR&hl=de&gl=DE",
+      "ground_mode": "Auto/Bahn",
+      "ground_hours": 1.0,
+      "ground_cost_eur": 25.0,
+      "overnight_needed": false,
+      "price_eur_total": 2094.0,
+      "price_eur_per_person": 2094.0,
+      "route": "Zuhause → HAM → BKK  |  HKT → HAM → Zuhause"
     },
     {
       "type": "combination",
@@ -374,59 +1613,147 @@
       "cabin": "PREMIUM_ECONOMY",
       "outbound_airlines": [],
       "inbound_airlines": [],
-      "outbound_price_eur": 2090.0,
-      "inbound_price_eur": 2052.0,
+      "outbound_price_eur": 1045.0,
+      "inbound_price_eur": 1024.0,
+      "outbound_departure_time": "14:45",
+      "outbound_duration": "13h 20min",
+      "outbound_aircraft": "Embraer 175",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/KLM/KLM_Embraer_175.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-03&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "09:20",
+      "inbound_duration": "15h 45min",
+      "inbound_aircraft": "Airbus A350",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Airbus_A350.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-03&curr=EUR&hl=de&gl=DE",
       "ground_mode": "Auto/Bahn",
       "ground_hours": 1.0,
-      "ground_cost_eur": 50.0,
+      "ground_cost_eur": 25.0,
       "overnight_needed": false,
-      "price_eur_total": 4192.0,
-      "price_eur_per_person": 2096.0,
+      "price_eur_total": 2094.0,
+      "price_eur_per_person": 2094.0,
       "route": "Zuhause → HAM → BKK  |  HKT → HAM → Zuhause"
     },
     {
       "type": "combination",
-      "origin": "BLL",
-      "origin_label": "Billund",
-      "departure": "2027-02-04",
-      "return": "2027-03-04",
+      "origin": "HAM",
+      "origin_label": "Hamburg",
+      "departure": "2027-02-06",
+      "return": "2027-03-06",
       "cabin": "PREMIUM_ECONOMY",
       "outbound_airlines": [],
       "inbound_airlines": [],
-      "outbound_price_eur": 2502.0,
-      "inbound_price_eur": 2357.0,
+      "outbound_price_eur": 1130.0,
+      "inbound_price_eur": 1150.0,
+      "outbound_departure_time": "16:50",
+      "outbound_duration": "15h 25min",
+      "outbound_aircraft": "Airbus A320",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-06&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "10:30",
+      "inbound_duration": "16h 40min",
+      "inbound_aircraft": "Airbus A330-900neo",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-06&curr=EUR&hl=de&gl=DE",
       "ground_mode": "Auto/Bahn",
-      "ground_hours": 3.5,
-      "ground_cost_eur": 110.0,
+      "ground_hours": 1.0,
+      "ground_cost_eur": 25.0,
       "overnight_needed": false,
-      "price_eur_total": 4969.0,
-      "price_eur_per_person": 2484.5,
-      "route": "Zuhause → BLL → BKK  |  HKT → BLL → Zuhause"
-    },
-    {
-      "type": "combination",
-      "origin": "BLL",
-      "origin_label": "Billund",
-      "departure": "2027-02-03",
-      "return": "2027-03-03",
-      "cabin": "PREMIUM_ECONOMY",
-      "outbound_airlines": [],
-      "inbound_airlines": [],
-      "outbound_price_eur": 2922.0,
-      "inbound_price_eur": 2357.0,
-      "ground_mode": "Auto/Bahn",
-      "ground_hours": 3.5,
-      "ground_cost_eur": 110.0,
-      "overnight_needed": false,
-      "price_eur_total": 5389.0,
-      "price_eur_per_person": 2694.5,
-      "route": "Zuhause → BLL → BKK  |  HKT → BLL → Zuhause"
+      "price_eur_total": 2305.0,
+      "price_eur_per_person": 2305.0,
+      "route": "Zuhause → HAM → BKK  |  HKT → HAM → Zuhause"
     }
   ],
   "open_jaw": [],
   "results": [
     {
       "type": "combination",
+      "origin": "CPH",
+      "origin_label": "Kopenhagen",
+      "departure": "2027-02-03",
+      "return": "2027-03-03",
+      "cabin": "ECONOMY",
+      "outbound_airlines": [],
+      "inbound_airlines": [],
+      "outbound_price_eur": 365.0,
+      "inbound_price_eur": 462.0,
+      "outbound_departure_time": "15:00",
+      "outbound_duration": "13h 45min",
+      "outbound_aircraft": "Airbus A220-300 Passenger",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Swiss/Swiss_Airbus_A220-300.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-03&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "23:50",
+      "inbound_duration": "18h 40min",
+      "inbound_aircraft": "Boeing 777",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Boeing_777.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-03&curr=EUR&hl=de&gl=DE",
+      "ground_mode": "Bahn",
+      "ground_hours": 6.0,
+      "ground_cost_eur": 45.0,
+      "overnight_needed": false,
+      "price_eur_total": 872.0,
+      "price_eur_per_person": 872.0,
+      "route": "Zuhause → CPH → BKK  |  HKT → CPH → Zuhause"
+    },
+    {
+      "type": "combination",
+      "origin": "CPH",
+      "origin_label": "Kopenhagen",
+      "departure": "2027-02-04",
+      "return": "2027-03-04",
+      "cabin": "ECONOMY",
+      "outbound_airlines": [],
+      "inbound_airlines": [],
+      "outbound_price_eur": 421.0,
+      "inbound_price_eur": 462.0,
+      "outbound_departure_time": "19:55",
+      "outbound_duration": "32h 50min",
+      "outbound_aircraft": "Airbus A320neo",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Swiss/Swiss_Airbus_A320neo.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-04&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "23:50",
+      "inbound_duration": "18h 40min",
+      "inbound_aircraft": "Boeing 777",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Boeing_777.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-04&curr=EUR&hl=de&gl=DE",
+      "ground_mode": "Bahn",
+      "ground_hours": 6.0,
+      "ground_cost_eur": 45.0,
+      "overnight_needed": false,
+      "price_eur_total": 928.0,
+      "price_eur_per_person": 928.0,
+      "route": "Zuhause → CPH → BKK  |  HKT → CPH → Zuhause"
+    },
+    {
+      "type": "combination",
+      "origin": "CPH",
+      "origin_label": "Kopenhagen",
+      "departure": "2027-02-06",
+      "return": "2027-03-06",
+      "cabin": "ECONOMY",
+      "outbound_airlines": [],
+      "inbound_airlines": [],
+      "outbound_price_eur": 505.0,
+      "inbound_price_eur": 462.0,
+      "outbound_departure_time": "08:55",
+      "outbound_duration": "18h 5min",
+      "outbound_aircraft": "Airbus A320",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Lufthansa/Lufthansa_Airbus_A320.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-06&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "23:50",
+      "inbound_duration": "18h 40min",
+      "inbound_aircraft": "Boeing 777",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Boeing_777.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-06&curr=EUR&hl=de&gl=DE",
+      "ground_mode": "Bahn",
+      "ground_hours": 6.0,
+      "ground_cost_eur": 45.0,
+      "overnight_needed": false,
+      "price_eur_total": 1012.0,
+      "price_eur_per_person": 1012.0,
+      "route": "Zuhause → CPH → BKK  |  HKT → CPH → Zuhause"
+    },
+    {
+      "type": "combination",
       "origin": "HAM",
       "origin_label": "Hamburg",
       "departure": "2027-02-03",
@@ -434,14 +1761,24 @@
       "cabin": "ECONOMY",
       "outbound_airlines": [],
       "inbound_airlines": [],
-      "outbound_price_eur": 905.0,
-      "inbound_price_eur": 1209.0,
+      "outbound_price_eur": 453.0,
+      "inbound_price_eur": 603.0,
+      "outbound_departure_time": "14:50",
+      "outbound_duration": "18h 35min",
+      "outbound_aircraft": "Airbus A320neo",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-03&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "10:30",
+      "inbound_duration": "29h 5min",
+      "inbound_aircraft": "Boeing 737",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-03&curr=EUR&hl=de&gl=DE",
       "ground_mode": "Auto/Bahn",
       "ground_hours": 1.0,
-      "ground_cost_eur": 50.0,
+      "ground_cost_eur": 25.0,
       "overnight_needed": false,
-      "price_eur_total": 2164.0,
-      "price_eur_per_person": 1082.0,
+      "price_eur_total": 1081.0,
+      "price_eur_per_person": 1081.0,
       "route": "Zuhause → HAM → BKK  |  HKT → HAM → Zuhause"
     },
     {
@@ -453,14 +1790,53 @@
       "cabin": "ECONOMY",
       "outbound_airlines": [],
       "inbound_airlines": [],
-      "outbound_price_eur": 1088.0,
-      "inbound_price_eur": 1209.0,
+      "outbound_price_eur": 544.0,
+      "inbound_price_eur": 603.0,
+      "outbound_departure_time": "06:15",
+      "outbound_duration": "21h 30min",
+      "outbound_aircraft": "Airbus A321",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Lufthansa/Lufthansa_Airbus_A321.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-04&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "10:30",
+      "inbound_duration": "29h 5min",
+      "inbound_aircraft": "Boeing 737MAX 8 Passenger",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-04&curr=EUR&hl=de&gl=DE",
       "ground_mode": "Auto/Bahn",
       "ground_hours": 1.0,
-      "ground_cost_eur": 50.0,
+      "ground_cost_eur": 25.0,
       "overnight_needed": false,
-      "price_eur_total": 2347.0,
-      "price_eur_per_person": 1173.5,
+      "price_eur_total": 1172.0,
+      "price_eur_per_person": 1172.0,
+      "route": "Zuhause → HAM → BKK  |  HKT → HAM → Zuhause"
+    },
+    {
+      "type": "combination",
+      "origin": "HAM",
+      "origin_label": "Hamburg",
+      "departure": "2027-02-06",
+      "return": "2027-03-06",
+      "cabin": "ECONOMY",
+      "outbound_airlines": [],
+      "inbound_airlines": [],
+      "outbound_price_eur": 453.0,
+      "inbound_price_eur": 1070.0,
+      "outbound_departure_time": "14:50",
+      "outbound_duration": "18h 35min",
+      "outbound_aircraft": "Airbus A320neo",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-06&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "10:30",
+      "inbound_duration": "16h 40min",
+      "inbound_aircraft": "Airbus A330-900neo",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-06&curr=EUR&hl=de&gl=DE",
+      "ground_mode": "Auto/Bahn",
+      "ground_hours": 1.0,
+      "ground_cost_eur": 25.0,
+      "overnight_needed": false,
+      "price_eur_total": 1548.0,
+      "price_eur_per_person": 1548.0,
       "route": "Zuhause → HAM → BKK  |  HKT → HAM → Zuhause"
     },
     {
@@ -472,14 +1848,24 @@
       "cabin": "PREMIUM_ECONOMY",
       "outbound_airlines": [],
       "inbound_airlines": [],
-      "outbound_price_eur": 1367.0,
-      "inbound_price_eur": 1890.0,
+      "outbound_price_eur": 684.0,
+      "inbound_price_eur": 943.0,
+      "outbound_departure_time": "20:05",
+      "outbound_duration": "13h 25min",
+      "outbound_aircraft": "Airbus A321",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Austrian_Airlines/Austrian_Airlines_Airbus_A321.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-04&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "09:20",
+      "inbound_duration": "15h 30min",
+      "inbound_aircraft": "Airbus A350",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Airbus_A350.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-04&curr=EUR&hl=de&gl=DE",
       "ground_mode": "Bahn",
       "ground_hours": 6.0,
-      "ground_cost_eur": 90.0,
+      "ground_cost_eur": 45.0,
       "overnight_needed": false,
-      "price_eur_total": 3347.0,
-      "price_eur_per_person": 1673.5,
+      "price_eur_total": 1672.0,
+      "price_eur_per_person": 1672.0,
       "route": "Zuhause → CPH → BKK  |  HKT → CPH → Zuhause"
     },
     {
@@ -491,15 +1877,83 @@
       "cabin": "PREMIUM_ECONOMY",
       "outbound_airlines": [],
       "inbound_airlines": [],
-      "outbound_price_eur": 1367.0,
-      "inbound_price_eur": 1890.0,
+      "outbound_price_eur": 684.0,
+      "inbound_price_eur": 943.0,
+      "outbound_departure_time": "17:35",
+      "outbound_duration": "12h 45min",
+      "outbound_aircraft": "Airbus A320",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Austrian_Airlines/Austrian_Airlines_Airbus_A320.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-03&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "09:20",
+      "inbound_duration": "15h 30min",
+      "inbound_aircraft": "Airbus A350",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Airbus_A350.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-03&curr=EUR&hl=de&gl=DE",
       "ground_mode": "Bahn",
       "ground_hours": 6.0,
-      "ground_cost_eur": 90.0,
+      "ground_cost_eur": 45.0,
       "overnight_needed": false,
-      "price_eur_total": 3347.0,
-      "price_eur_per_person": 1673.5,
+      "price_eur_total": 1672.0,
+      "price_eur_per_person": 1672.0,
       "route": "Zuhause → CPH → BKK  |  HKT → CPH → Zuhause"
+    },
+    {
+      "type": "combination",
+      "origin": "CPH",
+      "origin_label": "Kopenhagen",
+      "departure": "2027-02-06",
+      "return": "2027-03-06",
+      "cabin": "PREMIUM_ECONOMY",
+      "outbound_airlines": [],
+      "inbound_airlines": [],
+      "outbound_price_eur": 686.0,
+      "inbound_price_eur": 943.0,
+      "outbound_departure_time": "18:20",
+      "outbound_duration": "14h 30min",
+      "outbound_aircraft": "Airbus A319",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Lufthansa/Lufthansa_Airbus_A319.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20CPH%20on%202027-02-06&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "09:20",
+      "inbound_duration": "15h 30min",
+      "inbound_aircraft": "Airbus A350",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Airbus_A350.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20CPH%20from%20HKT%20on%202027-03-06&curr=EUR&hl=de&gl=DE",
+      "ground_mode": "Bahn",
+      "ground_hours": 6.0,
+      "ground_cost_eur": 45.0,
+      "overnight_needed": false,
+      "price_eur_total": 1674.0,
+      "price_eur_per_person": 1674.0,
+      "route": "Zuhause → CPH → BKK  |  HKT → CPH → Zuhause"
+    },
+    {
+      "type": "combination",
+      "origin": "HAM",
+      "origin_label": "Hamburg",
+      "departure": "2027-02-04",
+      "return": "2027-03-04",
+      "cabin": "PREMIUM_ECONOMY",
+      "outbound_airlines": [],
+      "inbound_airlines": [],
+      "outbound_price_eur": 1045.0,
+      "inbound_price_eur": 1024.0,
+      "outbound_departure_time": "06:00",
+      "outbound_duration": "21h 30min",
+      "outbound_aircraft": "Airbus A220-300 Passenger",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/Air_France/Air_France_Airbus_A220-300.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-04&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "09:20",
+      "inbound_duration": "15h 45min",
+      "inbound_aircraft": "Airbus A350",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Airbus_A350.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-04&curr=EUR&hl=de&gl=DE",
+      "ground_mode": "Auto/Bahn",
+      "ground_hours": 1.0,
+      "ground_cost_eur": 25.0,
+      "overnight_needed": false,
+      "price_eur_total": 2094.0,
+      "price_eur_per_person": 2094.0,
+      "route": "Zuhause → HAM → BKK  |  HKT → HAM → Zuhause"
     },
     {
       "type": "combination",
@@ -510,58 +1964,59 @@
       "cabin": "PREMIUM_ECONOMY",
       "outbound_airlines": [],
       "inbound_airlines": [],
-      "outbound_price_eur": 2090.0,
-      "inbound_price_eur": 2052.0,
+      "outbound_price_eur": 1045.0,
+      "inbound_price_eur": 1024.0,
+      "outbound_departure_time": "14:45",
+      "outbound_duration": "13h 20min",
+      "outbound_aircraft": "Embraer 175",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/airlines/KLM/KLM_Embraer_175.php",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-03&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "09:20",
+      "inbound_duration": "15h 45min",
+      "inbound_aircraft": "Airbus A350",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/airlines/Emirates/Emirates_Airbus_A350.php",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-03&curr=EUR&hl=de&gl=DE",
       "ground_mode": "Auto/Bahn",
       "ground_hours": 1.0,
-      "ground_cost_eur": 50.0,
+      "ground_cost_eur": 25.0,
       "overnight_needed": false,
-      "price_eur_total": 4192.0,
-      "price_eur_per_person": 2096.0,
+      "price_eur_total": 2094.0,
+      "price_eur_per_person": 2094.0,
       "route": "Zuhause → HAM → BKK  |  HKT → HAM → Zuhause"
     },
     {
       "type": "combination",
-      "origin": "BLL",
-      "origin_label": "Billund",
-      "departure": "2027-02-04",
-      "return": "2027-03-04",
+      "origin": "HAM",
+      "origin_label": "Hamburg",
+      "departure": "2027-02-06",
+      "return": "2027-03-06",
       "cabin": "PREMIUM_ECONOMY",
       "outbound_airlines": [],
       "inbound_airlines": [],
-      "outbound_price_eur": 2502.0,
-      "inbound_price_eur": 2357.0,
+      "outbound_price_eur": 1130.0,
+      "inbound_price_eur": 1150.0,
+      "outbound_departure_time": "16:50",
+      "outbound_duration": "15h 25min",
+      "outbound_aircraft": "Airbus A320",
+      "outbound_aircraft_review_url": "https://www.seatguru.com/",
+      "outbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20BKK%20from%20HAM%20on%202027-02-06&curr=EUR&hl=de&gl=DE",
+      "inbound_departure_time": "10:30",
+      "inbound_duration": "16h 40min",
+      "inbound_aircraft": "Airbus A330-900neo",
+      "inbound_aircraft_review_url": "https://www.seatguru.com/",
+      "inbound_booking_url": "https://www.google.com/travel/flights?q=Flights%20to%20HAM%20from%20HKT%20on%202027-03-06&curr=EUR&hl=de&gl=DE",
       "ground_mode": "Auto/Bahn",
-      "ground_hours": 3.5,
-      "ground_cost_eur": 110.0,
+      "ground_hours": 1.0,
+      "ground_cost_eur": 25.0,
       "overnight_needed": false,
-      "price_eur_total": 4969.0,
-      "price_eur_per_person": 2484.5,
-      "route": "Zuhause → BLL → BKK  |  HKT → BLL → Zuhause"
-    },
-    {
-      "type": "combination",
-      "origin": "BLL",
-      "origin_label": "Billund",
-      "departure": "2027-02-03",
-      "return": "2027-03-03",
-      "cabin": "PREMIUM_ECONOMY",
-      "outbound_airlines": [],
-      "inbound_airlines": [],
-      "outbound_price_eur": 2922.0,
-      "inbound_price_eur": 2357.0,
-      "ground_mode": "Auto/Bahn",
-      "ground_hours": 3.5,
-      "ground_cost_eur": 110.0,
-      "overnight_needed": false,
-      "price_eur_total": 5389.0,
-      "price_eur_per_person": 2694.5,
-      "route": "Zuhause → BLL → BKK  |  HKT → BLL → Zuhause"
+      "price_eur_total": 2305.0,
+      "price_eur_per_person": 2305.0,
+      "route": "Zuhause → HAM → BKK  |  HKT → HAM → Zuhause"
     }
   ],
   "forecast": {
     "generated_at": "2026-07-02",
-    "generated_at_utc": "2026-07-02T07:06:28.374587+00:00",
+    "generated_at_utc": "2026-07-02T13:28:32.136624+00:00",
     "methodology": {
       "sources": [
         "Eigene Preishistorie (tägliche Tracker-Daten, lineare Regression)",
@@ -571,10 +2026,10 @@
       "model_version": "1.0"
     },
     "summary": {
-      "headline_de": "Günstigste Option: Kopenhagen – aktuell 3.347 €",
-      "expected_in_30_days": 3331.4,
-      "expected_change_30d_pct": -0.5,
-      "expected_at_departure": 4187.03,
+      "headline_de": "Günstigste Option: Kopenhagen – aktuell 1.672 €",
+      "expected_in_30_days": 1660.35,
+      "expected_change_30d_pct": -0.7,
+      "expected_at_departure": 2063.74,
       "recommendation": "monitor",
       "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
       "confidence": "low",
@@ -587,10 +2042,10 @@
         "cabin": "PREMIUM_ECONOMY",
         "departure": "2027-02-04",
         "days_until_departure": 217,
-        "current_price_eur": 3347.0,
+        "current_price_eur": 1672.0,
         "trend": {
           "direction": "stable",
-          "weekly_change_pct": 0.0,
+          "weekly_change_pct": -0.63,
           "data_points": 2
         },
         "booking_window": {
@@ -600,22 +2055,22 @@
         },
         "forecast": {
           "in_30_days": {
-            "expected": 3331.4,
-            "low": 3131.52,
-            "high": 3531.28
+            "expected": 1660.35,
+            "low": 1560.73,
+            "high": 1759.97
           },
           "in_60_days": {
-            "expected": 3295.4,
-            "low": 3097.67,
-            "high": 3493.12
+            "expected": 1638.51,
+            "low": 1540.2,
+            "high": 1736.82
           },
           "at_departure_if_wait": {
-            "expected": 4187.03,
-            "low": 3935.81,
-            "high": 4438.25
+            "expected": 2063.74,
+            "low": 1939.91,
+            "high": 2187.56
           },
-          "change_30d_pct": -0.5,
-          "change_to_departure_pct": 25.1
+          "change_30d_pct": -0.7,
+          "change_to_departure_pct": 23.4
         },
         "recommendation": "monitor",
         "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
@@ -623,93 +2078,93 @@
         "projection_curve": [
           {
             "date": "2026-07-02",
-            "price_expected": 3347.0,
-            "price_low": 3146.18,
-            "price_high": 3547.82,
+            "price_expected": 1672.0,
+            "price_low": 1571.68,
+            "price_high": 1772.32,
             "type": "actual"
           },
           {
             "date": "2026-07-09",
-            "price_expected": 3347.0,
-            "price_low": 3146.18,
-            "price_high": 3547.82,
+            "price_expected": 1671.1,
+            "price_low": 1570.83,
+            "price_high": 1771.37,
             "type": "forecast"
           },
           {
             "date": "2026-07-16",
-            "price_expected": 3347.0,
-            "price_low": 3146.18,
-            "price_high": 3547.82,
+            "price_expected": 1670.2,
+            "price_low": 1569.99,
+            "price_high": 1770.41,
             "type": "forecast"
           },
           {
             "date": "2026-07-23",
-            "price_expected": 3342.2,
-            "price_low": 3141.67,
-            "price_high": 3542.73,
+            "price_expected": 1666.9,
+            "price_low": 1566.89,
+            "price_high": 1766.92,
             "type": "forecast"
           },
           {
             "date": "2026-07-30",
-            "price_expected": 3333.8,
-            "price_low": 3133.77,
-            "price_high": 3533.83,
+            "price_expected": 1661.81,
+            "price_low": 1562.1,
+            "price_high": 1761.51,
             "type": "forecast"
           },
           {
             "date": "2026-08-06",
-            "price_expected": 3325.4,
-            "price_low": 3125.88,
-            "price_high": 3524.92,
+            "price_expected": 1656.71,
+            "price_low": 1557.31,
+            "price_high": 1756.11,
             "type": "forecast"
           },
           {
             "date": "2026-08-13",
-            "price_expected": 3317.0,
-            "price_low": 3117.98,
-            "price_high": 3516.02,
+            "price_expected": 1651.61,
+            "price_low": 1552.52,
+            "price_high": 1750.71,
             "type": "forecast"
           },
           {
             "date": "2026-08-20",
-            "price_expected": 3308.6,
-            "price_low": 3110.08,
-            "price_high": 3507.11,
+            "price_expected": 1646.52,
+            "price_low": 1547.73,
+            "price_high": 1745.31,
             "type": "forecast"
           },
           {
             "date": "2026-08-27",
-            "price_expected": 3300.2,
-            "price_low": 3102.19,
-            "price_high": 3498.21,
+            "price_expected": 1641.42,
+            "price_low": 1542.93,
+            "price_high": 1739.91,
             "type": "forecast"
           },
           {
             "date": "2026-09-03",
-            "price_expected": 3291.8,
-            "price_low": 3094.29,
-            "price_high": 3489.31,
+            "price_expected": 1636.32,
+            "price_low": 1538.14,
+            "price_high": 1734.5,
             "type": "forecast"
           },
           {
             "date": "2026-09-10",
-            "price_expected": 3281.0,
-            "price_low": 3084.14,
-            "price_high": 3477.86,
+            "price_expected": 1630.03,
+            "price_low": 1532.23,
+            "price_high": 1727.83,
             "type": "forecast"
           },
           {
             "date": "2026-09-17",
-            "price_expected": 3267.0,
-            "price_low": 3070.98,
-            "price_high": 3463.02,
+            "price_expected": 1622.13,
+            "price_low": 1524.81,
+            "price_high": 1719.46,
             "type": "forecast"
           },
           {
             "date": "2026-09-24",
-            "price_expected": 3253.0,
-            "price_low": 3057.82,
-            "price_high": 3448.18,
+            "price_expected": 1614.24,
+            "price_low": 1517.39,
+            "price_high": 1711.09,
             "type": "forecast"
           }
         ]
@@ -720,10 +2175,10 @@
         "cabin": "PREMIUM_ECONOMY",
         "departure": "2027-02-03",
         "days_until_departure": 216,
-        "current_price_eur": 3347.0,
+        "current_price_eur": 1672.0,
         "trend": {
           "direction": "stable",
-          "weekly_change_pct": 0.0,
+          "weekly_change_pct": -0.63,
           "data_points": 2
         },
         "booking_window": {
@@ -733,22 +2188,22 @@
         },
         "forecast": {
           "in_30_days": {
-            "expected": 3330.2,
-            "low": 3130.39,
-            "high": 3530.01
+            "expected": 1659.75,
+            "low": 1560.17,
+            "high": 1759.34
           },
           "in_60_days": {
-            "expected": 3294.2,
-            "low": 3096.55,
-            "high": 3491.85
+            "expected": 1637.91,
+            "low": 1539.63,
+            "high": 1736.18
           },
           "at_departure_if_wait": {
-            "expected": 4187.03,
-            "low": 3935.81,
-            "high": 4438.25
+            "expected": 2063.87,
+            "low": 1940.04,
+            "high": 2187.7
           },
-          "change_30d_pct": -0.5,
-          "change_to_departure_pct": 25.1
+          "change_30d_pct": -0.7,
+          "change_to_departure_pct": 23.4
         },
         "recommendation": "monitor",
         "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
@@ -756,93 +2211,359 @@
         "projection_curve": [
           {
             "date": "2026-07-02",
-            "price_expected": 3347.0,
-            "price_low": 3146.18,
-            "price_high": 3547.82,
+            "price_expected": 1672.0,
+            "price_low": 1571.68,
+            "price_high": 1772.32,
             "type": "actual"
           },
           {
             "date": "2026-07-09",
-            "price_expected": 3347.0,
-            "price_low": 3146.18,
-            "price_high": 3547.82,
+            "price_expected": 1671.1,
+            "price_low": 1570.83,
+            "price_high": 1771.37,
             "type": "forecast"
           },
           {
             "date": "2026-07-16",
-            "price_expected": 3347.0,
-            "price_low": 3146.18,
-            "price_high": 3547.82,
+            "price_expected": 1670.2,
+            "price_low": 1569.99,
+            "price_high": 1770.41,
             "type": "forecast"
           },
           {
             "date": "2026-07-23",
-            "price_expected": 3341.0,
-            "price_low": 3140.54,
-            "price_high": 3541.46,
+            "price_expected": 1666.3,
+            "price_low": 1566.32,
+            "price_high": 1766.28,
             "type": "forecast"
           },
           {
             "date": "2026-07-30",
-            "price_expected": 3332.6,
-            "price_low": 3132.64,
-            "price_high": 3532.56,
+            "price_expected": 1661.21,
+            "price_low": 1561.53,
+            "price_high": 1760.88,
             "type": "forecast"
           },
           {
             "date": "2026-08-06",
-            "price_expected": 3324.2,
-            "price_low": 3124.75,
-            "price_high": 3523.65,
+            "price_expected": 1656.11,
+            "price_low": 1556.74,
+            "price_high": 1755.48,
             "type": "forecast"
           },
           {
             "date": "2026-08-13",
-            "price_expected": 3315.8,
-            "price_low": 3116.85,
-            "price_high": 3514.75,
+            "price_expected": 1651.01,
+            "price_low": 1551.95,
+            "price_high": 1750.07,
             "type": "forecast"
           },
           {
             "date": "2026-08-20",
-            "price_expected": 3307.4,
-            "price_low": 3108.95,
-            "price_high": 3505.84,
+            "price_expected": 1645.92,
+            "price_low": 1547.16,
+            "price_high": 1744.67,
             "type": "forecast"
           },
           {
             "date": "2026-08-27",
-            "price_expected": 3299.0,
-            "price_low": 3101.06,
-            "price_high": 3496.94,
+            "price_expected": 1640.82,
+            "price_low": 1542.37,
+            "price_high": 1739.27,
             "type": "forecast"
           },
           {
             "date": "2026-09-03",
-            "price_expected": 3290.6,
-            "price_low": 3093.16,
-            "price_high": 3488.03,
+            "price_expected": 1635.72,
+            "price_low": 1537.58,
+            "price_high": 1733.87,
             "type": "forecast"
           },
           {
             "date": "2026-09-10",
-            "price_expected": 3279.0,
-            "price_low": 3082.26,
-            "price_high": 3475.74,
+            "price_expected": 1629.03,
+            "price_low": 1531.29,
+            "price_high": 1726.77,
             "type": "forecast"
           },
           {
             "date": "2026-09-17",
-            "price_expected": 3265.0,
-            "price_low": 3069.1,
-            "price_high": 3460.9,
+            "price_expected": 1621.14,
+            "price_low": 1523.87,
+            "price_high": 1718.4,
             "type": "forecast"
           },
           {
             "date": "2026-09-24",
-            "price_expected": 3251.0,
-            "price_low": 3055.94,
-            "price_high": 3446.06,
+            "price_expected": 1613.24,
+            "price_low": 1516.45,
+            "price_high": 1710.04,
+            "type": "forecast"
+          }
+        ]
+      },
+      {
+        "origin": "CPH",
+        "origin_label": "Kopenhagen",
+        "cabin": "PREMIUM_ECONOMY",
+        "departure": "2027-02-06",
+        "days_until_departure": 219,
+        "current_price_eur": 1674.0,
+        "trend": {
+          "direction": "stable",
+          "weekly_change_pct": -0.63,
+          "data_points": 2
+        },
+        "booking_window": {
+          "factor_now": 1.02,
+          "phase": "sehr früh (Preise können noch schwanken)",
+          "optimal_days_before": "56–90"
+        },
+        "forecast": {
+          "in_30_days": {
+            "expected": 1663.54,
+            "low": 1563.73,
+            "high": 1763.35
+          },
+          "in_60_days": {
+            "expected": 1641.68,
+            "low": 1543.18,
+            "high": 1740.18
+          },
+          "at_departure_if_wait": {
+            "expected": 2065.98,
+            "low": 1942.02,
+            "high": 2189.94
+          },
+          "change_30d_pct": -0.6,
+          "change_to_departure_pct": 23.4
+        },
+        "recommendation": "monitor",
+        "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
+        "confidence": "low",
+        "projection_curve": [
+          {
+            "date": "2026-07-02",
+            "price_expected": 1674.0,
+            "price_low": 1573.56,
+            "price_high": 1774.44,
+            "type": "actual"
+          },
+          {
+            "date": "2026-07-09",
+            "price_expected": 1673.1,
+            "price_low": 1572.71,
+            "price_high": 1773.49,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-07-16",
+            "price_expected": 1672.2,
+            "price_low": 1571.87,
+            "price_high": 1772.53,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-07-23",
+            "price_expected": 1670.1,
+            "price_low": 1569.89,
+            "price_high": 1770.31,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-07-30",
+            "price_expected": 1665.0,
+            "price_low": 1565.1,
+            "price_high": 1764.9,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-08-06",
+            "price_expected": 1659.9,
+            "price_low": 1560.3,
+            "price_high": 1759.49,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-08-13",
+            "price_expected": 1654.8,
+            "price_low": 1555.51,
+            "price_high": 1754.08,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-08-20",
+            "price_expected": 1649.69,
+            "price_low": 1550.71,
+            "price_high": 1748.68,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-08-27",
+            "price_expected": 1644.59,
+            "price_low": 1545.92,
+            "price_high": 1743.27,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-09-03",
+            "price_expected": 1639.49,
+            "price_low": 1541.12,
+            "price_high": 1737.86,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-09-10",
+            "price_expected": 1633.99,
+            "price_low": 1535.95,
+            "price_high": 1732.03,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-09-17",
+            "price_expected": 1626.09,
+            "price_low": 1528.52,
+            "price_high": 1723.65,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-09-24",
+            "price_expected": 1618.18,
+            "price_low": 1521.09,
+            "price_high": 1715.28,
+            "type": "forecast"
+          }
+        ]
+      },
+      {
+        "origin": "HAM",
+        "origin_label": "Hamburg",
+        "cabin": "PREMIUM_ECONOMY",
+        "departure": "2027-02-04",
+        "days_until_departure": 217,
+        "current_price_eur": 2094.0,
+        "trend": {
+          "direction": "stable",
+          "weekly_change_pct": -0.5,
+          "data_points": 2
+        },
+        "booking_window": {
+          "factor_now": 1.02,
+          "phase": "sehr früh (Preise können noch schwanken)",
+          "optimal_days_before": "56–90"
+        },
+        "forecast": {
+          "in_30_days": {
+            "expected": 2080.38,
+            "low": 1955.56,
+            "high": 2205.21
+          },
+          "in_60_days": {
+            "expected": 2054.0,
+            "low": 1930.76,
+            "high": 2177.24
+          },
+          "at_departure_if_wait": {
+            "expected": 2591.65,
+            "low": 2436.15,
+            "high": 2747.15
+          },
+          "change_30d_pct": -0.7,
+          "change_to_departure_pct": 23.8
+        },
+        "recommendation": "monitor",
+        "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
+        "confidence": "low",
+        "projection_curve": [
+          {
+            "date": "2026-07-02",
+            "price_expected": 2094.0,
+            "price_low": 1968.36,
+            "price_high": 2219.64,
+            "type": "actual"
+          },
+          {
+            "date": "2026-07-09",
+            "price_expected": 2093.1,
+            "price_low": 1967.51,
+            "price_high": 2218.69,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-07-16",
+            "price_expected": 2092.2,
+            "price_low": 1966.67,
+            "price_high": 2217.73,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-07-23",
+            "price_expected": 2088.3,
+            "price_low": 1963.0,
+            "price_high": 2213.59,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-07-30",
+            "price_expected": 2082.14,
+            "price_low": 1957.21,
+            "price_high": 2207.07,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-08-06",
+            "price_expected": 2075.99,
+            "price_low": 1951.43,
+            "price_high": 2200.54,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-08-13",
+            "price_expected": 2069.83,
+            "price_low": 1945.64,
+            "price_high": 2194.02,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-08-20",
+            "price_expected": 2063.67,
+            "price_low": 1939.85,
+            "price_high": 2187.5,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-08-27",
+            "price_expected": 2057.52,
+            "price_low": 1934.07,
+            "price_high": 2180.97,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-09-03",
+            "price_expected": 2051.36,
+            "price_low": 1928.28,
+            "price_high": 2174.45,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-09-10",
+            "price_expected": 2043.71,
+            "price_low": 1921.08,
+            "price_high": 2166.33,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-09-17",
+            "price_expected": 2034.05,
+            "price_low": 1912.0,
+            "price_high": 2156.09,
+            "type": "forecast"
+          },
+          {
+            "date": "2026-09-24",
+            "price_expected": 2024.39,
+            "price_low": 1902.92,
+            "price_high": 2145.85,
             "type": "forecast"
           }
         ]
@@ -853,10 +2574,10 @@
         "cabin": "PREMIUM_ECONOMY",
         "departure": "2027-02-03",
         "days_until_departure": 216,
-        "current_price_eur": 4192.0,
+        "current_price_eur": 2094.0,
         "trend": {
           "direction": "stable",
-          "weekly_change_pct": 0.17,
+          "weekly_change_pct": -0.5,
           "data_points": 2
         },
         "booking_window": {
@@ -866,22 +2587,22 @@
         },
         "forecast": {
           "in_30_days": {
-            "expected": 4173.53,
-            "low": 3923.12,
-            "high": 4423.94
+            "expected": 2079.63,
+            "low": 1954.85,
+            "high": 2204.41
           },
           "in_60_days": {
-            "expected": 4131.01,
-            "low": 3883.15,
-            "high": 4378.87
+            "expected": 2053.25,
+            "low": 1930.06,
+            "high": 2176.45
           },
           "at_departure_if_wait": {
-            "expected": 5262.62,
-            "low": 4946.87,
-            "high": 5578.38
+            "expected": 2591.78,
+            "low": 2436.27,
+            "high": 2747.29
           },
-          "change_30d_pct": -0.4,
-          "change_to_departure_pct": 25.5
+          "change_30d_pct": -0.7,
+          "change_to_departure_pct": 23.8
         },
         "recommendation": "monitor",
         "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
@@ -889,107 +2610,107 @@
         "projection_curve": [
           {
             "date": "2026-07-02",
-            "price_expected": 4192.0,
-            "price_low": 3940.48,
-            "price_high": 4443.52,
+            "price_expected": 2094.0,
+            "price_low": 1968.36,
+            "price_high": 2219.64,
             "type": "actual"
           },
           {
             "date": "2026-07-09",
-            "price_expected": 4192.6,
-            "price_low": 3941.04,
-            "price_high": 4444.16,
+            "price_expected": 2093.1,
+            "price_low": 1967.51,
+            "price_high": 2218.69,
             "type": "forecast"
           },
           {
             "date": "2026-07-16",
-            "price_expected": 4193.2,
-            "price_low": 3941.61,
-            "price_high": 4444.79,
+            "price_expected": 2092.2,
+            "price_low": 1966.67,
+            "price_high": 2217.73,
             "type": "forecast"
           },
           {
             "date": "2026-07-23",
-            "price_expected": 4186.28,
-            "price_low": 3935.11,
-            "price_high": 4437.46,
+            "price_expected": 2087.55,
+            "price_low": 1962.29,
+            "price_high": 2212.8,
             "type": "forecast"
           },
           {
             "date": "2026-07-30",
-            "price_expected": 4176.36,
-            "price_low": 3925.78,
-            "price_high": 4426.95,
+            "price_expected": 2081.39,
+            "price_low": 1956.51,
+            "price_high": 2206.27,
             "type": "forecast"
           },
           {
             "date": "2026-08-06",
-            "price_expected": 4166.44,
-            "price_low": 3916.46,
-            "price_high": 4416.43,
+            "price_expected": 2075.23,
+            "price_low": 1950.72,
+            "price_high": 2199.75,
             "type": "forecast"
           },
           {
             "date": "2026-08-13",
-            "price_expected": 4156.52,
-            "price_low": 3907.13,
-            "price_high": 4405.91,
+            "price_expected": 2069.08,
+            "price_low": 1944.93,
+            "price_high": 2193.22,
             "type": "forecast"
           },
           {
             "date": "2026-08-20",
-            "price_expected": 4146.6,
-            "price_low": 3897.8,
-            "price_high": 4395.4,
+            "price_expected": 2062.92,
+            "price_low": 1939.15,
+            "price_high": 2186.7,
             "type": "forecast"
           },
           {
             "date": "2026-08-27",
-            "price_expected": 4136.68,
-            "price_low": 3888.48,
-            "price_high": 4384.88,
+            "price_expected": 2056.77,
+            "price_low": 1933.36,
+            "price_high": 2180.17,
             "type": "forecast"
           },
           {
             "date": "2026-09-03",
-            "price_expected": 4126.76,
-            "price_low": 3879.15,
-            "price_high": 4374.36,
+            "price_expected": 2050.61,
+            "price_low": 1927.58,
+            "price_high": 2173.65,
             "type": "forecast"
           },
           {
             "date": "2026-09-10",
-            "price_expected": 4112.83,
-            "price_low": 3866.06,
-            "price_high": 4359.6,
+            "price_expected": 2042.46,
+            "price_low": 1919.91,
+            "price_high": 2165.0,
             "type": "forecast"
           },
           {
             "date": "2026-09-17",
-            "price_expected": 4095.89,
-            "price_low": 3850.14,
-            "price_high": 4341.65,
+            "price_expected": 2032.8,
+            "price_low": 1910.83,
+            "price_high": 2154.76,
             "type": "forecast"
           },
           {
             "date": "2026-09-24",
-            "price_expected": 4078.96,
-            "price_low": 3834.22,
-            "price_high": 4323.7,
+            "price_expected": 2023.14,
+            "price_low": 1901.75,
+            "price_high": 2144.53,
             "type": "forecast"
           }
         ]
       },
       {
-        "origin": "BLL",
-        "origin_label": "Billund",
+        "origin": "HAM",
+        "origin_label": "Hamburg",
         "cabin": "PREMIUM_ECONOMY",
-        "departure": "2027-02-04",
-        "days_until_departure": 217,
-        "current_price_eur": 4969.0,
+        "departure": "2027-02-06",
+        "days_until_departure": 219,
+        "current_price_eur": 2305.0,
         "trend": {
-          "direction": "rising",
-          "weekly_change_pct": 22.76,
+          "direction": "stable",
+          "weekly_change_pct": -0.5,
           "data_points": 2
         },
         "booking_window": {
@@ -999,249 +2720,116 @@
         },
         "forecast": {
           "in_30_days": {
-            "expected": 5354.7,
-            "low": 5033.41,
-            "high": 5675.98
+            "expected": 2292.05,
+            "low": 2154.53,
+            "high": 2429.58
           },
           "in_60_days": {
-            "expected": 5710.11,
-            "low": 5367.5,
-            "high": 6052.71
+            "expected": 2263.4,
+            "low": 2127.6,
+            "high": 2399.21
           },
           "at_departure_if_wait": {
-            "expected": 9173.52,
-            "low": 8623.11,
-            "high": 9723.93
+            "expected": 2855.35,
+            "low": 2684.03,
+            "high": 3026.67
           },
-          "change_30d_pct": 7.8,
-          "change_to_departure_pct": 84.6
+          "change_30d_pct": -0.6,
+          "change_to_departure_pct": 23.9
         },
-        "recommendation": "buy_soon",
-        "recommendation_de": "Aufwärtstrend erkennbar – nicht zu lange warten.",
+        "recommendation": "monitor",
+        "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
         "confidence": "low",
         "projection_curve": [
           {
             "date": "2026-07-02",
-            "price_expected": 4969.0,
-            "price_low": 4670.86,
-            "price_high": 5267.14,
+            "price_expected": 2305.0,
+            "price_low": 2166.7,
+            "price_high": 2443.3,
             "type": "actual"
           },
           {
             "date": "2026-07-09",
-            "price_expected": 5064.4,
-            "price_low": 4760.54,
-            "price_high": 5368.26,
+            "price_expected": 2304.1,
+            "price_low": 2165.85,
+            "price_high": 2442.35,
             "type": "forecast"
           },
           {
             "date": "2026-07-16",
-            "price_expected": 5159.8,
-            "price_low": 4850.21,
-            "price_high": 5469.39,
+            "price_expected": 2303.2,
+            "price_low": 2165.01,
+            "price_high": 2441.39,
             "type": "forecast"
           },
           {
             "date": "2026-07-23",
-            "price_expected": 5248.07,
-            "price_low": 4933.19,
-            "price_high": 5562.96,
+            "price_expected": 2300.65,
+            "price_low": 2162.61,
+            "price_high": 2438.69,
             "type": "forecast"
           },
           {
             "date": "2026-07-30",
-            "price_expected": 5331.0,
-            "price_low": 5011.14,
-            "price_high": 5650.86,
+            "price_expected": 2293.96,
+            "price_low": 2156.32,
+            "price_high": 2431.6,
             "type": "forecast"
           },
           {
             "date": "2026-08-06",
-            "price_expected": 5413.93,
-            "price_low": 5089.1,
-            "price_high": 5738.77,
+            "price_expected": 2287.28,
+            "price_low": 2150.04,
+            "price_high": 2424.51,
             "type": "forecast"
           },
           {
             "date": "2026-08-13",
-            "price_expected": 5496.86,
-            "price_low": 5167.05,
-            "price_high": 5826.67,
+            "price_expected": 2280.59,
+            "price_low": 2143.76,
+            "price_high": 2417.43,
             "type": "forecast"
           },
           {
             "date": "2026-08-20",
-            "price_expected": 5579.79,
-            "price_low": 5245.0,
-            "price_high": 5914.58,
+            "price_expected": 2273.91,
+            "price_low": 2137.47,
+            "price_high": 2410.34,
             "type": "forecast"
           },
           {
             "date": "2026-08-27",
-            "price_expected": 5662.72,
-            "price_low": 5322.95,
-            "price_high": 6002.48,
+            "price_expected": 2267.22,
+            "price_low": 2131.19,
+            "price_high": 2403.25,
             "type": "forecast"
           },
           {
             "date": "2026-09-03",
-            "price_expected": 5745.65,
-            "price_low": 5400.91,
-            "price_high": 6090.39,
+            "price_expected": 2260.54,
+            "price_low": 2124.9,
+            "price_high": 2396.17,
             "type": "forecast"
           },
           {
             "date": "2026-09-10",
-            "price_expected": 5825.01,
-            "price_low": 5475.51,
-            "price_high": 6174.51,
+            "price_expected": 2253.3,
+            "price_low": 2118.1,
+            "price_high": 2388.5,
             "type": "forecast"
           },
           {
             "date": "2026-09-17",
-            "price_expected": 5899.63,
-            "price_low": 5545.65,
-            "price_high": 6253.6,
+            "price_expected": 2242.76,
+            "price_low": 2108.19,
+            "price_high": 2377.32,
             "type": "forecast"
           },
           {
             "date": "2026-09-24",
-            "price_expected": 5974.24,
-            "price_low": 5615.79,
-            "price_high": 6332.7,
-            "type": "forecast"
-          }
-        ]
-      },
-      {
-        "origin": "BLL",
-        "origin_label": "Billund",
-        "cabin": "PREMIUM_ECONOMY",
-        "departure": "2027-02-03",
-        "days_until_departure": 216,
-        "current_price_eur": 5389.0,
-        "trend": {
-          "direction": "rising",
-          "weekly_change_pct": 22.76,
-          "data_points": 2
-        },
-        "booking_window": {
-          "factor_now": 1.02,
-          "phase": "sehr früh (Preise können noch schwanken)",
-          "optimal_days_before": "56–90"
-        },
-        "forecast": {
-          "in_30_days": {
-            "expected": 5770.81,
-            "low": 5424.56,
-            "high": 6117.05
-          },
-          "in_60_days": {
-            "expected": 6121.7,
-            "low": 5754.4,
-            "high": 6489.0
-          },
-          "at_departure_if_wait": {
-            "expected": 9685.3,
-            "low": 9104.19,
-            "high": 10266.42
-          },
-          "change_30d_pct": 7.1,
-          "change_to_departure_pct": 79.7
-        },
-        "recommendation": "buy_soon",
-        "recommendation_de": "Aufwärtstrend erkennbar – nicht zu lange warten.",
-        "confidence": "low",
-        "projection_curve": [
-          {
-            "date": "2026-07-02",
-            "price_expected": 5389.0,
-            "price_low": 5065.66,
-            "price_high": 5712.34,
-            "type": "actual"
-          },
-          {
-            "date": "2026-07-09",
-            "price_expected": 5484.4,
-            "price_low": 5155.34,
-            "price_high": 5813.46,
-            "type": "forecast"
-          },
-          {
-            "date": "2026-07-16",
-            "price_expected": 5579.8,
-            "price_low": 5245.01,
-            "price_high": 5914.59,
-            "type": "forecast"
-          },
-          {
-            "date": "2026-07-23",
-            "price_expected": 5665.54,
-            "price_low": 5325.61,
-            "price_high": 6005.47,
-            "type": "forecast"
-          },
-          {
-            "date": "2026-07-30",
-            "price_expected": 5747.41,
-            "price_low": 5402.57,
-            "price_high": 6092.26,
-            "type": "forecast"
-          },
-          {
-            "date": "2026-08-06",
-            "price_expected": 5829.29,
-            "price_low": 5479.53,
-            "price_high": 6179.05,
-            "type": "forecast"
-          },
-          {
-            "date": "2026-08-13",
-            "price_expected": 5911.16,
-            "price_low": 5556.49,
-            "price_high": 6265.83,
-            "type": "forecast"
-          },
-          {
-            "date": "2026-08-20",
-            "price_expected": 5993.04,
-            "price_low": 5633.46,
-            "price_high": 6352.62,
-            "type": "forecast"
-          },
-          {
-            "date": "2026-08-27",
-            "price_expected": 6074.91,
-            "price_low": 5710.42,
-            "price_high": 6439.41,
-            "type": "forecast"
-          },
-          {
-            "date": "2026-09-03",
-            "price_expected": 6156.79,
-            "price_low": 5787.38,
-            "price_high": 6526.19,
-            "type": "forecast"
-          },
-          {
-            "date": "2026-09-10",
-            "price_expected": 6233.51,
-            "price_low": 5859.5,
-            "price_high": 6607.52,
-            "type": "forecast"
-          },
-          {
-            "date": "2026-09-17",
-            "price_expected": 6306.37,
-            "price_low": 5927.98,
-            "price_high": 6684.75,
-            "type": "forecast"
-          },
-          {
-            "date": "2026-09-24",
-            "price_expected": 6379.22,
-            "price_low": 5996.47,
-            "price_high": 6761.98,
+            "price_expected": 2232.22,
+            "price_low": 2098.28,
+            "price_high": 2366.15,
             "type": "forecast"
           }
         ]
