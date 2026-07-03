@@ -74,14 +74,28 @@
       border-radius: 0 8px 8px 0;
     }
     .forecast-box h3 { margin: 0 0 0.35rem; font-size: 1rem; }
-    .filters { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
-    .filters select {
+    .filters { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; align-items: flex-end; }
+    .filters select,
+    .filters input[type="number"] {
       background: var(--bg);
       color: var(--text);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 0.45rem 0.75rem;
     }
+    .filters label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .filters label span.hint { text-transform: none; letter-spacing: normal; font-size: 0.72rem; opacity: 0.85; }
+    .badge.pe { background: rgba(61, 156, 240, 0.15); color: var(--accent); }
+    .badge.biz { background: rgba(255, 193, 7, 0.18); color: #ffc857; }
+    .badge.eco { background: rgba(93, 211, 158, 0.12); color: var(--accent2); }
     .note { font-size: 0.85rem; color: var(--muted); margin-top: 1rem; }
     .empty { color: var(--muted); padding: 2rem; text-align: center; }
     a.link {
@@ -127,10 +141,31 @@
     <p class="sub">
       Hinflug: Abflughafen → Bangkok (BKK) · Rückflug: Phuket (HKT) → Abflughafen ·
       Abflug frühestens 03.02.2027, bevorzugt 04.02.2027 · 1 Person ·
-      Premium Economy · Preise pro Person inkl. Anreise (Bahn/Auto) ·
+      Kabine wählbar (Eco / PE / Business) · Preise pro Person inkl. Anreise (Bahn/Auto) ·
       Abflughäfen Hinflug: Hamburg & Kopenhagen · Rückflug zusätzlich Frankfurt (FRA) ·
       Wunsch-Airlines: SQ, CX, TG · Rückflug auch Condor (DE)
     </p>
+
+    <section>
+      <h2>Einstellungen</h2>
+      <div class="filters">
+        <label>Kabine
+          <select id="pref-cabin">
+            <option value="PREMIUM_ECONOMY">Premium Economy</option>
+            <option value="BUSINESS">Business Class</option>
+            <option value="ECONOMY">Economy</option>
+          </select>
+        </label>
+        <label>Hinflug max. Dauer (h)
+          <input type="number" id="pref-max-outbound-hours" min="0" max="48" step="0.5" value="16">
+          <span class="hint">0 = kein Limit · Hin: nur Nonstop</span>
+        </label>
+        <label>Rückflug max. Dauer (h)
+          <input type="number" id="pref-max-inbound-hours" min="0" max="48" step="0.5" value="24">
+          <span class="hint">0 = kein Limit · Stopps nur EU/SEA</span>
+        </label>
+      </div>
+    </section>
 
     <div class="cards" id="summary-cards"></div>
 
@@ -151,10 +186,6 @@
           <option value="HAM">Hamburg</option>
           <option value="CPH">Kopenhagen</option>
         </select>
-        <select id="chart-cabin">
-          <option value="PREMIUM_ECONOMY">Premium Economy</option>
-          <option value="ECONOMY">Economy</option>
-        </select>
         <select id="chart-airline">
           <option value="">Alle Airlines</option>
           <option value="SQ">Singapore Airlines (SQ)</option>
@@ -170,7 +201,7 @@
     <div class="legs-grid">
       <section class="legs-panel outbound">
         <h2>Hinflug → Bangkok (BKK)</h2>
-        <p class="note" style="margin-top:0;margin-bottom:0.75rem">Nur Nonstop, max. 16 h Flugzeit</p>
+        <p class="note" id="outbound-legs-note" style="margin-top:0;margin-bottom:0.75rem"></p>
         <div style="overflow-x:auto">
           <table id="outbound-legs-table" class="legs-table">
             <thead>
@@ -194,7 +225,7 @@
 
       <section class="legs-panel inbound">
         <h2>Rückflug Phuket (HKT) → Deutschland</h2>
-        <p class="note" style="margin-top:0;margin-bottom:0.75rem">Zwischenstopps nur in Europa oder Südostasien (kein Naher Osten)</p>
+        <p class="note" id="inbound-legs-note" style="margin-top:0;margin-bottom:0.75rem"></p>
         <div style="overflow-x:auto">
           <table id="inbound-legs-table" class="legs-table">
             <thead>
@@ -232,7 +263,16 @@
     const INBOUND_DESTINATIONS = new Set(['HAM', 'CPH', 'FRA']);
     const DIRECTION_LABELS = { outbound: 'Hinflug', inbound: 'Rückflug' };
     const ORIGIN_NAMES = { HAM: 'Hamburg', CPH: 'Kopenhagen', FRA: 'Frankfurt' };
-    const OUTBOUND_MAX_MINUTES = 16 * 60;
+    const CABIN_LABELS = {
+      PREMIUM_ECONOMY: 'PE',
+      ECONOMY: 'Eco',
+      BUSINESS: 'Business'
+    };
+    const PREF_STORAGE = {
+      cabin: 'flugreisen_pref_cabin',
+      maxOutbound: 'flugreisen_max_outbound_hours',
+      maxInbound: 'flugreisen_max_inbound_hours'
+    };
 
     const EUROPE_AIRPORTS = new Set([
       'HAM', 'FRA', 'MUC', 'BER', 'DUS', 'CGN', 'STR', 'HAJ', 'NUE', 'LEJ', 'BRE', 'DTM', 'DRS', 'FMO', 'PAD', 'FDH',
@@ -295,13 +335,77 @@
       return EUROPE_AIRPORTS.has(airport) || SE_ASIA_NEAR_THAILAND.has(airport);
     }
 
+    function selectedCabin() {
+      return document.getElementById('pref-cabin')?.value || 'PREMIUM_ECONOMY';
+    }
+
+    function getMaxDurationMinutes(direction) {
+      const id = direction === 'outbound' ? 'pref-max-outbound-hours' : 'pref-max-inbound-hours';
+      const hours = parseFloat(document.getElementById(id)?.value);
+      if (!Number.isFinite(hours) || hours <= 0) return Infinity;
+      return Math.round(hours * 60);
+    }
+
+    function formatMaxDurationHint(direction) {
+      const max = getMaxDurationMinutes(direction);
+      return max === Infinity ? 'kein Limit' : formatDurationClock(max);
+    }
+
+    function loadPreferences() {
+      const cabin = localStorage.getItem(PREF_STORAGE.cabin);
+      if (cabin && CABIN_LABELS[cabin]) {
+        document.getElementById('pref-cabin').value = cabin;
+      }
+      const outH = localStorage.getItem(PREF_STORAGE.maxOutbound);
+      if (outH != null && outH !== '') {
+        document.getElementById('pref-max-outbound-hours').value = outH;
+      }
+      const inH = localStorage.getItem(PREF_STORAGE.maxInbound);
+      if (inH != null && inH !== '') {
+        document.getElementById('pref-max-inbound-hours').value = inH;
+      }
+    }
+
+    function savePreferences() {
+      localStorage.setItem(PREF_STORAGE.cabin, selectedCabin());
+      localStorage.setItem(PREF_STORAGE.maxOutbound, document.getElementById('pref-max-outbound-hours').value);
+      localStorage.setItem(PREF_STORAGE.maxInbound, document.getElementById('pref-max-inbound-hours').value);
+    }
+
+    function updateLegFilterNotes() {
+      const outEl = document.getElementById('outbound-legs-note');
+      const inEl = document.getElementById('inbound-legs-note');
+      if (outEl) {
+        const max = formatMaxDurationHint('outbound');
+        outEl.textContent = max === 'kein Limit'
+          ? 'Nur Nonstop'
+          : `Nur Nonstop, max. ${max} Flugzeit`;
+      }
+      if (inEl) {
+        const max = formatMaxDurationHint('inbound');
+        inEl.textContent = max === 'kein Limit'
+          ? 'Zwischenstopps nur in Europa oder Südostasien (kein Naher Osten)'
+          : `Zwischenstopps nur EU/SEA (kein Naher Osten), max. ${max} Flugzeit`;
+      }
+    }
+
+    function formatCabinBadge(cabin) {
+      const label = CABIN_LABELS[cabin] || cabin;
+      const cls = cabin === 'PREMIUM_ECONOMY' ? 'pe' : (cabin === 'BUSINESS' ? 'biz' : 'eco');
+      return `<span class="badge ${cls}">${label}</span>`;
+    }
+
     function passesLegRules(leg) {
       if (leg.direction === 'outbound') {
         const mins = legDurationMinutes(leg);
-        if (mins != null && mins > OUTBOUND_MAX_MINUTES) return false;
+        const maxOut = getMaxDurationMinutes('outbound');
+        if (mins != null && mins > maxOut) return false;
         return legStopCount(leg) === 0;
       }
       if (leg.direction === 'inbound') {
+        const mins = legDurationMinutes(leg);
+        const maxIn = getMaxDurationMinutes('inbound');
+        if (mins != null && mins > maxIn) return false;
         const layovers = legLayoverAirports(leg);
         if (layovers === null) return false;
         if (!layovers.length) return true;
@@ -311,7 +415,18 @@
     }
 
     function filterLegs(rows) {
-      return filterAllowed(rows).filter(passesLegRules);
+      const cabin = selectedCabin();
+      return filterAllowed(rows)
+        .filter(l => l.cabin === cabin)
+        .filter(passesLegRules);
+    }
+
+    function applyViewFilters() {
+      latest.legs = filterLegs(latest.allLegs || []);
+      updateLegFilterNotes();
+      renderSummary();
+      renderLegs();
+      renderForecast();
     }
 
     function formatDateShort(iso) {
@@ -385,12 +500,14 @@
       return `${normalized.direction}-${normalized.origin}`;
     }
 
-    function bestLeg(direction, airport, cabin = 'PREMIUM_ECONOMY') {
-      return (latest.legs || [])
+    function bestLeg(direction, airport, cabin) {
+      cabin = cabin ?? selectedCabin();
+      return (latest.allLegs || [])
         .filter(l => l.direction === direction && l.cabin === cabin)
         .filter(l => direction === 'outbound'
           ? l.from === airport && l.to === 'BKK'
           : l.from === 'HKT' && l.to === airport)
+        .filter(passesLegRules)
         .sort((a, b) => pricePerPerson(a) - pricePerPerson(b))[0] || null;
     }
 
@@ -398,7 +515,7 @@
     let legsSortOutbound = { key: 'price', asc: true };
     let legsSortInbound = { key: 'price', asc: true };
 
-    let latest = { combinations: [], legs: [], results: [], forecast: null };
+    let latest = { allLegs: [], combinations: [], legs: [], results: [], forecast: null };
     let history = [];
     let chart;
     let selectedForecastRoute = '';
@@ -421,14 +538,14 @@
       history = historyRes;
       if (!latest.forecast && forecastRes) latest.forecast = forecastRes;
       if (latest.forecast) latest.forecast = sanitizeForecast(latest.forecast);
-      latest.legs = filterLegs(latest.legs || []);
+      latest.allLegs = latestRes.legs || [];
+      loadPreferences();
+      applyViewFilters();
       if (!selectedForecastRoute) {
         selectedForecastRoute = `${document.getElementById('chart-direction').value}-${document.getElementById('chart-origin').value}`;
       }
       populateOriginFilter();
-      renderSummary();
       renderForecast();
-      renderLegs();
       renderChart();
       document.getElementById('updated-note').textContent =
         latest.fetched_at
@@ -452,9 +569,10 @@
     }
 
     function renderSummary() {
+      const cabinTag = CABIN_LABELS[selectedCabin()] || selectedCabin();
       const cards = [
         {
-          label: 'Hinflug Hamburg → BKK (PE)',
+          label: `Hinflug Hamburg → BKK (${cabinTag})`,
           value: (() => {
             const leg = bestLeg('outbound', 'HAM');
             return leg
@@ -463,7 +581,7 @@
           })()
         },
         {
-          label: 'Hinflug Kopenhagen → BKK (PE)',
+          label: `Hinflug Kopenhagen → BKK (${cabinTag})`,
           value: (() => {
             const leg = bestLeg('outbound', 'CPH');
             return leg
@@ -472,7 +590,7 @@
           })()
         },
         {
-          label: 'Rückflug HKT → Hamburg (PE)',
+          label: `Rückflug HKT → Hamburg (${cabinTag})`,
           value: (() => {
             const leg = bestLeg('inbound', 'HAM');
             return leg
@@ -481,7 +599,7 @@
           })()
         },
         {
-          label: 'Rückflug HKT → Kopenhagen (PE)',
+          label: `Rückflug HKT → Kopenhagen (${cabinTag})`,
           value: (() => {
             const leg = bestLeg('inbound', 'CPH');
             return leg
@@ -490,7 +608,7 @@
           })()
         },
         {
-          label: 'Rückflug HKT → Frankfurt (PE)',
+          label: `Rückflug HKT → Frankfurt (${cabinTag})`,
           value: (() => {
             const leg = bestLeg('inbound', 'FRA');
             return leg
@@ -518,12 +636,15 @@
         return;
       }
 
+      const cabin = selectedCabin();
       const outbound = (fc.outbound_routes || fc.routes.filter(r => r.direction === 'outbound'))
         .map(normalizeForecastRoute)
-        .filter(r => OUTBOUND_ORIGINS.has(r.origin));
+        .filter(r => OUTBOUND_ORIGINS.has(r.origin))
+        .filter(r => !r.cabin || r.cabin === cabin);
       const inbound = (fc.inbound_routes || fc.routes.filter(r => r.direction === 'inbound'))
         .map(normalizeForecastRoute)
-        .filter(r => INBOUND_DESTINATIONS.has(r.origin));
+        .filter(r => INBOUND_DESTINATIONS.has(r.origin))
+        .filter(r => !r.cabin || r.cabin === cabin);
       const routes = [...outbound, ...inbound];
 
       if (!routes.length) {
@@ -644,7 +765,7 @@
     function filterHistory() {
       const direction = document.getElementById('chart-direction').value;
       const origin = document.getElementById('chart-origin').value;
-      const cabin = document.getElementById('chart-cabin').value;
+      const cabin = selectedCabin();
       const airline = document.getElementById('chart-airline').value;
 
       return history.filter(h => {
@@ -930,7 +1051,7 @@
 
       const label = direction === 'outbound' ? 'Hinflug' : 'Rückflug';
       if (!legs.length) {
-        tbody.innerHTML = `<tr><td colspan="10" class="empty">Keine ${label}-Strecken für die gewählten Filter (Hin: Nonstop ≤16 h · Rück: Stopps nur EU/SEA).</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="10" class="empty">Keine ${label}-Strecken für die gewählten Filter (${CABIN_LABELS[selectedCabin()] || selectedCabin()}, Dauer/Stopp-Regeln).</td></tr>`;
         return;
       }
       tbody.innerHTML = legs.map(l => `
@@ -941,7 +1062,7 @@
           <td>${l.arrival_time || '–'}</td>
           <td>${formatLegDuration(l)}</td>
           <td>${l.aircraft || '–'}</td>
-          <td><span class="badge ${l.cabin === 'PREMIUM_ECONOMY' ? 'pe' : ''}">${l.cabin === 'PREMIUM_ECONOMY' ? 'PE' : 'Eco'}</span></td>
+          <td>${formatCabinBadge(l.cabin)}</td>
           <td>${formatLegAirline(l)}</td>
           <td>${pricePerPerson(l).toLocaleString('de-DE')} €</td>
           <td>${linkCell(l.booking_url, legAirlineCode(l), direction === 'outbound' ? 'Hin' : 'Rück')}</td>
@@ -978,7 +1099,21 @@
       });
     }
 
-    ['chart-direction', 'chart-origin', 'chart-cabin', 'chart-airline'].forEach(id => {
+    ['pref-cabin', 'pref-max-outbound-hours', 'pref-max-inbound-hours'].forEach(id => {
+      document.getElementById(id).addEventListener('change', () => {
+        savePreferences();
+        applyViewFilters();
+        renderChart();
+      });
+      if (id !== 'pref-cabin') {
+        document.getElementById(id).addEventListener('input', () => {
+          savePreferences();
+          applyViewFilters();
+        });
+      }
+    });
+
+    ['chart-direction', 'chart-origin', 'chart-airline'].forEach(id => {
       document.getElementById(id).addEventListener('change', () => {
         if (id === 'chart-direction') {
           syncChartOriginOptions();
