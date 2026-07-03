@@ -107,7 +107,7 @@
     .segment-tabs button.active { background: var(--accent); border-color: var(--accent); }
     .legs-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+      grid-template-columns: 1fr;
       gap: 1.5rem;
     }
     .legs-panel {
@@ -165,40 +165,6 @@
       <p class="note" id="chart-note"></p>
     </section>
 
-    <section>
-      <h2>Gesamtkosten inkl. Anreise (beste Kombinationen)</h2>
-      <div class="filters">
-        <select id="table-cabin">
-          <option value="">Alle Kabinen</option>
-          <option value="PREMIUM_ECONOMY" selected>Premium Economy</option>
-          <option value="ECONOMY">Economy</option>
-        </select>
-        <select id="table-sort">
-          <option value="price">Preis pro Person aufsteigend</option>
-          <option value="origin">Abflughafen</option>
-        </select>
-      </div>
-      <div style="overflow-x:auto">
-        <table>
-          <thead>
-            <tr>
-              <th>Abflughafen</th>
-              <th>Anreise</th>
-              <th>Hinflug</th>
-              <th>Rückflug</th>
-              <th>Kabine</th>
-              <th>Flüge</th>
-              <th>Boden</th>
-              <th>Preis / Person</th>
-              <th>Fluggerät</th>
-              <th>Links</th>
-            </tr>
-          </thead>
-          <tbody id="offers-body"></tbody>
-        </table>
-      </div>
-    </section>
-
     <div class="legs-grid">
       <section class="legs-panel outbound">
         <h2>Hinflug → Bangkok (BKK)</h2>
@@ -213,7 +179,7 @@
                 <th class="sortable" data-sort="duration_minutes" data-label="Dauer">Dauer</th>
                 <th class="sortable" data-sort="aircraft" data-label="Fluggerät">Fluggerät</th>
                 <th class="sortable" data-sort="cabin" data-label="Kabine">Kabine</th>
-                <th class="sortable" data-sort="airline" data-label="Airline">Airline</th>
+                <th class="sortable" data-sort="airline" data-label="Anbieter">Anbieter</th>
                 <th class="sortable" data-sort="price" data-label="Preis / Person">Preis / Person</th>
                 <th>Links</th>
               </tr>
@@ -236,7 +202,7 @@
                 <th class="sortable" data-sort="duration_minutes" data-label="Dauer">Dauer</th>
                 <th class="sortable" data-sort="aircraft" data-label="Fluggerät">Fluggerät</th>
                 <th class="sortable" data-sort="cabin" data-label="Kabine">Kabine</th>
-                <th class="sortable" data-sort="airline" data-label="Airline">Airline</th>
+                <th class="sortable" data-sort="airline" data-label="Anbieter">Anbieter</th>
                 <th class="sortable" data-sort="price" data-label="Preis / Person">Preis / Person</th>
                 <th>Links</th>
               </tr>
@@ -261,10 +227,6 @@
     const ALLOWED_ORIGINS = new Set(['HAM', 'CPH']);
     const DIRECTION_LABELS = { outbound: 'Hinflug', inbound: 'Rückflug' };
     const ORIGIN_NAMES = { HAM: 'Hamburg', CPH: 'Kopenhagen' };
-    const GROUND_INFO = {
-      HAM: 'ca. 1 h Auto/Bahn',
-      CPH: 'ca. 6 h Bahn (Lübeck Hbf)'
-    };
 
     function pricePerPerson(row) {
       return row.price_eur_per_person ?? row.price_eur_total ?? 0;
@@ -311,25 +273,7 @@
       return mins != null ? formatDurationClock(mins) : '–';
     }
 
-    function formatFlightCell(time, duration) {
-      if (!time && !duration) return '–';
-      const parts = [];
-      if (time) parts.push(`Abflug ${time}`);
-      if (duration != null && duration !== '') {
-        const mins = typeof duration === 'number' ? duration : parseDurationMinutes(duration);
-        parts.push(mins != null ? formatDurationClock(mins) : duration);
-      }
-      return parts.join(' · ');
-    }
-
-    function formatAircraft(outAircraft, inAircraft) {
-      const parts = [];
-      if (outAircraft) parts.push(`Hin: ${outAircraft}`);
-      if (inAircraft) parts.push(`Rück: ${inAircraft}`);
-      return parts.length ? parts.join('<br>') : '–';
-    }
-
-    const AEROLOPA_SLUG = {
+    function buildAeroLopaUrl(airlineCode) {
       SQ: 'sq', CX: 'cx', TG: 'tg', LH: 'lh', AF: 'af', KL: 'kl', TK: 'tk',
       QR: 'qr', EK: 'ek', EY: 'ey', AY: 'ay', SK: 'sk', BA: 'ba', LX: 'lx', OS: 'os', GF: 'gf'
     };
@@ -339,35 +283,17 @@
       return slug ? `https://www.aerolopa.com/${slug}` : 'https://www.aerolopa.com/';
     }
 
-    function comboAeroLopaLinks(r) {
-      const outLeg = findLegForCombo('outbound', r.origin, r.cabin, r.departure);
-      const inLeg = findLegForCombo('inbound', r.origin, r.cabin, r.return);
-      const links = [];
-      links.push(`<a class="link" href="${buildAeroLopaUrl(legAirlineCode(outLeg) || r.outbound_airlines?.[0])}" target="_blank" rel="noopener">Hin · AeroLOPA</a>`);
-      links.push(`<a class="link" href="${buildAeroLopaUrl(legAirlineCode(inLeg) || r.inbound_airlines?.[0])}" target="_blank" rel="noopener">Rück · AeroLOPA</a>`);
-      return links.join('');
-    }
-
     function linkCell(bookingUrl, airlineCode, label) {
       const links = [];
       if (bookingUrl) {
         links.push(`<a class="link" href="${bookingUrl}" target="_blank" rel="noopener">Buchen${label ? ' (' + label + ')' : ''}</a>`);
       }
-      links.push(`<a class="link" href="${buildAeroLopaUrl(airlineCode)}" target="_blank" rel="noopener">Fluggerät (AeroLOPA)</a>`);
+      links.push(`<a class="link" href="${buildAeroLopaUrl(airlineCode)}" target="_blank" rel="noopener">AeroLOPA</a>`);
       return `<div class="link-stack">${links.join('')}</div>`;
     }
 
     function legAirlineCode(leg) {
       return leg.primary_airline || legAirlineCodes(leg)[0] || null;
-    }
-
-    function findLegForCombo(direction, origin, cabin, date) {
-      const from = direction === 'outbound' ? origin : 'HKT';
-      const to = direction === 'outbound' ? 'BKK' : origin;
-      return (latest.legs || []).find(l =>
-        l.direction === direction && l.from === from && l.to === to &&
-        l.cabin === cabin && l.date === date
-      );
     }
 
     function normalizeForecastRoute(route) {
@@ -424,10 +350,6 @@
       latest = latestRes;
       history = historyRes;
       if (!latest.forecast && forecastRes) latest.forecast = forecastRes;
-      if (!latest.combinations?.length && latest.results?.length) {
-        latest.combinations = latest.results.filter(r => r.type === 'combination' || r.ground_cost_eur != null);
-      }
-      latest.combinations = filterAllowed(latest.combinations || []);
       latest.legs = filterAllowed(latest.legs || []);
       if (!selectedForecastRoute) {
         selectedForecastRoute = `${document.getElementById('chart-direction').value}-${document.getElementById('chart-origin').value}`;
@@ -435,17 +357,12 @@
       populateOriginFilter();
       renderSummary();
       renderForecast();
-      renderTable();
       renderLegs();
       renderChart();
       document.getElementById('updated-note').textContent =
         latest.fetched_at
           ? `Stand: ${latest.fetched_at} · alle Preise pro Person · Abflughäfen: Hamburg & Kopenhagen (täglich via GitHub Actions)`
           : 'Noch keine Daten – fetch_prices.py ausführen.';
-    }
-
-    function formatAirlines(codes) {
-      return (codes || []).map(c => AIRLINE_NAMES[c] || c).join(', ') || '–';
     }
 
     function legAirlineCodes(leg) {
@@ -633,38 +550,26 @@
       const airline = document.getElementById('chart-airline').value;
 
       return history.filter(h => {
-        if (h.record_type === 'leg' || h.direction) {
-          if (h.direction !== direction) return false;
-          if (cabin && h.cabin !== cabin) return false;
-          const airport = h.direction === 'outbound' ? h.from : h.to;
-          if (origin && airport !== origin) return false;
-          if (!ALLOWED_ORIGINS.has(airport)) return false;
-          if (direction === 'outbound' && h.to !== 'BKK') return false;
-          if (direction === 'inbound' && h.from !== 'HKT') return false;
-          if (airline && !(h.airlines || []).includes(airline) && h.airline_filter !== airline) return false;
-          return true;
-        }
-
-        if (h.record_type === 'combination' || h.ground_cost_eur != null) {
-          if (cabin && h.cabin !== cabin) return false;
-          if (!ALLOWED_ORIGINS.has(h.origin)) return false;
-          if (origin && h.origin !== origin) return false;
-          if (airline && !(h.airlines || []).includes(airline) && h.airline_filter !== airline) return false;
-          const legPrice = direction === 'outbound' ? h.outbound_price_eur : h.inbound_price_eur;
-          return legPrice != null;
-        }
-
-        return false;
+        if (h.record_type !== 'leg' && !h.direction) return false;
+        if (h.direction !== direction) return false;
+        if (cabin && h.cabin !== cabin) return false;
+        const airport = direction === 'outbound' ? h.from : h.to;
+        if (origin && airport !== origin) return false;
+        if (!ALLOWED_ORIGINS.has(airport)) return false;
+        if (direction === 'outbound' && h.to !== 'BKK') return false;
+        if (direction === 'inbound' && h.from !== 'HKT') return false;
+        if (airline && !(h.airlines || []).includes(airline) && h.airline_filter !== airline) return false;
+        return true;
       });
     }
 
     function historyPointPrice(h) {
-      const direction = document.getElementById('chart-direction').value;
-      if (h.record_type === 'leg' || h.direction) {
-        return pricePerPerson(h);
-      }
-      const legPrice = direction === 'outbound' ? h.outbound_price_eur : h.inbound_price_eur;
-      return legPrice != null ? Number(legPrice) : null;
+      return pricePerPerson(h);
+    }
+
+    function clampForecastPrice(value, floor) {
+      if (value == null) return null;
+      return Math.max(floor, value);
     }
 
     function renderChart() {
@@ -692,8 +597,12 @@
         || fc?.routes?.[0];
       const proj = routeFc?.projection_curve || [];
       const projLabels = proj.map(p => p.date);
-      const projExpected = proj.map(p => p.price_expected);
-      const projLow = proj.map(p => p.price_low);
+      const priceFloor = Math.max(
+        50,
+        ...(histData.length ? histData : [routeFc?.current_price_eur || 100]).map(p => p * 0.35)
+      );
+      const projExpected = proj.map(p => clampForecastPrice(p.price_expected, priceFloor));
+      const projLow = proj.map(p => clampForecastPrice(p.price_low, priceFloor));
       const projHigh = proj.map(p => p.price_high);
 
       const allLabels = [...new Set([...histLabels, ...projLabels])].sort();
@@ -804,48 +713,6 @@
         noteParts.push(`${dir} ${routeFc.route_label || routeFc.origin_label}: Prognose basiert auf ${routeFc.trend.data_points} Messpunkten + Buchungsfenster-Modell`);
       }
       document.getElementById('chart-note').textContent = noteParts.join(' · ');
-    }
-
-    function renderTable() {
-      const cabin = document.getElementById('table-cabin').value;
-      const sort = document.getElementById('table-sort').value;
-      let rows = [...(latest.combinations || [])];
-      if (cabin) rows = rows.filter(r => r.cabin === cabin);
-      if (sort === 'price') rows.sort((a, b) => pricePerPerson(a) - pricePerPerson(b));
-      else rows.sort((a, b) => a.origin.localeCompare(b.origin));
-
-      const tbody = document.getElementById('offers-body');
-      if (!rows.length) {
-        tbody.innerHTML = '<tr><td colspan="10" class="empty">Keine Kombinationen für die gewählten Filter.</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = rows.map(r => `
-        <tr>
-          <td><strong>${r.origin_label || ORIGIN_NAMES[r.origin] || r.origin}</strong></td>
-          <td>${GROUND_INFO[r.origin] || r.ground_mode || '–'}</td>
-          <td>
-            ${formatDateShort(r.departure)}
-            <div class="flight-meta">${formatFlightCell(r.outbound_departure_time, r.outbound_duration)}</div>
-          </td>
-          <td>
-            ${formatDateShort(r.return)}
-            <div class="flight-meta">${formatFlightCell(r.inbound_departure_time, r.inbound_duration)}</div>
-          </td>
-          <td><span class="badge ${r.cabin === 'PREMIUM_ECONOMY' ? 'pe' : ''}">${r.cabin === 'PREMIUM_ECONOMY' ? 'Premium Eco' : 'Economy'}</span></td>
-          <td>${formatAirlines([...(r.outbound_airlines||[]), ...(r.inbound_airlines||[])])}</td>
-          <td>${(r.ground_cost_eur||0).toLocaleString('de-DE')} €</td>
-          <td><strong>${pricePerPerson(r).toLocaleString('de-DE')} €</strong></td>
-          <td>${formatAircraft(r.outbound_aircraft, r.inbound_aircraft)}</td>
-          <td>
-            <div class="link-stack">
-              ${r.outbound_booking_url ? `<a class="link" href="${r.outbound_booking_url}" target="_blank" rel="noopener">Hin buchen</a>` : ''}
-              ${r.inbound_booking_url ? `<a class="link" href="${r.inbound_booking_url}" target="_blank" rel="noopener">Rück buchen</a>` : ''}
-              ${comboAeroLopaLinks(r)}
-            </div>
-          </td>
-        </tr>
-      `).join('');
     }
 
     function legSortValue(leg, key) {
@@ -968,10 +835,6 @@
         renderChart();
       });
     });
-    ['table-cabin', 'table-sort'].forEach(id => {
-      document.getElementById(id).addEventListener('change', renderTable);
-    });
-
     initLegSortHandlers();
     loadData();
   </script>

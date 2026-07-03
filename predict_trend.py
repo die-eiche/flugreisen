@@ -248,6 +248,13 @@ def confidence_level(trend: TrendStats) -> str:
     return "low"
 
 
+MIN_PRICE_EUR = 50.0
+
+
+def _clamp_price(value: float, floor: float) -> float:
+    return max(floor, value)
+
+
 def project_price(
     current: float,
     trend: TrendStats,
@@ -269,11 +276,15 @@ def project_price(
     w_hist = min(trend.data_points / 14, 1.0) * 0.6
     w_curve = 1.0 - w_hist
     expected = w_hist * trend_price + w_curve * curve_price
+    floor = max(MIN_PRICE_EUR, current * 0.35)
+    expected = _clamp_price(expected, floor)
+    trend_price = _clamp_price(trend_price, floor)
+    curve_price = _clamp_price(curve_price, floor)
 
     spread = 0.04 + (0.02 if trend.data_points < 5 else 0.01)
     return {
         "expected": round(expected, 2),
-        "low": round(expected * (1 - spread), 2),
+        "low": round(_clamp_price(expected * (1 - spread), floor), 2),
         "high": round(expected * (1 + spread), 2),
     }
 
