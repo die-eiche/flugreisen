@@ -28,7 +28,8 @@ HISTORY_FILE = DATA_DIR / "history.json"
 LATEST_FILE = DATA_DIR / "latest.json"
 CONFIG_FILE = ROOT / "config.yaml"
 
-ALLOWED_ORIGINS = {"HAM", "CPH"}
+OUTBOUND_ORIGINS = {"HAM", "CPH"}
+ALLOWED_ORIGINS = {"HAM", "CPH", "FRA"}
 
 AEROLOPA_AIRLINE = {
     "SQ": "sq",
@@ -437,6 +438,7 @@ def main() -> int:
             if c in ALLOWED_ORIGINS
         ]
     origin_codes = [o["code"] for o in origins_cfg]
+    origin_meta = {o["code"]: o for o in origins_cfg}
     date_pairs = cfg["date_pairs"]
     cabins = cfg["cabins"]
     preferred = cfg.get("preferred_airlines", [])
@@ -463,12 +465,17 @@ def main() -> int:
 
         if search_mode in ("separate", "both"):
             for origin in origin_codes:
+                meta = origin_meta.get(origin, {})
                 for cabin in cabins:
                     for airline in airline_filters:
                         for direction, fro, to in [
                             ("outbound", origin, "BKK"),
                             ("inbound", "HKT", origin),
                         ]:
+                            if direction == "outbound" and (
+                                meta.get("inbound_only") or origin not in OUTBOUND_ORIGINS
+                            ):
+                                continue
                             travel_date = dep if direction == "outbound" else ret
                             try:
                                 row = search_one_way(

@@ -120,8 +120,8 @@ def linear_trend(dated_prices: list[tuple[date, float]]) -> TrendStats:
     return TrendStats(slope, round(weekly_pct, 2), n, direction)
 
 
-ALLOWED_ORIGINS = {"HAM", "CPH"}
-ORIGIN_LABELS = {"HAM": "Hamburg", "CPH": "Kopenhagen"}
+ALLOWED_ORIGINS = {"HAM", "CPH", "FRA"}
+ORIGIN_LABELS = {"HAM": "Hamburg", "CPH": "Kopenhagen", "FRA": "Frankfurt"}
 DIRECTION_LABELS = {
     "outbound": "Hinflug",
     "inbound": "Rückflug",
@@ -493,7 +493,7 @@ def run_forecast(as_of: date | None = None) -> dict:
         "methodology": {
             "sources": [
                 "Eigene Preishistorie je Einzelstrecke (tägliche Tracker-Daten, lineare Regression)",
-                "Getrennte Prognosen für Hinflug (HAM/CPH→BKK) und Rückflug (HKT→HAM/CPH)",
+                "Getrennte Prognosen für Hinflug (HAM/CPH→BKK) und Rückflug (HKT→HAM/CPH/FRA)",
                 "Buchungsfenster-Heuristik für Langstrecken (EU→Asien, 8–16 Wo. vor Abflug)",
             ],
             "disclaimer": (

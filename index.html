@@ -128,7 +128,8 @@
       Hinflug: Abflughafen → Bangkok (BKK) · Rückflug: Phuket (HKT) → Abflughafen ·
       Abflug frühestens 03.02.2027, bevorzugt 04.02.2027 · 1 Person ·
       Premium Economy · Preise pro Person inkl. Anreise (Bahn/Auto) ·
-      Abflughäfen: Hamburg & Kopenhagen · Wunsch-Airlines: SQ, CX, TG
+      Abflughäfen Hinflug: Hamburg & Kopenhagen · Rückflug zusätzlich Frankfurt (FRA) ·
+      Wunsch-Airlines: SQ, CX, TG · Rückflug auch Condor (DE)
     </p>
 
     <div class="cards" id="summary-cards"></div>
@@ -159,6 +160,7 @@
           <option value="SQ">Singapore Airlines (SQ)</option>
           <option value="CX">Cathay Pacific (CX)</option>
           <option value="TG">Thai Airways (TG)</option>
+          <option value="DE">Condor (DE)</option>
         </select>
       </div>
       <div class="chart-wrap"><canvas id="price-chart"></canvas></div>
@@ -219,16 +221,17 @@
 
   <script>
     const AIRLINE_NAMES = {
-      SQ: 'Singapore Airlines', CX: 'Cathay Pacific', TG: 'Thai Airways',
+      SQ: 'Singapore Airlines', CX: 'Cathay Pacific', TG: 'Thai Airways', DE: 'Condor',
       LH: 'Lufthansa', AF: 'Air France', KL: 'KLM', TK: 'Turkish Airlines',
       QR: 'Qatar Airways', EK: 'Emirates', EY: 'Etihad', AY: 'Finnair',
       SK: 'SAS', BA: 'British Airways', LX: 'Swiss', OS: 'Austrian',
       GF: 'Gulf Air', MU: 'China Eastern', CA: 'Air China', NH: 'ANA',
       OZ: 'Asiana', VN: 'Vietnam Airlines'
     };
-    const ALLOWED_ORIGINS = new Set(['HAM', 'CPH']);
+    const OUTBOUND_ORIGINS = new Set(['HAM', 'CPH']);
+    const INBOUND_DESTINATIONS = new Set(['HAM', 'CPH', 'FRA']);
     const DIRECTION_LABELS = { outbound: 'Hinflug', inbound: 'Rückflug' };
-    const ORIGIN_NAMES = { HAM: 'Hamburg', CPH: 'Kopenhagen' };
+    const ORIGIN_NAMES = { HAM: 'Hamburg', CPH: 'Kopenhagen', FRA: 'Frankfurt' };
     const OUTBOUND_MAX_MINUTES = 16 * 60;
 
     const EUROPE_AIRPORTS = new Set([
@@ -261,12 +264,12 @@
     function filterAllowed(rows) {
       return rows.filter(r => {
         if (r.direction === 'outbound') {
-          return ALLOWED_ORIGINS.has(r.from) && r.to === 'BKK';
+          return OUTBOUND_ORIGINS.has(r.from) && r.to === 'BKK';
         }
         if (r.direction === 'inbound') {
-          return r.from === 'HKT' && ALLOWED_ORIGINS.has(r.to);
+          return r.from === 'HKT' && INBOUND_DESTINATIONS.has(r.to);
         }
-        return ALLOWED_ORIGINS.has(r.origin || r.from);
+        return OUTBOUND_ORIGINS.has(r.origin || r.from) || INBOUND_DESTINATIONS.has(r.origin || r.to);
       });
     }
 
@@ -341,7 +344,7 @@
     }
 
     const AEROLOPA_SLUG = {
-      SQ: 'sq', CX: 'cx', TG: 'tg', LH: 'lh', AF: 'af', KL: 'kl', TK: 'tk',
+      SQ: 'sq', CX: 'cx', TG: 'tg', DE: 'de', LH: 'lh', AF: 'af', KL: 'kl', TK: 'tk',
       QR: 'qr', EK: 'ek', EY: 'ey', AY: 'ay', SK: 'sk', BA: 'ba', LX: 'lx', OS: 'os', GF: 'gf'
     };
 
@@ -485,6 +488,15 @@
               ? `${pricePerPerson(leg).toLocaleString('de-DE')} € <small>pro Person</small>`
               : '–';
           })()
+        },
+        {
+          label: 'Rückflug HKT → Frankfurt (PE)',
+          value: (() => {
+            const leg = bestLeg('inbound', 'FRA');
+            return leg
+              ? `${pricePerPerson(leg).toLocaleString('de-DE')} € <small>pro Person</small>`
+              : '–';
+          })()
         }
       ];
 
@@ -508,10 +520,10 @@
 
       const outbound = (fc.outbound_routes || fc.routes.filter(r => r.direction === 'outbound'))
         .map(normalizeForecastRoute)
-        .filter(r => ALLOWED_ORIGINS.has(r.origin));
+        .filter(r => OUTBOUND_ORIGINS.has(r.origin));
       const inbound = (fc.inbound_routes || fc.routes.filter(r => r.direction === 'inbound'))
         .map(normalizeForecastRoute)
-        .filter(r => ALLOWED_ORIGINS.has(r.origin));
+        .filter(r => INBOUND_DESTINATIONS.has(r.origin));
       const routes = [...outbound, ...inbound];
 
       if (!routes.length) {
@@ -607,8 +619,26 @@
       note.textContent = fc.methodology?.disclaimer || '';
     }
 
+    const CHART_ORIGIN_OPTIONS = {
+      outbound: [['HAM', 'Hamburg'], ['CPH', 'Kopenhagen']],
+      inbound: [['HAM', 'Hamburg'], ['CPH', 'Kopenhagen'], ['FRA', 'Frankfurt (FRA)']]
+    };
+
+    function syncChartOriginOptions() {
+      const direction = document.getElementById('chart-direction').value;
+      const sel = document.getElementById('chart-origin');
+      const current = sel.value;
+      const options = CHART_ORIGIN_OPTIONS[direction] || CHART_ORIGIN_OPTIONS.outbound;
+      sel.innerHTML = options.map(([code, label]) => `<option value="${code}">${label}</option>`).join('');
+      if (options.some(([code]) => code === current)) {
+        sel.value = current;
+      } else {
+        sel.value = options[0][0];
+      }
+    }
+
     function populateOriginFilter() {
-      // feste Auswahl HAM/CPH – nichts zu tun
+      syncChartOriginOptions();
     }
 
     function filterHistory() {
@@ -623,7 +653,8 @@
         if (cabin && h.cabin !== cabin) return false;
         const airport = direction === 'outbound' ? h.from : h.to;
         if (origin && airport !== origin) return false;
-        if (!ALLOWED_ORIGINS.has(airport)) return false;
+        const allowed = direction === 'outbound' ? OUTBOUND_ORIGINS : INBOUND_DESTINATIONS;
+        if (!allowed.has(airport)) return false;
         if (direction === 'outbound' && h.to !== 'BKK') return false;
         if (direction === 'inbound' && h.from !== 'HKT') return false;
         if (airline && !(h.airlines || []).includes(airline) && h.airline_filter !== airline) return false;
@@ -949,6 +980,9 @@
 
     ['chart-direction', 'chart-origin', 'chart-cabin', 'chart-airline'].forEach(id => {
       document.getElementById(id).addEventListener('change', () => {
+        if (id === 'chart-direction') {
+          syncChartOriginOptions();
+        }
         const direction = document.getElementById('chart-direction').value;
         const origin = document.getElementById('chart-origin').value;
         selectedForecastRoute = `${direction}-${origin}`;
