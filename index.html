@@ -168,6 +168,7 @@
     <div class="legs-grid">
       <section class="legs-panel outbound">
         <h2>Hinflug → Bangkok (BKK)</h2>
+        <p class="note" style="margin-top:0;margin-bottom:0.75rem">Nur Nonstop, max. 16 h Flugzeit</p>
         <div style="overflow-x:auto">
           <table id="outbound-legs-table" class="legs-table">
             <thead>
@@ -191,6 +192,7 @@
 
       <section class="legs-panel inbound">
         <h2>Rückflug Phuket (HKT) → Deutschland</h2>
+        <p class="note" style="margin-top:0;margin-bottom:0.75rem">Zwischenstopps nur in Europa oder Südostasien (kein Naher Osten)</p>
         <div style="overflow-x:auto">
           <table id="inbound-legs-table" class="legs-table">
             <thead>
@@ -227,6 +229,30 @@
     const ALLOWED_ORIGINS = new Set(['HAM', 'CPH']);
     const DIRECTION_LABELS = { outbound: 'Hinflug', inbound: 'Rückflug' };
     const ORIGIN_NAMES = { HAM: 'Hamburg', CPH: 'Kopenhagen' };
+    const OUTBOUND_MAX_MINUTES = 16 * 60;
+
+    const EUROPE_AIRPORTS = new Set([
+      'HAM', 'FRA', 'MUC', 'BER', 'DUS', 'CGN', 'STR', 'HAJ', 'NUE', 'LEJ', 'BRE', 'DTM', 'DRS', 'FMO', 'PAD', 'FDH',
+      'CPH', 'ARN', 'OSL', 'HEL', 'GOT', 'BGO', 'TRD', 'AAL', 'BLL', 'TLL', 'RIX', 'VNO', 'KEF',
+      'AMS', 'EIN', 'RTM', 'CDG', 'ORY', 'BVA', 'BRU', 'CRL', 'LUX', 'LHR', 'LGW', 'STN', 'LTN', 'MAN', 'BHX', 'EDI', 'GLA', 'DUB', 'SNN', 'ORK',
+      'MAD', 'BCN', 'AGP', 'PMI', 'FCO', 'MXP', 'LIN', 'VCE', 'NAP', 'ATH', 'SKG', 'LIS', 'OPO', 'FAO',
+      'VIE', 'SZG', 'INN', 'ZRH', 'GVA', 'BSL', 'PRG', 'BRQ', 'WAW', 'KRK', 'GDN', 'KTW', 'BUD', 'OTP', 'SOF', 'ZAG', 'LJU', 'BEG', 'SKP', 'TIA',
+      'NCE', 'LYS', 'MRS', 'TLS', 'BOD', 'NTE', 'BIO', 'SVQ', 'LPA', 'TFS'
+    ]);
+
+    const SE_ASIA_NEAR_THAILAND = new Set([
+      'BKK', 'DMK', 'HKT', 'CNX', 'HDY', 'KBV', 'USM', 'UTP',
+      'SIN', 'KUL', 'PEN', 'BKI', 'CGK', 'DPS', 'SUB',
+      'HKG', 'MFM', 'CAN', 'SZX', 'PVG', 'PEK', 'CTU', 'KMG',
+      'MNL', 'CEB', 'SGN', 'HAN', 'DAD', 'REP', 'PNH', 'VTE', 'RGN', 'NYT',
+      'TPE', 'TSA', 'RGN', 'MDL', 'LPQ'
+    ]);
+
+    const MIDDLE_EAST_AIRPORTS = new Set([
+      'DXB', 'DWC', 'AUH', 'SHJ', 'RKT', 'DOH', 'BAH', 'MCT', 'KWI', 'RUH', 'JED', 'DMM', 'MED', 'AHB', 'TUU', 'ELQ',
+      'AMM', 'BEY', 'TLV', 'CAI', 'HRG', 'SSH', 'BGW', 'BSR', 'IKA', 'THR', 'MHD', 'EVN', 'TBS', 'GYD',
+      'IST', 'SAW', 'ESB', 'ADB', 'AYT', 'DLM', 'BJV'
+    ]);
 
     function pricePerPerson(row) {
       return row.price_eur_per_person ?? row.price_eur_total ?? 0;
@@ -242,6 +268,47 @@
         }
         return ALLOWED_ORIGINS.has(r.origin || r.from);
       });
+    }
+
+    function legDurationMinutes(leg) {
+      return leg.duration_minutes ?? parseDurationMinutes(leg.duration);
+    }
+
+    function legStopCount(leg) {
+      if (leg.stops != null) return leg.stops;
+      const segs = leg.segments || [];
+      return Math.max(0, segs.length - 1);
+    }
+
+    function legLayoverAirports(leg) {
+      const segs = leg.segments || [];
+      if (segs.length >= 2) return segs.slice(0, -1).map(s => s.to).filter(Boolean);
+      if (legStopCount(leg) > 0) return null;
+      return [];
+    }
+
+    function isLayoverAllowed(airport) {
+      if (MIDDLE_EAST_AIRPORTS.has(airport)) return false;
+      return EUROPE_AIRPORTS.has(airport) || SE_ASIA_NEAR_THAILAND.has(airport);
+    }
+
+    function passesLegRules(leg) {
+      if (leg.direction === 'outbound') {
+        const mins = legDurationMinutes(leg);
+        if (mins != null && mins > OUTBOUND_MAX_MINUTES) return false;
+        return legStopCount(leg) === 0;
+      }
+      if (leg.direction === 'inbound') {
+        const layovers = legLayoverAirports(leg);
+        if (layovers === null) return false;
+        if (!layovers.length) return true;
+        return layovers.every(isLayoverAllowed);
+      }
+      return true;
+    }
+
+    function filterLegs(rows) {
+      return filterAllowed(rows).filter(passesLegRules);
     }
 
     function formatDateShort(iso) {
@@ -350,7 +417,7 @@
       latest = latestRes;
       history = historyRes;
       if (!latest.forecast && forecastRes) latest.forecast = forecastRes;
-      latest.legs = filterAllowed(latest.legs || []);
+      latest.legs = filterLegs(latest.legs || []);
       if (!selectedForecastRoute) {
         selectedForecastRoute = `${document.getElementById('chart-direction').value}-${document.getElementById('chart-origin').value}`;
       }
@@ -769,8 +836,8 @@
     function renderLegsTable(direction, tbodyId, tableId, sortState) {
       const tbody = document.getElementById(tbodyId);
       let legs = (latest.legs || []).filter(l => {
-        if (direction === 'outbound') return ALLOWED_ORIGINS.has(l.from) && l.to === 'BKK';
-        if (direction === 'inbound') return l.from === 'HKT' && ALLOWED_ORIGINS.has(l.to);
+        if (direction === 'outbound') return l.direction === 'outbound';
+        if (direction === 'inbound') return l.direction === 'inbound';
         return false;
       });
       legs = sortLegRows(legs, sortState);
@@ -778,7 +845,7 @@
 
       const label = direction === 'outbound' ? 'Hinflug' : 'Rückflug';
       if (!legs.length) {
-        tbody.innerHTML = `<tr><td colspan="10" class="empty">Noch keine ${label}-Strecken geladen.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="10" class="empty">Keine ${label}-Strecken für die gewählten Filter (Hin: Nonstop ≤16 h · Rück: Stopps nur EU/SEA).</td></tr>`;
         return;
       }
       tbody.innerHTML = legs.map(l => `
