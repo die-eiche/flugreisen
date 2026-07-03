@@ -259,17 +259,45 @@
       return parts.length ? parts.join('<br>') : '–';
     }
 
-    function linkCell(bookingUrl, reviewUrl, label) {
+    const AEROLOPA_SLUG = {
+      SQ: 'sq', CX: 'cx', TG: 'tg', LH: 'lh', AF: 'af', KL: 'kl', TK: 'tk',
+      QR: 'qr', EK: 'ek', EY: 'ey', AY: 'ay', SK: 'sk', BA: 'ba', LX: 'lx', OS: 'os', GF: 'gf'
+    };
+
+    function buildAeroLopaUrl(airlineCode) {
+      const slug = airlineCode && AEROLOPA_SLUG[airlineCode];
+      return slug ? `https://www.aerolopa.com/${slug}` : 'https://www.aerolopa.com/';
+    }
+
+    function comboAeroLopaLinks(r) {
+      const outLeg = findLegForCombo('outbound', r.origin, r.cabin, r.departure);
+      const inLeg = findLegForCombo('inbound', r.origin, r.cabin, r.return);
+      const links = [];
+      links.push(`<a class="link" href="${buildAeroLopaUrl(legAirlineCode(outLeg) || r.outbound_airlines?.[0])}" target="_blank" rel="noopener">Hin · AeroLOPA</a>`);
+      links.push(`<a class="link" href="${buildAeroLopaUrl(legAirlineCode(inLeg) || r.inbound_airlines?.[0])}" target="_blank" rel="noopener">Rück · AeroLOPA</a>`);
+      return links.join('');
+    }
+
+    function linkCell(bookingUrl, airlineCode, label) {
       const links = [];
       if (bookingUrl) {
         links.push(`<a class="link" href="${bookingUrl}" target="_blank" rel="noopener">Buchen${label ? ' (' + label + ')' : ''}</a>`);
       }
-      if (reviewUrl) {
-        links.push(`<a class="link" href="${reviewUrl}" target="_blank" rel="noopener">Fluggerät (AeroLOPA)</a>`);
-      }
-      return links.length
-        ? `<div class="link-stack">${links.join('')}</div>`
-        : '–';
+      links.push(`<a class="link" href="${buildAeroLopaUrl(airlineCode)}" target="_blank" rel="noopener">Fluggerät (AeroLOPA)</a>`);
+      return `<div class="link-stack">${links.join('')}</div>`;
+    }
+
+    function legAirlineCode(leg) {
+      return leg.primary_airline || legAirlineCodes(leg)[0] || null;
+    }
+
+    function findLegForCombo(direction, origin, cabin, date) {
+      const from = direction === 'outbound' ? origin : 'HKT';
+      const to = direction === 'outbound' ? 'BKK' : origin;
+      return (latest.legs || []).find(l =>
+        l.direction === direction && l.from === from && l.to === to &&
+        l.cabin === cabin && l.date === date
+      );
     }
 
     function normalizeForecastRoute(route) {
@@ -742,8 +770,7 @@
             <div class="link-stack">
               ${r.outbound_booking_url ? `<a class="link" href="${r.outbound_booking_url}" target="_blank" rel="noopener">Hin buchen</a>` : ''}
               ${r.inbound_booking_url ? `<a class="link" href="${r.inbound_booking_url}" target="_blank" rel="noopener">Rück buchen</a>` : ''}
-              ${r.outbound_aircraft_review_url ? `<a class="link" href="${r.outbound_aircraft_review_url}" target="_blank" rel="noopener">Hin · AeroLOPA</a>` : ''}
-              ${r.inbound_aircraft_review_url ? `<a class="link" href="${r.inbound_aircraft_review_url}" target="_blank" rel="noopener">Rück · AeroLOPA</a>` : ''}
+              ${comboAeroLopaLinks(r)}
             </div>
           </td>
         </tr>
@@ -829,7 +856,7 @@
           <td><span class="badge ${l.cabin === 'PREMIUM_ECONOMY' ? 'pe' : ''}">${l.cabin === 'PREMIUM_ECONOMY' ? 'PE' : 'Eco'}</span></td>
           <td>${formatLegAirline(l)}</td>
           <td>${pricePerPerson(l).toLocaleString('de-DE')} €</td>
-          <td>${linkCell(l.booking_url, l.aircraft_review_url, l.direction === 'outbound' ? 'Hin' : 'Rück')}</td>
+          <td>${linkCell(l.booking_url, legAirlineCode(l), l.direction === 'outbound' ? 'Hin' : 'Rück')}</td>
         </tr>
       `).join('');
     }
