@@ -99,6 +99,15 @@ def linear_trend(dated_prices: list[tuple[date, float]]) -> TrendStats:
     num = sum((xs[i] - x_mean) * (ys[i] - y_mean) for i in range(n))
     den = sum((xs[i] - x_mean) ** 2 for i in range(n))
     slope = num / den if den else 0.0
+
+    # Bei wenigen Messpunkten Trend stark dämpfen (Ausreißer / Methodenwechsel)
+    if y_mean and n < 14:
+        max_weekly_pct = 0.03 if n < 5 else 0.05
+        max_slope = y_mean * max_weekly_pct / 7
+        slope = max(-max_slope, min(max_slope, slope))
+    if n < 3:
+        slope = 0.0
+
     weekly_pct = (slope * 7 / y_mean * 100) if y_mean else 0.0
 
     if weekly_pct < -0.8:
@@ -251,8 +260,15 @@ def confidence_level(trend: TrendStats) -> str:
 MIN_PRICE_EUR = 50.0
 
 
-def _clamp_price(value: float, floor: float) -> float:
-    return max(floor, value)
+def _price_bounds(current: float) -> tuple[float, float]:
+    """Untere/obere Plausibilitätsgrenze relativ zum aktuellen Preis."""
+    floor = max(MIN_PRICE_EUR, current * 0.55)
+    ceiling = current * 2.2
+    return floor, ceiling
+
+
+def _clamp_price(value: float, floor: float, ceiling: float) -> float:
+    return max(floor, min(ceiling, value))
 
 
 def project_price(
@@ -262,6 +278,8 @@ def project_price(
     days_to_dep_now: int,
 ) -> dict[str, float]:
     """Erwarteter, optimistischer und pessimistischer Preis."""
+    floor, ceiling = _price_bounds(current)
+
     # Historischer Trend
     trend_price = current + trend.slope_per_day * days_ahead
 
@@ -276,16 +294,27 @@ def project_price(
     w_hist = min(trend.data_points / 14, 1.0) * 0.6
     w_curve = 1.0 - w_hist
     expected = w_hist * trend_price + w_curve * curve_price
-    floor = max(MIN_PRICE_EUR, current * 0.35)
-    expected = _clamp_price(expected, floor)
-    trend_price = _clamp_price(trend_price, floor)
-    curve_price = _clamp_price(curve_price, floor)
+    expected = _clamp_price(expected, floor, ceiling)
 
-    spread = 0.04 + (0.02 if trend.data_points < 5 else 0.01)
+    # Unsicherheitsband: nach unten begrenzt, nach oben Buchungsfenster berücksichtigen
+    spread_down = 0.05 + (0.04 if trend.data_points < 5 else 0.02)
+    spread_up = 0.06 + (0.05 if trend.data_points < 5 else 0.03)
+    if future_days_to_dep <= 90:
+        spread_up += 0.04
+    if curve_adjust > 1.02:
+        spread_up += min(0.12, (curve_adjust - 1.0) * 0.5)
+
+    low = _clamp_price(expected * (1 - spread_down), floor, ceiling)
+    high = _clamp_price(expected * (1 + spread_up), floor, ceiling)
+    if low > expected:
+        low = _clamp_price(expected * 0.95, floor, ceiling)
+    if high < expected:
+        high = _clamp_price(expected * 1.05, floor, ceiling)
+
     return {
         "expected": round(expected, 2),
-        "low": round(_clamp_price(expected * (1 - spread), floor), 2),
-        "high": round(expected * (1 + spread), 2),
+        "low": round(low, 2),
+        "high": round(high, 2),
     }
 
 
@@ -471,7 +500,7 @@ def run_forecast(as_of: date | None = None) -> dict:
                 "Schätzung ohne Garantie. Keine Finanzberatung. "
                 "Tatsächliche Preise hängen von Verfügbarkeit, Sales und Airline ab."
             ),
-            "model_version": "1.1",
+            "model_version": "1.2",
         },
         "summary": _build_summary(best, outbound, inbound, as_of),
         "routes": routes,

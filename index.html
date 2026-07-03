@@ -417,6 +417,7 @@
       latest = latestRes;
       history = historyRes;
       if (!latest.forecast && forecastRes) latest.forecast = forecastRes;
+      if (latest.forecast) latest.forecast = sanitizeForecast(latest.forecast);
       latest.legs = filterLegs(latest.legs || []);
       if (!selectedForecastRoute) {
         selectedForecastRoute = `${document.getElementById('chart-direction').value}-${document.getElementById('chart-origin').value}`;
@@ -634,9 +635,44 @@
       return pricePerPerson(h);
     }
 
-    function clampForecastPrice(value, floor) {
-      if (value == null) return null;
-      return Math.max(floor, value);
+    function clampForecastPrice(value, current) {
+      if (value == null || Number.isNaN(value)) return null;
+      const floor = Math.max(50, (current || 100) * 0.55);
+      const ceiling = (current || 100) * 2.2;
+      return Math.min(ceiling, Math.max(floor, value));
+    }
+
+    function sanitizeForecastPoint(point, current) {
+      if (!point) return point;
+      const expected = clampForecastPrice(point.expected ?? point.price_expected, current);
+      let low = clampForecastPrice(point.low ?? point.price_low, current);
+      let high = clampForecastPrice(point.high ?? point.price_high, current);
+      if (expected != null) {
+        if (low == null || low > expected) low = Math.round(expected * 0.94 * 100) / 100;
+        if (high == null || high < expected) high = Math.round(expected * 1.08 * 100) / 100;
+      }
+      if (point.expected != null) {
+        return { ...point, expected, low, high };
+      }
+      return { ...point, price_expected: expected, price_low: low, price_high: high };
+    }
+
+    function sanitizeForecast(fc) {
+      if (!fc?.routes) return fc;
+      fc.routes.forEach(route => {
+        const cur = route.current_price_eur || 100;
+        if (route.forecast) {
+          ['in_30_days', 'in_60_days', 'at_departure_if_wait'].forEach(key => {
+            if (route.forecast[key]) {
+              route.forecast[key] = sanitizeForecastPoint(route.forecast[key], cur);
+            }
+          });
+        }
+        if (route.projection_curve) {
+          route.projection_curve = route.projection_curve.map(p => sanitizeForecastPoint(p, cur));
+        }
+      });
+      return fc;
     }
 
     function renderChart() {
@@ -664,13 +700,11 @@
         || fc?.routes?.[0];
       const proj = routeFc?.projection_curve || [];
       const projLabels = proj.map(p => p.date);
-      const priceFloor = Math.max(
-        50,
-        ...(histData.length ? histData : [routeFc?.current_price_eur || 100]).map(p => p * 0.35)
-      );
-      const projExpected = proj.map(p => clampForecastPrice(p.price_expected, priceFloor));
-      const projLow = proj.map(p => clampForecastPrice(p.price_low, priceFloor));
-      const projHigh = proj.map(p => p.price_high);
+      const current = routeFc?.current_price_eur || histData[histData.length - 1] || 100;
+      const sanitizedProj = proj.map(p => sanitizeForecastPoint(p, current));
+      const projExpected = sanitizedProj.map(p => p.price_expected);
+      const projLow = sanitizedProj.map(p => p.price_low);
+      const projHigh = sanitizedProj.map(p => p.price_high);
 
       const allLabels = [...new Set([...histLabels, ...projLabels])].sort();
       const actualSeries = allLabels.map(l => histLabels.includes(l) ? byDate[l] : null);
@@ -701,6 +735,15 @@
         return;
       }
 
+      const yMin = Math.max(
+        0,
+        Math.min(
+          ...(histData.length ? histData : [current]),
+          ...projLow.filter(v => v != null),
+          ...projExpected.filter(v => v != null)
+        ) * 0.85
+      );
+
       chart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -714,7 +757,30 @@
               fill: false,
               tension: 0.25,
               pointRadius: 5,
-              spanGaps: false
+              spanGaps: false,
+              order: 1
+            },
+            {
+              label: 'Prognose-Band (unten)',
+              data: bandLow,
+              borderColor: 'transparent',
+              backgroundColor: 'transparent',
+              fill: false,
+              tension: 0.25,
+              pointRadius: 0,
+              spanGaps: false,
+              order: 3
+            },
+            {
+              label: 'Prognose-Band (oben)',
+              data: bandHigh,
+              borderColor: 'rgba(93, 211, 158, 0.35)',
+              backgroundColor: 'rgba(93, 211, 158, 0.12)',
+              fill: '-1',
+              tension: 0.25,
+              pointRadius: 0,
+              spanGaps: false,
+              order: 2
             },
             {
               label: 'Prognose (erwartet)',
@@ -724,26 +790,8 @@
               fill: false,
               tension: 0.25,
               pointRadius: 3,
-              spanGaps: false
-            },
-            {
-              label: 'Prognose-Band (oben)',
-              data: bandHigh,
-              borderColor: 'rgba(93, 211, 158, 0.25)',
-              backgroundColor: 'rgba(93, 211, 158, 0.08)',
-              fill: '+1',
-              tension: 0.25,
-              pointRadius: 0,
-              spanGaps: false
-            },
-            {
-              label: 'Prognose-Band (unten)',
-              data: bandLow,
-              borderColor: 'rgba(93, 211, 158, 0.25)',
-              fill: false,
-              tension: 0.25,
-              pointRadius: 0,
-              spanGaps: false
+              spanGaps: false,
+              order: 0
             }
           ]
         },
@@ -752,13 +800,19 @@
           maintainAspectRatio: false,
           scales: {
             y: {
+              min: yMin,
               ticks: { callback: v => v.toLocaleString('de-DE') + ' €' },
               grid: { color: 'rgba(255,255,255,0.06)' }
             },
             x: { grid: { display: false } }
           },
           plugins: {
-            legend: { labels: { color: '#e8edf4' } },
+            legend: {
+              labels: {
+                color: '#e8edf4',
+                filter: item => !item.text.includes('(unten)')
+              }
+            },
             tooltip: {
               callbacks: {
                 label: ctx => {
