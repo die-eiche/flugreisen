@@ -105,6 +105,20 @@
       cursor: pointer;
     }
     .segment-tabs button.active { background: var(--accent); border-color: var(--accent); }
+    .legs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+      gap: 1.5rem;
+    }
+    .legs-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .legs-panel h2 { font-size: 1rem; margin: 0 0 0.75rem; }
+    .legs-panel.outbound { border-top: 3px solid var(--accent); }
+    .legs-panel.inbound { border-top: 3px solid var(--accent2); }
   </style>
 </head>
 <body>
@@ -185,30 +199,54 @@
       </div>
     </section>
 
-    <section>
-      <h2>Einzelne Flugstrecken</h2>
-      <div style="overflow-x:auto">
-        <table id="legs-table">
-          <thead>
-            <tr>
-              <th class="sortable" data-sort="direction" data-label="Richtung">Richtung</th>
-              <th class="sortable" data-sort="route" data-label="Strecke">Strecke</th>
-              <th class="sortable" data-sort="date" data-label="Datum">Datum</th>
-              <th class="sortable" data-sort="departure_time" data-label="Abflug">Abflug</th>
-              <th class="sortable" data-sort="arrival_time" data-label="Ankunft">Ankunft</th>
-              <th class="sortable" data-sort="duration_minutes" data-label="Dauer">Dauer</th>
-              <th class="sortable" data-sort="aircraft" data-label="Fluggerät">Fluggerät</th>
-              <th class="sortable" data-sort="cabin" data-label="Kabine">Kabine</th>
-              <th class="sortable" data-sort="airline" data-label="Airline">Airline</th>
-              <th class="sortable" data-sort="price" data-label="Preis / Person">Preis / Person</th>
-              <th>Links</th>
-            </tr>
-          </thead>
-          <tbody id="legs-body"></tbody>
-        </table>
-      </div>
-      <p class="note" id="updated-note"></p>
-    </section>
+    <div class="legs-grid">
+      <section class="legs-panel outbound">
+        <h2>Hinflug → Bangkok (BKK)</h2>
+        <div style="overflow-x:auto">
+          <table id="outbound-legs-table" class="legs-table">
+            <thead>
+              <tr>
+                <th class="sortable" data-sort="route" data-label="Strecke">Strecke</th>
+                <th class="sortable" data-sort="date" data-label="Datum">Datum</th>
+                <th class="sortable" data-sort="departure_time" data-label="Abflug">Abflug</th>
+                <th class="sortable" data-sort="arrival_time" data-label="Ankunft">Ankunft</th>
+                <th class="sortable" data-sort="duration_minutes" data-label="Dauer">Dauer</th>
+                <th class="sortable" data-sort="aircraft" data-label="Fluggerät">Fluggerät</th>
+                <th class="sortable" data-sort="cabin" data-label="Kabine">Kabine</th>
+                <th class="sortable" data-sort="airline" data-label="Airline">Airline</th>
+                <th class="sortable" data-sort="price" data-label="Preis / Person">Preis / Person</th>
+                <th>Links</th>
+              </tr>
+            </thead>
+            <tbody id="outbound-legs-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="legs-panel inbound">
+        <h2>Rückflug Phuket (HKT) → Deutschland</h2>
+        <div style="overflow-x:auto">
+          <table id="inbound-legs-table" class="legs-table">
+            <thead>
+              <tr>
+                <th class="sortable" data-sort="route" data-label="Strecke">Strecke</th>
+                <th class="sortable" data-sort="date" data-label="Datum">Datum</th>
+                <th class="sortable" data-sort="departure_time" data-label="Abflug">Abflug</th>
+                <th class="sortable" data-sort="arrival_time" data-label="Ankunft">Ankunft</th>
+                <th class="sortable" data-sort="duration_minutes" data-label="Dauer">Dauer</th>
+                <th class="sortable" data-sort="aircraft" data-label="Fluggerät">Fluggerät</th>
+                <th class="sortable" data-sort="cabin" data-label="Kabine">Kabine</th>
+                <th class="sortable" data-sort="airline" data-label="Airline">Airline</th>
+                <th class="sortable" data-sort="price" data-label="Preis / Person">Preis / Person</th>
+                <th>Links</th>
+              </tr>
+            </thead>
+            <tbody id="inbound-legs-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    <p class="note" id="updated-note"></p>
   </div>
 
   <script>
@@ -244,11 +282,43 @@
       });
     }
 
+    function formatDateShort(iso) {
+      if (!iso) return '–';
+      const parts = String(iso).split('-');
+      if (parts.length < 3) return iso;
+      return `${parts[2]}.${parts[1]}.`;
+    }
+
+    function parseDurationMinutes(value) {
+      if (typeof value === 'number' && !Number.isNaN(value)) return value;
+      const text = String(value || '');
+      const match = text.match(/(\d+)\s*h(?:\s*(\d+)\s*min)?/i);
+      if (match) {
+        return parseInt(match[1], 10) * 60 + (parseInt(match[2], 10) || 0);
+      }
+      return null;
+    }
+
+    function formatDurationClock(minutes) {
+      if (minutes == null || minutes < 0) return '–';
+      const h = Math.floor(minutes / 60);
+      const m = minutes % 60;
+      return `${h}'${String(m).padStart(2, '0')}''`;
+    }
+
+    function formatLegDuration(leg) {
+      const mins = leg.duration_minutes ?? parseDurationMinutes(leg.duration);
+      return mins != null ? formatDurationClock(mins) : '–';
+    }
+
     function formatFlightCell(time, duration) {
       if (!time && !duration) return '–';
       const parts = [];
       if (time) parts.push(`Abflug ${time}`);
-      if (duration) parts.push(duration);
+      if (duration != null && duration !== '') {
+        const mins = typeof duration === 'number' ? duration : parseDurationMinutes(duration);
+        parts.push(mins != null ? formatDurationClock(mins) : duration);
+      }
       return parts.join(' · ');
     }
 
@@ -329,7 +399,8 @@
     }
 
 
-    let legsSort = { key: 'price', asc: true };
+    let legsSortOutbound = { key: 'price', asc: true };
+    let legsSortInbound = { key: 'price', asc: true };
 
     let latest = { combinations: [], legs: [], results: [], forecast: null };
     let history = [];
@@ -754,11 +825,11 @@
           <td><strong>${r.origin_label || ORIGIN_NAMES[r.origin] || r.origin}</strong></td>
           <td>${GROUND_INFO[r.origin] || r.ground_mode || '–'}</td>
           <td>
-            ${r.departure}
+            ${formatDateShort(r.departure)}
             <div class="flight-meta">${formatFlightCell(r.outbound_departure_time, r.outbound_duration)}</div>
           </td>
           <td>
-            ${r.return}
+            ${formatDateShort(r.return)}
             <div class="flight-meta">${formatFlightCell(r.inbound_departure_time, r.inbound_duration)}</div>
           </td>
           <td><span class="badge ${r.cabin === 'PREMIUM_ECONOMY' ? 'pe' : ''}">${r.cabin === 'PREMIUM_ECONOMY' ? 'Premium Eco' : 'Economy'}</span></td>
@@ -779,8 +850,6 @@
 
     function legSortValue(leg, key) {
       switch (key) {
-        case 'direction':
-          return leg.direction === 'outbound' ? 0 : 1;
         case 'route':
           return `${leg.from}-${leg.to}`;
         case 'date':
@@ -790,7 +859,7 @@
         case 'arrival_time':
           return leg.arrival_time || '';
         case 'duration_minutes':
-          return leg.duration_minutes ?? -1;
+          return leg.duration_minutes ?? parseDurationMinutes(leg.duration) ?? -1;
         case 'aircraft':
           return leg.aircraft || '';
         case 'cabin':
@@ -804,8 +873,8 @@
       }
     }
 
-    function sortLegRows(rows) {
-      const { key, asc } = legsSort;
+    function sortLegRows(rows, sortState) {
+      const { key, asc } = sortState;
       return [...rows].sort((a, b) => {
         const va = legSortValue(a, key);
         const vb = legSortValue(b, key);
@@ -818,59 +887,73 @@
       });
     }
 
-    function updateLegSortHeaders() {
-      document.querySelectorAll('#legs-table th.sortable').forEach(th => {
+    function updateLegSortHeaders(tableId, sortState) {
+      document.querySelectorAll(`#${tableId} th.sortable`).forEach(th => {
         const label = th.dataset.label || th.textContent.trim();
         th.classList.remove('sorted-asc', 'sorted-desc');
         th.innerHTML = label;
-        if (th.dataset.sort === legsSort.key) {
-          th.classList.add(legsSort.asc ? 'sorted-asc' : 'sorted-desc');
-          th.innerHTML = `${label}<span class="sort-indicator">${legsSort.asc ? '▲' : '▼'}</span>`;
+        if (th.dataset.sort === sortState.key) {
+          th.classList.add(sortState.asc ? 'sorted-asc' : 'sorted-desc');
+          th.innerHTML = `${label}<span class="sort-indicator">${sortState.asc ? '▲' : '▼'}</span>`;
         }
       });
     }
 
-    function renderLegs() {
-      const tbody = document.getElementById('legs-body');
+    function renderLegsTable(direction, tbodyId, tableId, sortState) {
+      const tbody = document.getElementById(tbodyId);
       let legs = (latest.legs || []).filter(l => {
-        if (l.direction === 'outbound') return ALLOWED_ORIGINS.has(l.from) && l.to === 'BKK';
-        if (l.direction === 'inbound') return l.from === 'HKT' && ALLOWED_ORIGINS.has(l.to);
+        if (direction === 'outbound') return ALLOWED_ORIGINS.has(l.from) && l.to === 'BKK';
+        if (direction === 'inbound') return l.from === 'HKT' && ALLOWED_ORIGINS.has(l.to);
         return false;
       });
-      legs = sortLegRows(legs);
-      updateLegSortHeaders();
+      legs = sortLegRows(legs, sortState);
+      updateLegSortHeaders(tableId, sortState);
 
+      const label = direction === 'outbound' ? 'Hinflug' : 'Rückflug';
       if (!legs.length) {
-        tbody.innerHTML = '<tr><td colspan="11" class="empty">Noch keine Einzelstrecken geladen.</td></tr>';
+        tbody.innerHTML = `<tr><td colspan="10" class="empty">Noch keine ${label}-Strecken geladen.</td></tr>`;
         return;
       }
       tbody.innerHTML = legs.map(l => `
         <tr>
-          <td>${DIRECTION_LABELS[l.direction] || l.direction}</td>
           <td>${l.from} → ${l.to}</td>
-          <td>${l.date}</td>
+          <td>${formatDateShort(l.date)}</td>
           <td>${l.departure_time || '–'}</td>
           <td>${l.arrival_time || '–'}</td>
-          <td>${l.duration || '–'}</td>
+          <td>${formatLegDuration(l)}</td>
           <td>${l.aircraft || '–'}</td>
           <td><span class="badge ${l.cabin === 'PREMIUM_ECONOMY' ? 'pe' : ''}">${l.cabin === 'PREMIUM_ECONOMY' ? 'PE' : 'Eco'}</span></td>
           <td>${formatLegAirline(l)}</td>
           <td>${pricePerPerson(l).toLocaleString('de-DE')} €</td>
-          <td>${linkCell(l.booking_url, legAirlineCode(l), l.direction === 'outbound' ? 'Hin' : 'Rück')}</td>
+          <td>${linkCell(l.booking_url, legAirlineCode(l), direction === 'outbound' ? 'Hin' : 'Rück')}</td>
         </tr>
       `).join('');
     }
 
+    function renderLegs() {
+      renderLegsTable('outbound', 'outbound-legs-body', 'outbound-legs-table', legsSortOutbound);
+      renderLegsTable('inbound', 'inbound-legs-body', 'inbound-legs-table', legsSortInbound);
+    }
+
     function initLegSortHandlers() {
-      document.getElementById('legs-table').addEventListener('click', (event) => {
+      document.querySelector('.legs-grid').addEventListener('click', (event) => {
         const th = event.target.closest('th.sortable');
         if (!th) return;
         event.preventDefault();
+        const table = th.closest('table');
+        const isOutbound = table.id === 'outbound-legs-table';
+        const sortState = isOutbound ? legsSortOutbound : legsSortInbound;
         const key = th.dataset.sort;
-        if (legsSort.key === key) {
-          legsSort.asc = !legsSort.asc;
+        if (sortState.key === key) {
+          sortState.asc = !sortState.asc;
         } else {
-          legsSort = { key, asc: true };
+          sortState.key = key;
+          sortState.asc = true;
+        }
+        if (isOutbound) {
+          legsSortOutbound = sortState;
+        } else {
+          legsSortInbound = sortState;
         }
         renderLegs();
       });
