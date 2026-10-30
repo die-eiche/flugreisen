@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-29",
-  "generated_at_utc": "2026-10-29T12:01:51.190538+00:00",
+  "generated_at": "2026-10-30",
+  "generated_at_utc": "2026-10-30T11:54:55.590562+00:00",
   "methodology": {
     "sources": [
       "Eigene Preishistorie je Einzelstrecke (tägliche Tracker-Daten, lineare Regression)",
@@ -11,12 +11,12 @@
     "model_version": "1.2"
   },
   "summary": {
-    "headline_de": "Hinflug CPH→BKK: 741 € · Rückflug HKT→FRA: 929 €",
+    "headline_de": "Hinflug CPH→BKK: 766 € · Rückflug HKT→FRA: 926 €",
     "best_outbound": "CPH→BKK",
     "best_inbound": "HKT→FRA",
-    "expected_in_30_days": 747.88,
+    "expected_in_30_days": 772.95,
     "expected_change_30d_pct": 0.9,
-    "expected_at_departure": 878.72,
+    "expected_at_departure": 907.85,
     "recommendation": "monitor",
     "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
     "confidence": "high",
@@ -32,36 +32,36 @@
       "from": "HKT",
       "to": "FRA",
       "cabin": "PREMIUM_ECONOMY",
-      "departure": "2027-03-04",
-      "days_until_departure": 126,
-      "current_price_eur": 929.0,
+      "departure": "2027-03-03",
+      "days_until_departure": 124,
+      "current_price_eur": 926.0,
       "trend": {
         "direction": "stable",
         "weekly_change_pct": 0.22,
-        "data_points": 119
+        "data_points": 120
       },
       "booking_window": {
-        "factor_now": 0.984,
+        "factor_now": 0.983,
         "phase": "sehr früh (Preise können noch schwanken)",
         "optimal_days_before": "56–90"
       },
       "forecast": {
         "in_30_days": {
-          "expected": 926.69,
-          "low": 861.83,
-          "high": 1010.1
+          "expected": 923.63,
+          "low": 858.98,
+          "high": 1006.76
         },
         "in_60_days": {
-          "expected": 927.73,
-          "low": 862.79,
-          "high": 1048.34
+          "expected": 925.65,
+          "low": 860.85,
+          "high": 1045.98
         },
         "at_departure_if_wait": {
-          "expected": 1070.37,
-          "low": 995.45,
-          "high": 1337.97
+          "expected": 1066.99,
+          "low": 992.3,
+          "high": 1333.74
         },
-        "change_30d_pct": -0.2,
+        "change_30d_pct": -0.3,
         "change_to_departure_pct": 15.2
       },
       "recommendation": "monitor",
@@ -69,94 +69,94 @@
       "confidence": "high",
       "projection_curve": [
         {
-          "date": "2026-10-29",
-          "price_expected": 929.0,
-          "price_low": 863.97,
-          "price_high": 1012.61,
+          "date": "2026-10-30",
+          "price_expected": 926.0,
+          "price_low": 861.18,
+          "price_high": 1009.34,
           "type": "actual"
         },
         {
-          "date": "2026-11-05",
-          "price_expected": 928.46,
-          "price_low": 863.47,
-          "price_high": 1012.02,
+          "date": "2026-11-06",
+          "price_expected": 925.45,
+          "price_low": 860.67,
+          "price_high": 1008.74,
           "type": "forecast"
         },
         {
-          "date": "2026-11-12",
-          "price_expected": 927.92,
-          "price_low": 862.97,
-          "price_high": 1011.44,
+          "date": "2026-11-13",
+          "price_expected": 924.9,
+          "price_low": 860.15,
+          "price_high": 1008.14,
           "type": "forecast"
         },
         {
-          "date": "2026-11-19",
-          "price_expected": 927.39,
-          "price_low": 862.47,
-          "price_high": 1010.85,
+          "date": "2026-11-20",
+          "price_expected": 924.34,
+          "price_low": 859.64,
+          "price_high": 1007.53,
           "type": "forecast"
         },
         {
-          "date": "2026-11-26",
-          "price_expected": 926.85,
-          "price_low": 861.97,
-          "price_high": 1010.26,
+          "date": "2026-11-27",
+          "price_expected": 923.79,
+          "price_low": 859.13,
+          "price_high": 1006.93,
           "type": "forecast"
         },
         {
-          "date": "2026-12-03",
-          "price_expected": 926.31,
-          "price_low": 861.47,
-          "price_high": 1009.68,
+          "date": "2026-12-04",
+          "price_expected": 923.3,
+          "price_low": 858.67,
+          "price_high": 1043.33,
           "type": "forecast"
         },
         {
-          "date": "2026-12-10",
-          "price_expected": 926.15,
-          "price_low": 861.32,
-          "price_high": 1046.55,
+          "date": "2026-12-11",
+          "price_expected": 923.19,
+          "price_low": 858.57,
+          "price_high": 1043.2,
           "type": "forecast"
         },
         {
-          "date": "2026-12-17",
-          "price_expected": 926.05,
-          "price_low": 861.23,
-          "price_high": 1046.44,
+          "date": "2026-12-18",
+          "price_expected": 923.08,
+          "price_low": 858.46,
+          "price_high": 1043.08,
           "type": "forecast"
         },
         {
-          "date": "2026-12-24",
-          "price_expected": 925.96,
-          "price_low": 861.14,
-          "price_high": 1046.33,
+          "date": "2026-12-25",
+          "price_expected": 923.88,
+          "price_low": 859.21,
+          "price_high": 1043.98,
           "type": "forecast"
         },
         {
-          "date": "2026-12-31",
-          "price_expected": 929.07,
-          "price_low": 864.03,
-          "price_high": 1049.85,
+          "date": "2027-01-01",
+          "price_expected": 926.97,
+          "price_low": 862.08,
+          "price_high": 1047.48,
           "type": "forecast"
         },
         {
-          "date": "2027-01-07",
-          "price_expected": 932.18,
-          "price_low": 866.93,
-          "price_high": 1053.36,
+          "date": "2027-01-08",
+          "price_expected": 931.68,
+          "price_low": 866.46,
+          "price_high": 1052.8,
           "type": "forecast"
         },
         {
-          "date": "2027-01-14",
-          "price_expected": 940.96,
-          "price_low": 875.09,
-          "price_high": 1063.28,
+          "date": "2027-01-15",
+          "price_expected": 940.42,
+          "price_low": 874.59,
+          "price_high": 1062.68,
           "type": "forecast"
         },
         {
-          "date": "2027-01-21",
-          "price_expected": 949.74,
-          "price_low": 883.25,
-          "price_high": 1073.2,
+          "date": "2027-01-22",
+          "price_expected": 950.25,
+          "price_low": 883.73,
+          "price_high": 1086.3,
           "type": "forecast"
         }
       ]
@@ -171,130 +171,130 @@
       "to": "CPH",
       "cabin": "PREMIUM_ECONOMY",
       "departure": "2027-03-04",
-      "days_until_departure": 126,
-      "current_price_eur": 936.0,
+      "days_until_departure": 125,
+      "current_price_eur": 933.0,
       "trend": {
         "direction": "stable",
-        "weekly_change_pct": 0.26,
-        "data_points": 121
+        "weekly_change_pct": 0.25,
+        "data_points": 122
       },
       "booking_window": {
-        "factor_now": 0.984,
+        "factor_now": 0.983,
         "phase": "sehr früh (Preise können noch schwanken)",
         "optimal_days_before": "56–90"
       },
       "forecast": {
         "in_30_days": {
-          "expected": 934.71,
-          "low": 869.28,
-          "high": 1018.83
+          "expected": 931.53,
+          "low": 866.32,
+          "high": 1015.36
         },
         "in_60_days": {
-          "expected": 936.79,
-          "low": 871.21,
-          "high": 1058.57
+          "expected": 933.94,
+          "low": 868.56,
+          "high": 1055.35
         },
         "at_departure_if_wait": {
-          "expected": 1082.77,
-          "low": 1006.98,
-          "high": 1353.46
+          "expected": 1078.66,
+          "low": 1003.16,
+          "high": 1348.33
         },
-        "change_30d_pct": -0.1,
-        "change_to_departure_pct": 15.7
+        "change_30d_pct": -0.2,
+        "change_to_departure_pct": 15.6
       },
       "recommendation": "monitor",
       "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
       "confidence": "high",
       "projection_curve": [
         {
-          "date": "2026-10-29",
-          "price_expected": 936.0,
-          "price_low": 870.48,
-          "price_high": 1020.24,
+          "date": "2026-10-30",
+          "price_expected": 933.0,
+          "price_low": 867.69,
+          "price_high": 1016.97,
           "type": "actual"
         },
         {
-          "date": "2026-11-05",
-          "price_expected": 935.7,
-          "price_low": 870.2,
-          "price_high": 1019.91,
+          "date": "2026-11-06",
+          "price_expected": 932.66,
+          "price_low": 867.37,
+          "price_high": 1016.59,
           "type": "forecast"
         },
         {
-          "date": "2026-11-12",
-          "price_expected": 935.4,
-          "price_low": 869.92,
-          "price_high": 1019.58,
+          "date": "2026-11-13",
+          "price_expected": 932.31,
+          "price_low": 867.05,
+          "price_high": 1016.22,
           "type": "forecast"
         },
         {
-          "date": "2026-11-19",
-          "price_expected": 935.1,
-          "price_low": 869.64,
-          "price_high": 1019.25,
+          "date": "2026-11-20",
+          "price_expected": 931.97,
+          "price_low": 866.73,
+          "price_high": 1015.84,
           "type": "forecast"
         },
         {
-          "date": "2026-11-26",
-          "price_expected": 934.79,
-          "price_low": 869.36,
-          "price_high": 1018.93,
+          "date": "2026-11-27",
+          "price_expected": 931.62,
+          "price_low": 866.41,
+          "price_high": 1015.47,
           "type": "forecast"
         },
         {
-          "date": "2026-12-03",
-          "price_expected": 934.49,
-          "price_low": 869.08,
-          "price_high": 1018.6,
+          "date": "2026-12-04",
+          "price_expected": 931.28,
+          "price_low": 866.09,
+          "price_high": 1052.35,
           "type": "forecast"
         },
         {
-          "date": "2026-12-10",
-          "price_expected": 934.57,
-          "price_low": 869.15,
-          "price_high": 1056.07,
+          "date": "2026-12-11",
+          "price_expected": 931.38,
+          "price_low": 866.18,
+          "price_high": 1052.46,
           "type": "forecast"
         },
         {
-          "date": "2026-12-17",
-          "price_expected": 934.72,
-          "price_low": 869.29,
-          "price_high": 1056.23,
+          "date": "2026-12-18",
+          "price_expected": 931.48,
+          "price_low": 866.27,
+          "price_high": 1052.57,
           "type": "forecast"
         },
         {
-          "date": "2026-12-24",
-          "price_expected": 934.86,
-          "price_low": 869.42,
-          "price_high": 1056.39,
+          "date": "2026-12-25",
+          "price_expected": 932.04,
+          "price_low": 866.79,
+          "price_high": 1053.2,
           "type": "forecast"
         },
         {
-          "date": "2026-12-31",
-          "price_expected": 938.23,
-          "price_low": 872.56,
-          "price_high": 1060.2,
+          "date": "2027-01-01",
+          "price_expected": 935.36,
+          "price_low": 869.89,
+          "price_high": 1056.96,
           "type": "forecast"
         },
         {
-          "date": "2027-01-07",
-          "price_expected": 941.61,
-          "price_low": 875.7,
-          "price_high": 1064.02,
+          "date": "2027-01-08",
+          "price_expected": 939.5,
+          "price_low": 873.73,
+          "price_high": 1061.63,
           "type": "forecast"
         },
         {
-          "date": "2027-01-14",
-          "price_expected": 950.7,
-          "price_low": 884.15,
-          "price_high": 1074.29,
+          "date": "2027-01-15",
+          "price_expected": 948.52,
+          "price_low": 882.12,
+          "price_high": 1071.82,
           "type": "forecast"
         },
         {
-          "date": "2027-01-21",
-          "price_expected": 959.78,
-          "price_low": 892.59,
-          "price_high": 1084.55,
+          "date": "2027-01-22",
+          "price_expected": 958.08,
+          "price_low": 891.01,
+          "price_high": 1092.83,
           "type": "forecast"
         }
       ]
@@ -309,130 +309,130 @@
       "to": "HAM",
       "cabin": "PREMIUM_ECONOMY",
       "departure": "2027-03-04",
-      "days_until_departure": 126,
-      "current_price_eur": 936.0,
+      "days_until_departure": 125,
+      "current_price_eur": 934.0,
       "trend": {
         "direction": "stable",
-        "weekly_change_pct": 0.06,
-        "data_points": 121
+        "weekly_change_pct": 0.04,
+        "data_points": 122
       },
       "booking_window": {
-        "factor_now": 0.984,
+        "factor_now": 0.983,
         "phase": "sehr früh (Preise können noch schwanken)",
         "optimal_days_before": "56–90"
       },
       "forecast": {
         "in_30_days": {
-          "expected": 929.98,
-          "low": 864.88,
-          "high": 1013.68
+          "expected": 927.51,
+          "low": 862.58,
+          "high": 1010.99
         },
         "in_60_days": {
-          "expected": 927.33,
-          "low": 862.42,
-          "high": 1047.89
+          "expected": 924.91,
+          "low": 860.17,
+          "high": 1045.15
         },
         "at_departure_if_wait": {
-          "expected": 1062.92,
-          "low": 988.51,
-          "high": 1328.65
+          "expected": 1058.93,
+          "low": 984.81,
+          "high": 1323.67
         },
-        "change_30d_pct": -0.6,
-        "change_to_departure_pct": 13.6
+        "change_30d_pct": -0.7,
+        "change_to_departure_pct": 13.4
       },
       "recommendation": "monitor",
       "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
       "confidence": "high",
       "projection_curve": [
         {
-          "date": "2026-10-29",
-          "price_expected": 936.0,
-          "price_low": 870.48,
-          "price_high": 1020.24,
+          "date": "2026-10-30",
+          "price_expected": 934.0,
+          "price_low": 868.62,
+          "price_high": 1018.06,
           "type": "actual"
         },
         {
-          "date": "2026-11-05",
-          "price_expected": 934.6,
-          "price_low": 869.17,
-          "price_high": 1018.71,
+          "date": "2026-11-06",
+          "price_expected": 932.49,
+          "price_low": 867.21,
+          "price_high": 1016.41,
           "type": "forecast"
         },
         {
-          "date": "2026-11-12",
-          "price_expected": 933.19,
-          "price_low": 867.87,
-          "price_high": 1017.18,
+          "date": "2026-11-13",
+          "price_expected": 930.97,
+          "price_low": 865.8,
+          "price_high": 1014.76,
           "type": "forecast"
         },
         {
-          "date": "2026-11-19",
-          "price_expected": 931.79,
-          "price_low": 866.56,
-          "price_high": 1015.65,
+          "date": "2026-11-20",
+          "price_expected": 929.46,
+          "price_low": 864.4,
+          "price_high": 1013.11,
           "type": "forecast"
         },
         {
-          "date": "2026-11-26",
-          "price_expected": 930.38,
-          "price_low": 865.26,
-          "price_high": 1014.12,
+          "date": "2026-11-27",
+          "price_expected": 927.94,
+          "price_low": 862.99,
+          "price_high": 1011.46,
           "type": "forecast"
         },
         {
-          "date": "2026-12-03",
-          "price_expected": 928.98,
-          "price_low": 863.95,
-          "price_high": 1012.59,
+          "date": "2026-12-04",
+          "price_expected": 926.43,
+          "price_low": 861.58,
+          "price_high": 1046.86,
           "type": "forecast"
         },
         {
-          "date": "2026-12-10",
-          "price_expected": 927.95,
-          "price_low": 863.0,
-          "price_high": 1048.59,
+          "date": "2026-12-11",
+          "price_expected": 925.36,
+          "price_low": 860.58,
+          "price_high": 1045.65,
           "type": "forecast"
         },
         {
-          "date": "2026-12-17",
-          "price_expected": 926.99,
-          "price_low": 862.1,
-          "price_high": 1047.5,
+          "date": "2026-12-18",
+          "price_expected": 924.29,
+          "price_low": 859.59,
+          "price_high": 1044.44,
           "type": "forecast"
         },
         {
-          "date": "2026-12-24",
-          "price_expected": 926.03,
-          "price_low": 861.21,
-          "price_high": 1046.42,
+          "date": "2026-12-25",
+          "price_expected": 923.68,
+          "price_low": 859.02,
+          "price_high": 1043.76,
           "type": "forecast"
         },
         {
-          "date": "2026-12-31",
-          "price_expected": 928.31,
-          "price_low": 863.33,
-          "price_high": 1048.99,
+          "date": "2027-01-01",
+          "price_expected": 925.84,
+          "price_low": 861.03,
+          "price_high": 1046.19,
           "type": "forecast"
         },
         {
-          "date": "2027-01-07",
-          "price_expected": 930.58,
-          "price_low": 865.44,
-          "price_high": 1051.56,
+          "date": "2027-01-08",
+          "price_expected": 928.81,
+          "price_low": 863.79,
+          "price_high": 1049.55,
           "type": "forecast"
         },
         {
-          "date": "2027-01-14",
-          "price_expected": 938.56,
-          "price_low": 872.86,
-          "price_high": 1060.58,
+          "date": "2027-01-15",
+          "price_expected": 936.67,
+          "price_low": 871.1,
+          "price_high": 1058.43,
           "type": "forecast"
         },
         {
-          "date": "2027-01-21",
-          "price_expected": 946.54,
-          "price_low": 880.29,
-          "price_high": 1069.59,
+          "date": "2027-01-22",
+          "price_expected": 945.07,
+          "price_low": 878.91,
+          "price_high": 1077.99,
           "type": "forecast"
         }
       ]
@@ -446,13 +446,13 @@
       "from": "CPH",
       "to": "BKK",
       "cabin": "PREMIUM_ECONOMY",
-      "departure": "2027-02-03",
+      "departure": "2027-02-04",
       "days_until_departure": 97,
-      "current_price_eur": 741.0,
+      "current_price_eur": 766.0,
       "trend": {
         "direction": "stable",
-        "weekly_change_pct": 0.59,
-        "data_points": 121
+        "weekly_change_pct": 0.61,
+        "data_points": 122
       },
       "booking_window": {
         "factor_now": 0.965,
@@ -461,116 +461,116 @@
       },
       "forecast": {
         "in_30_days": {
-          "expected": 747.88,
-          "low": 695.53,
-          "high": 845.1
+          "expected": 772.95,
+          "low": 718.85,
+          "high": 873.44
         },
         "in_60_days": {
-          "expected": 779.89,
-          "low": 725.3,
-          "high": 904.22
+          "expected": 805.89,
+          "low": 749.48,
+          "high": 934.36
         },
         "at_departure_if_wait": {
-          "expected": 878.72,
-          "low": 817.21,
-          "high": 1098.39
+          "expected": 907.85,
+          "low": 844.3,
+          "high": 1134.81
         },
         "change_30d_pct": 0.9,
-        "change_to_departure_pct": 18.6
+        "change_to_departure_pct": 18.5
       },
       "recommendation": "monitor",
       "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
       "confidence": "high",
       "projection_curve": [
         {
-          "date": "2026-10-29",
-          "price_expected": 741.0,
-          "price_low": 689.13,
-          "price_high": 807.69,
+          "date": "2026-10-30",
+          "price_expected": 766.0,
+          "price_low": 712.38,
+          "price_high": 834.94,
           "type": "actual"
         },
         {
-          "date": "2026-11-05",
-          "price_expected": 742.07,
-          "price_low": 690.12,
-          "price_high": 838.54,
+          "date": "2026-11-06",
+          "price_expected": 767.07,
+          "price_low": 713.37,
+          "price_high": 866.79,
           "type": "forecast"
         },
         {
-          "date": "2026-11-12",
-          "price_expected": 743.5,
-          "price_low": 691.45,
-          "price_high": 840.15,
+          "date": "2026-11-13",
+          "price_expected": 768.51,
+          "price_low": 714.71,
+          "price_high": 868.41,
           "type": "forecast"
         },
         {
-          "date": "2026-11-19",
-          "price_expected": 744.92,
-          "price_low": 692.78,
-          "price_high": 841.76,
+          "date": "2026-11-20",
+          "price_expected": 769.95,
+          "price_low": 716.05,
+          "price_high": 870.04,
           "type": "forecast"
         },
         {
-          "date": "2026-11-26",
-          "price_expected": 746.72,
-          "price_low": 694.45,
-          "price_high": 843.8,
+          "date": "2026-11-27",
+          "price_expected": 771.77,
+          "price_low": 717.75,
+          "price_high": 872.1,
           "type": "forecast"
         },
         {
-          "date": "2026-12-03",
-          "price_expected": 750.76,
-          "price_low": 698.21,
-          "price_high": 848.36,
+          "date": "2026-12-04",
+          "price_expected": 775.91,
+          "price_low": 721.59,
+          "price_high": 876.78,
           "type": "forecast"
         },
         {
-          "date": "2026-12-10",
-          "price_expected": 755.46,
-          "price_low": 702.58,
-          "price_high": 853.67,
+          "date": "2026-12-11",
+          "price_expected": 780.73,
+          "price_low": 726.08,
+          "price_high": 882.22,
           "type": "forecast"
         },
         {
-          "date": "2026-12-17",
-          "price_expected": 764.11,
-          "price_low": 710.62,
-          "price_high": 863.44,
+          "date": "2026-12-18",
+          "price_expected": 789.63,
+          "price_low": 734.36,
+          "price_high": 892.28,
           "type": "forecast"
         },
         {
-          "date": "2026-12-24",
-          "price_expected": 773.2,
-          "price_low": 719.07,
-          "price_high": 889.59,
+          "date": "2026-12-25",
+          "price_expected": 798.99,
+          "price_low": 743.06,
+          "price_high": 919.26,
           "type": "forecast"
         },
         {
-          "date": "2026-12-31",
-          "price_expected": 784.92,
-          "price_low": 729.97,
-          "price_high": 915.28,
+          "date": "2027-01-01",
+          "price_expected": 811.06,
+          "price_low": 754.29,
+          "price_high": 945.77,
           "type": "forecast"
         },
         {
-          "date": "2027-01-07",
-          "price_expected": 797.08,
-          "price_low": 741.28,
-          "price_high": 942.44,
+          "date": "2027-01-08",
+          "price_expected": 823.6,
+          "price_low": 765.95,
+          "price_high": 973.8,
           "type": "forecast"
         },
         {
-          "date": "2027-01-14",
-          "price_expected": 812.31,
-          "price_low": 755.45,
-          "price_high": 977.9,
+          "date": "2027-01-15",
+          "price_expected": 839.31,
+          "price_low": 780.55,
+          "price_high": 1010.4,
           "type": "forecast"
         },
         {
-          "date": "2027-01-21",
-          "price_expected": 831.05,
-          "price_low": 772.88,
-          "price_high": 1023.23,
+          "date": "2027-01-22",
+          "price_expected": 858.65,
+          "price_low": 798.54,
+          "price_high": 1057.2,
           "type": "forecast"
         }
       ]
@@ -585,130 +585,130 @@
       "to": "BKK",
       "cabin": "PREMIUM_ECONOMY",
       "departure": "2027-02-03",
-      "days_until_departure": 97,
-      "current_price_eur": 908.0,
+      "days_until_departure": 96,
+      "current_price_eur": 1100.0,
       "trend": {
         "direction": "stable",
-        "weekly_change_pct": -0.31,
-        "data_points": 121
+        "weekly_change_pct": -0.26,
+        "data_points": 122
       },
       "booking_window": {
-        "factor_now": 0.965,
+        "factor_now": 0.964,
         "phase": "früh – Sweet Spot nähert sich",
         "optimal_days_before": "56–90"
       },
       "forecast": {
         "in_30_days": {
-          "expected": 894.77,
-          "low": 832.13,
-          "high": 1011.09
+          "expected": 1087.66,
+          "low": 1011.52,
+          "high": 1229.06
         },
         "in_60_days": {
-          "expected": 912.34,
-          "low": 848.47,
-          "high": 1057.78
+          "expected": 1113.66,
+          "low": 1035.71,
+          "high": 1294.09
         },
         "at_departure_if_wait": {
-          "expected": 1006.72,
-          "low": 936.25,
-          "high": 1258.4
+          "expected": 1230.15,
+          "low": 1144.04,
+          "high": 1537.69
         },
-        "change_30d_pct": -1.5,
-        "change_to_departure_pct": 10.9
+        "change_30d_pct": -1.1,
+        "change_to_departure_pct": 11.8
       },
       "recommendation": "monitor",
       "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
       "confidence": "high",
       "projection_curve": [
         {
-          "date": "2026-10-29",
-          "price_expected": 908.0,
-          "price_low": 844.44,
-          "price_high": 989.72,
+          "date": "2026-10-30",
+          "price_expected": 1100.0,
+          "price_low": 1023.0,
+          "price_high": 1199.0,
           "type": "actual"
         },
         {
-          "date": "2026-11-05",
-          "price_expected": 904.26,
-          "price_low": 840.96,
-          "price_high": 1021.81,
+          "date": "2026-11-06",
+          "price_expected": 1096.25,
+          "price_low": 1019.52,
+          "price_high": 1238.77,
           "type": "forecast"
         },
         {
-          "date": "2026-11-12",
-          "price_expected": 900.95,
-          "price_low": 837.88,
-          "price_high": 1018.07,
+          "date": "2026-11-13",
+          "price_expected": 1092.96,
+          "price_low": 1016.46,
+          "price_high": 1235.05,
           "type": "forecast"
         },
         {
-          "date": "2026-11-19",
-          "price_expected": 897.65,
-          "price_low": 834.81,
-          "price_high": 1014.34,
+          "date": "2026-11-20",
+          "price_expected": 1089.67,
+          "price_low": 1013.4,
+          "price_high": 1231.33,
           "type": "forecast"
         },
         {
-          "date": "2026-11-26",
-          "price_expected": 894.8,
-          "price_low": 832.16,
-          "price_high": 1011.12,
+          "date": "2026-11-27",
+          "price_expected": 1087.49,
+          "price_low": 1011.37,
+          "price_high": 1228.87,
           "type": "forecast"
         },
         {
-          "date": "2026-12-03",
-          "price_expected": 894.69,
-          "price_low": 832.07,
-          "price_high": 1011.0,
+          "date": "2026-12-04",
+          "price_expected": 1088.08,
+          "price_low": 1011.92,
+          "price_high": 1229.53,
           "type": "forecast"
         },
         {
-          "date": "2026-12-10",
-          "price_expected": 895.4,
-          "price_low": 832.72,
-          "price_high": 1011.8,
+          "date": "2026-12-11",
+          "price_expected": 1090.63,
+          "price_low": 1014.28,
+          "price_high": 1232.41,
           "type": "forecast"
         },
         {
-          "date": "2026-12-17",
-          "price_expected": 900.94,
-          "price_low": 837.87,
-          "price_high": 1018.06,
+          "date": "2026-12-18",
+          "price_expected": 1098.06,
+          "price_low": 1021.2,
+          "price_high": 1253.18,
           "type": "forecast"
         },
         {
-          "date": "2026-12-24",
-          "price_expected": 907.02,
-          "price_low": 843.53,
-          "price_high": 1043.56,
+          "date": "2026-12-25",
+          "price_expected": 1106.8,
+          "price_low": 1029.33,
+          "price_high": 1276.28,
           "type": "forecast"
         },
         {
-          "date": "2026-12-31",
-          "price_expected": 916.33,
-          "price_low": 852.18,
-          "price_high": 1068.52,
+          "date": "2027-01-01",
+          "price_expected": 1118.81,
+          "price_low": 1040.49,
+          "price_high": 1307.52,
           "type": "forecast"
         },
         {
-          "date": "2027-01-07",
-          "price_expected": 926.17,
-          "price_low": 861.34,
-          "price_high": 1095.08,
+          "date": "2027-01-08",
+          "price_expected": 1132.11,
+          "price_low": 1052.86,
+          "price_high": 1342.37,
           "type": "forecast"
         },
         {
-          "date": "2027-01-14",
-          "price_expected": 939.78,
-          "price_low": 874.0,
-          "price_high": 1131.36,
+          "date": "2027-01-15",
+          "price_expected": 1149.98,
+          "price_low": 1069.48,
+          "price_high": 1389.12,
           "type": "forecast"
         },
         {
-          "date": "2027-01-21",
-          "price_expected": 957.7,
-          "price_low": 890.66,
-          "price_high": 1179.16,
+          "date": "2027-01-22",
+          "price_expected": 1173.72,
+          "price_low": 1091.56,
+          "price_high": 1451.71,
           "type": "forecast"
         }
       ]
@@ -724,13 +724,13 @@
       "from": "CPH",
       "to": "BKK",
       "cabin": "PREMIUM_ECONOMY",
-      "departure": "2027-02-03",
+      "departure": "2027-02-04",
       "days_until_departure": 97,
-      "current_price_eur": 741.0,
+      "current_price_eur": 766.0,
       "trend": {
         "direction": "stable",
-        "weekly_change_pct": 0.59,
-        "data_points": 121
+        "weekly_change_pct": 0.61,
+        "data_points": 122
       },
       "booking_window": {
         "factor_now": 0.965,
@@ -739,116 +739,116 @@
       },
       "forecast": {
         "in_30_days": {
-          "expected": 747.88,
-          "low": 695.53,
-          "high": 845.1
+          "expected": 772.95,
+          "low": 718.85,
+          "high": 873.44
         },
         "in_60_days": {
-          "expected": 779.89,
-          "low": 725.3,
-          "high": 904.22
+          "expected": 805.89,
+          "low": 749.48,
+          "high": 934.36
         },
         "at_departure_if_wait": {
-          "expected": 878.72,
-          "low": 817.21,
-          "high": 1098.39
+          "expected": 907.85,
+          "low": 844.3,
+          "high": 1134.81
         },
         "change_30d_pct": 0.9,
-        "change_to_departure_pct": 18.6
+        "change_to_departure_pct": 18.5
       },
       "recommendation": "monitor",
       "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
       "confidence": "high",
       "projection_curve": [
         {
-          "date": "2026-10-29",
-          "price_expected": 741.0,
-          "price_low": 689.13,
-          "price_high": 807.69,
+          "date": "2026-10-30",
+          "price_expected": 766.0,
+          "price_low": 712.38,
+          "price_high": 834.94,
           "type": "actual"
         },
         {
-          "date": "2026-11-05",
-          "price_expected": 742.07,
-          "price_low": 690.12,
-          "price_high": 838.54,
+          "date": "2026-11-06",
+          "price_expected": 767.07,
+          "price_low": 713.37,
+          "price_high": 866.79,
           "type": "forecast"
         },
         {
-          "date": "2026-11-12",
-          "price_expected": 743.5,
-          "price_low": 691.45,
-          "price_high": 840.15,
+          "date": "2026-11-13",
+          "price_expected": 768.51,
+          "price_low": 714.71,
+          "price_high": 868.41,
           "type": "forecast"
         },
         {
-          "date": "2026-11-19",
-          "price_expected": 744.92,
-          "price_low": 692.78,
-          "price_high": 841.76,
+          "date": "2026-11-20",
+          "price_expected": 769.95,
+          "price_low": 716.05,
+          "price_high": 870.04,
           "type": "forecast"
         },
         {
-          "date": "2026-11-26",
-          "price_expected": 746.72,
-          "price_low": 694.45,
-          "price_high": 843.8,
+          "date": "2026-11-27",
+          "price_expected": 771.77,
+          "price_low": 717.75,
+          "price_high": 872.1,
           "type": "forecast"
         },
         {
-          "date": "2026-12-03",
-          "price_expected": 750.76,
-          "price_low": 698.21,
-          "price_high": 848.36,
+          "date": "2026-12-04",
+          "price_expected": 775.91,
+          "price_low": 721.59,
+          "price_high": 876.78,
           "type": "forecast"
         },
         {
-          "date": "2026-12-10",
-          "price_expected": 755.46,
-          "price_low": 702.58,
-          "price_high": 853.67,
+          "date": "2026-12-11",
+          "price_expected": 780.73,
+          "price_low": 726.08,
+          "price_high": 882.22,
           "type": "forecast"
         },
         {
-          "date": "2026-12-17",
-          "price_expected": 764.11,
-          "price_low": 710.62,
-          "price_high": 863.44,
+          "date": "2026-12-18",
+          "price_expected": 789.63,
+          "price_low": 734.36,
+          "price_high": 892.28,
           "type": "forecast"
         },
         {
-          "date": "2026-12-24",
-          "price_expected": 773.2,
-          "price_low": 719.07,
-          "price_high": 889.59,
+          "date": "2026-12-25",
+          "price_expected": 798.99,
+          "price_low": 743.06,
+          "price_high": 919.26,
           "type": "forecast"
         },
         {
-          "date": "2026-12-31",
-          "price_expected": 784.92,
-          "price_low": 729.97,
-          "price_high": 915.28,
+          "date": "2027-01-01",
+          "price_expected": 811.06,
+          "price_low": 754.29,
+          "price_high": 945.77,
           "type": "forecast"
         },
         {
-          "date": "2027-01-07",
-          "price_expected": 797.08,
-          "price_low": 741.28,
-          "price_high": 942.44,
+          "date": "2027-01-08",
+          "price_expected": 823.6,
+          "price_low": 765.95,
+          "price_high": 973.8,
           "type": "forecast"
         },
         {
-          "date": "2027-01-14",
-          "price_expected": 812.31,
-          "price_low": 755.45,
-          "price_high": 977.9,
+          "date": "2027-01-15",
+          "price_expected": 839.31,
+          "price_low": 780.55,
+          "price_high": 1010.4,
           "type": "forecast"
         },
         {
-          "date": "2027-01-21",
-          "price_expected": 831.05,
-          "price_low": 772.88,
-          "price_high": 1023.23,
+          "date": "2027-01-22",
+          "price_expected": 858.65,
+          "price_low": 798.54,
+          "price_high": 1057.2,
           "type": "forecast"
         }
       ]
@@ -863,130 +863,130 @@
       "to": "BKK",
       "cabin": "PREMIUM_ECONOMY",
       "departure": "2027-02-03",
-      "days_until_departure": 97,
-      "current_price_eur": 908.0,
+      "days_until_departure": 96,
+      "current_price_eur": 1100.0,
       "trend": {
         "direction": "stable",
-        "weekly_change_pct": -0.31,
-        "data_points": 121
+        "weekly_change_pct": -0.26,
+        "data_points": 122
       },
       "booking_window": {
-        "factor_now": 0.965,
+        "factor_now": 0.964,
         "phase": "früh – Sweet Spot nähert sich",
         "optimal_days_before": "56–90"
       },
       "forecast": {
         "in_30_days": {
-          "expected": 894.77,
-          "low": 832.13,
-          "high": 1011.09
+          "expected": 1087.66,
+          "low": 1011.52,
+          "high": 1229.06
         },
         "in_60_days": {
-          "expected": 912.34,
-          "low": 848.47,
-          "high": 1057.78
+          "expected": 1113.66,
+          "low": 1035.71,
+          "high": 1294.09
         },
         "at_departure_if_wait": {
-          "expected": 1006.72,
-          "low": 936.25,
-          "high": 1258.4
+          "expected": 1230.15,
+          "low": 1144.04,
+          "high": 1537.69
         },
-        "change_30d_pct": -1.5,
-        "change_to_departure_pct": 10.9
+        "change_30d_pct": -1.1,
+        "change_to_departure_pct": 11.8
       },
       "recommendation": "monitor",
       "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
       "confidence": "high",
       "projection_curve": [
         {
-          "date": "2026-10-29",
-          "price_expected": 908.0,
-          "price_low": 844.44,
-          "price_high": 989.72,
+          "date": "2026-10-30",
+          "price_expected": 1100.0,
+          "price_low": 1023.0,
+          "price_high": 1199.0,
           "type": "actual"
         },
         {
-          "date": "2026-11-05",
-          "price_expected": 904.26,
-          "price_low": 840.96,
-          "price_high": 1021.81,
+          "date": "2026-11-06",
+          "price_expected": 1096.25,
+          "price_low": 1019.52,
+          "price_high": 1238.77,
           "type": "forecast"
         },
         {
-          "date": "2026-11-12",
-          "price_expected": 900.95,
-          "price_low": 837.88,
-          "price_high": 1018.07,
+          "date": "2026-11-13",
+          "price_expected": 1092.96,
+          "price_low": 1016.46,
+          "price_high": 1235.05,
           "type": "forecast"
         },
         {
-          "date": "2026-11-19",
-          "price_expected": 897.65,
-          "price_low": 834.81,
-          "price_high": 1014.34,
+          "date": "2026-11-20",
+          "price_expected": 1089.67,
+          "price_low": 1013.4,
+          "price_high": 1231.33,
           "type": "forecast"
         },
         {
-          "date": "2026-11-26",
-          "price_expected": 894.8,
-          "price_low": 832.16,
-          "price_high": 1011.12,
+          "date": "2026-11-27",
+          "price_expected": 1087.49,
+          "price_low": 1011.37,
+          "price_high": 1228.87,
           "type": "forecast"
         },
         {
-          "date": "2026-12-03",
-          "price_expected": 894.69,
-          "price_low": 832.07,
-          "price_high": 1011.0,
+          "date": "2026-12-04",
+          "price_expected": 1088.08,
+          "price_low": 1011.92,
+          "price_high": 1229.53,
           "type": "forecast"
         },
         {
-          "date": "2026-12-10",
-          "price_expected": 895.4,
-          "price_low": 832.72,
-          "price_high": 1011.8,
+          "date": "2026-12-11",
+          "price_expected": 1090.63,
+          "price_low": 1014.28,
+          "price_high": 1232.41,
           "type": "forecast"
         },
         {
-          "date": "2026-12-17",
-          "price_expected": 900.94,
-          "price_low": 837.87,
-          "price_high": 1018.06,
+          "date": "2026-12-18",
+          "price_expected": 1098.06,
+          "price_low": 1021.2,
+          "price_high": 1253.18,
           "type": "forecast"
         },
         {
-          "date": "2026-12-24",
-          "price_expected": 907.02,
-          "price_low": 843.53,
-          "price_high": 1043.56,
+          "date": "2026-12-25",
+          "price_expected": 1106.8,
+          "price_low": 1029.33,
+          "price_high": 1276.28,
           "type": "forecast"
         },
         {
-          "date": "2026-12-31",
-          "price_expected": 916.33,
-          "price_low": 852.18,
-          "price_high": 1068.52,
+          "date": "2027-01-01",
+          "price_expected": 1118.81,
+          "price_low": 1040.49,
+          "price_high": 1307.52,
           "type": "forecast"
         },
         {
-          "date": "2027-01-07",
-          "price_expected": 926.17,
-          "price_low": 861.34,
-          "price_high": 1095.08,
+          "date": "2027-01-08",
+          "price_expected": 1132.11,
+          "price_low": 1052.86,
+          "price_high": 1342.37,
           "type": "forecast"
         },
         {
-          "date": "2027-01-14",
-          "price_expected": 939.78,
-          "price_low": 874.0,
-          "price_high": 1131.36,
+          "date": "2027-01-15",
+          "price_expected": 1149.98,
+          "price_low": 1069.48,
+          "price_high": 1389.12,
           "type": "forecast"
         },
         {
-          "date": "2027-01-21",
-          "price_expected": 957.7,
-          "price_low": 890.66,
-          "price_high": 1179.16,
+          "date": "2027-01-22",
+          "price_expected": 1173.72,
+          "price_low": 1091.56,
+          "price_high": 1451.71,
           "type": "forecast"
         }
       ]
@@ -1002,36 +1002,36 @@
       "from": "HKT",
       "to": "FRA",
       "cabin": "PREMIUM_ECONOMY",
-      "departure": "2027-03-04",
-      "days_until_departure": 126,
-      "current_price_eur": 929.0,
+      "departure": "2027-03-03",
+      "days_until_departure": 124,
+      "current_price_eur": 926.0,
       "trend": {
         "direction": "stable",
         "weekly_change_pct": 0.22,
-        "data_points": 119
+        "data_points": 120
       },
       "booking_window": {
-        "factor_now": 0.984,
+        "factor_now": 0.983,
         "phase": "sehr früh (Preise können noch schwanken)",
         "optimal_days_before": "56–90"
       },
       "forecast": {
         "in_30_days": {
-          "expected": 926.69,
-          "low": 861.83,
-          "high": 1010.1
+          "expected": 923.63,
+          "low": 858.98,
+          "high": 1006.76
         },
         "in_60_days": {
-          "expected": 927.73,
-          "low": 862.79,
-          "high": 1048.34
+          "expected": 925.65,
+          "low": 860.85,
+          "high": 1045.98
         },
         "at_departure_if_wait": {
-          "expected": 1070.37,
-          "low": 995.45,
-          "high": 1337.97
+          "expected": 1066.99,
+          "low": 992.3,
+          "high": 1333.74
         },
-        "change_30d_pct": -0.2,
+        "change_30d_pct": -0.3,
         "change_to_departure_pct": 15.2
       },
       "recommendation": "monitor",
@@ -1039,94 +1039,94 @@
       "confidence": "high",
       "projection_curve": [
         {
-          "date": "2026-10-29",
-          "price_expected": 929.0,
-          "price_low": 863.97,
-          "price_high": 1012.61,
+          "date": "2026-10-30",
+          "price_expected": 926.0,
+          "price_low": 861.18,
+          "price_high": 1009.34,
           "type": "actual"
         },
         {
-          "date": "2026-11-05",
-          "price_expected": 928.46,
-          "price_low": 863.47,
-          "price_high": 1012.02,
+          "date": "2026-11-06",
+          "price_expected": 925.45,
+          "price_low": 860.67,
+          "price_high": 1008.74,
           "type": "forecast"
         },
         {
-          "date": "2026-11-12",
-          "price_expected": 927.92,
-          "price_low": 862.97,
-          "price_high": 1011.44,
+          "date": "2026-11-13",
+          "price_expected": 924.9,
+          "price_low": 860.15,
+          "price_high": 1008.14,
           "type": "forecast"
         },
         {
-          "date": "2026-11-19",
-          "price_expected": 927.39,
-          "price_low": 862.47,
-          "price_high": 1010.85,
+          "date": "2026-11-20",
+          "price_expected": 924.34,
+          "price_low": 859.64,
+          "price_high": 1007.53,
           "type": "forecast"
         },
         {
-          "date": "2026-11-26",
-          "price_expected": 926.85,
-          "price_low": 861.97,
-          "price_high": 1010.26,
+          "date": "2026-11-27",
+          "price_expected": 923.79,
+          "price_low": 859.13,
+          "price_high": 1006.93,
           "type": "forecast"
         },
         {
-          "date": "2026-12-03",
-          "price_expected": 926.31,
-          "price_low": 861.47,
-          "price_high": 1009.68,
+          "date": "2026-12-04",
+          "price_expected": 923.3,
+          "price_low": 858.67,
+          "price_high": 1043.33,
           "type": "forecast"
         },
         {
-          "date": "2026-12-10",
-          "price_expected": 926.15,
-          "price_low": 861.32,
-          "price_high": 1046.55,
+          "date": "2026-12-11",
+          "price_expected": 923.19,
+          "price_low": 858.57,
+          "price_high": 1043.2,
           "type": "forecast"
         },
         {
-          "date": "2026-12-17",
-          "price_expected": 926.05,
-          "price_low": 861.23,
-          "price_high": 1046.44,
+          "date": "2026-12-18",
+          "price_expected": 923.08,
+          "price_low": 858.46,
+          "price_high": 1043.08,
           "type": "forecast"
         },
         {
-          "date": "2026-12-24",
-          "price_expected": 925.96,
-          "price_low": 861.14,
-          "price_high": 1046.33,
+          "date": "2026-12-25",
+          "price_expected": 923.88,
+          "price_low": 859.21,
+          "price_high": 1043.98,
           "type": "forecast"
         },
         {
-          "date": "2026-12-31",
-          "price_expected": 929.07,
-          "price_low": 864.03,
-          "price_high": 1049.85,
+          "date": "2027-01-01",
+          "price_expected": 926.97,
+          "price_low": 862.08,
+          "price_high": 1047.48,
           "type": "forecast"
         },
         {
-          "date": "2027-01-07",
-          "price_expected": 932.18,
-          "price_low": 866.93,
-          "price_high": 1053.36,
+          "date": "2027-01-08",
+          "price_expected": 931.68,
+          "price_low": 866.46,
+          "price_high": 1052.8,
           "type": "forecast"
         },
         {
-          "date": "2027-01-14",
-          "price_expected": 940.96,
-          "price_low": 875.09,
-          "price_high": 1063.28,
+          "date": "2027-01-15",
+          "price_expected": 940.42,
+          "price_low": 874.59,
+          "price_high": 1062.68,
           "type": "forecast"
         },
         {
-          "date": "2027-01-21",
-          "price_expected": 949.74,
-          "price_low": 883.25,
-          "price_high": 1073.2,
+          "date": "2027-01-22",
+          "price_expected": 950.25,
+          "price_low": 883.73,
+          "price_high": 1086.3,
           "type": "forecast"
         }
       ]
@@ -1141,130 +1141,130 @@
       "to": "CPH",
       "cabin": "PREMIUM_ECONOMY",
       "departure": "2027-03-04",
-      "days_until_departure": 126,
-      "current_price_eur": 936.0,
+      "days_until_departure": 125,
+      "current_price_eur": 933.0,
       "trend": {
         "direction": "stable",
-        "weekly_change_pct": 0.26,
-        "data_points": 121
+        "weekly_change_pct": 0.25,
+        "data_points": 122
       },
       "booking_window": {
-        "factor_now": 0.984,
+        "factor_now": 0.983,
         "phase": "sehr früh (Preise können noch schwanken)",
         "optimal_days_before": "56–90"
       },
       "forecast": {
         "in_30_days": {
-          "expected": 934.71,
-          "low": 869.28,
-          "high": 1018.83
+          "expected": 931.53,
+          "low": 866.32,
+          "high": 1015.36
         },
         "in_60_days": {
-          "expected": 936.79,
-          "low": 871.21,
-          "high": 1058.57
+          "expected": 933.94,
+          "low": 868.56,
+          "high": 1055.35
         },
         "at_departure_if_wait": {
-          "expected": 1082.77,
-          "low": 1006.98,
-          "high": 1353.46
+          "expected": 1078.66,
+          "low": 1003.16,
+          "high": 1348.33
         },
-        "change_30d_pct": -0.1,
-        "change_to_departure_pct": 15.7
+        "change_30d_pct": -0.2,
+        "change_to_departure_pct": 15.6
       },
       "recommendation": "monitor",
       "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
       "confidence": "high",
       "projection_curve": [
         {
-          "date": "2026-10-29",
-          "price_expected": 936.0,
-          "price_low": 870.48,
-          "price_high": 1020.24,
+          "date": "2026-10-30",
+          "price_expected": 933.0,
+          "price_low": 867.69,
+          "price_high": 1016.97,
           "type": "actual"
         },
         {
-          "date": "2026-11-05",
-          "price_expected": 935.7,
-          "price_low": 870.2,
-          "price_high": 1019.91,
+          "date": "2026-11-06",
+          "price_expected": 932.66,
+          "price_low": 867.37,
+          "price_high": 1016.59,
           "type": "forecast"
         },
         {
-          "date": "2026-11-12",
-          "price_expected": 935.4,
-          "price_low": 869.92,
-          "price_high": 1019.58,
+          "date": "2026-11-13",
+          "price_expected": 932.31,
+          "price_low": 867.05,
+          "price_high": 1016.22,
           "type": "forecast"
         },
         {
-          "date": "2026-11-19",
-          "price_expected": 935.1,
-          "price_low": 869.64,
-          "price_high": 1019.25,
+          "date": "2026-11-20",
+          "price_expected": 931.97,
+          "price_low": 866.73,
+          "price_high": 1015.84,
           "type": "forecast"
         },
         {
-          "date": "2026-11-26",
-          "price_expected": 934.79,
-          "price_low": 869.36,
-          "price_high": 1018.93,
+          "date": "2026-11-27",
+          "price_expected": 931.62,
+          "price_low": 866.41,
+          "price_high": 1015.47,
           "type": "forecast"
         },
         {
-          "date": "2026-12-03",
-          "price_expected": 934.49,
-          "price_low": 869.08,
-          "price_high": 1018.6,
+          "date": "2026-12-04",
+          "price_expected": 931.28,
+          "price_low": 866.09,
+          "price_high": 1052.35,
           "type": "forecast"
         },
         {
-          "date": "2026-12-10",
-          "price_expected": 934.57,
-          "price_low": 869.15,
-          "price_high": 1056.07,
+          "date": "2026-12-11",
+          "price_expected": 931.38,
+          "price_low": 866.18,
+          "price_high": 1052.46,
           "type": "forecast"
         },
         {
-          "date": "2026-12-17",
-          "price_expected": 934.72,
-          "price_low": 869.29,
-          "price_high": 1056.23,
+          "date": "2026-12-18",
+          "price_expected": 931.48,
+          "price_low": 866.27,
+          "price_high": 1052.57,
           "type": "forecast"
         },
         {
-          "date": "2026-12-24",
-          "price_expected": 934.86,
-          "price_low": 869.42,
-          "price_high": 1056.39,
+          "date": "2026-12-25",
+          "price_expected": 932.04,
+          "price_low": 866.79,
+          "price_high": 1053.2,
           "type": "forecast"
         },
         {
-          "date": "2026-12-31",
-          "price_expected": 938.23,
-          "price_low": 872.56,
-          "price_high": 1060.2,
+          "date": "2027-01-01",
+          "price_expected": 935.36,
+          "price_low": 869.89,
+          "price_high": 1056.96,
           "type": "forecast"
         },
         {
-          "date": "2027-01-07",
-          "price_expected": 941.61,
-          "price_low": 875.7,
-          "price_high": 1064.02,
+          "date": "2027-01-08",
+          "price_expected": 939.5,
+          "price_low": 873.73,
+          "price_high": 1061.63,
           "type": "forecast"
         },
         {
-          "date": "2027-01-14",
-          "price_expected": 950.7,
-          "price_low": 884.15,
-          "price_high": 1074.29,
+          "date": "2027-01-15",
+          "price_expected": 948.52,
+          "price_low": 882.12,
+          "price_high": 1071.82,
           "type": "forecast"
         },
         {
-          "date": "2027-01-21",
-          "price_expected": 959.78,
-          "price_low": 892.59,
-          "price_high": 1084.55,
+          "date": "2027-01-22",
+          "price_expected": 958.08,
+          "price_low": 891.01,
+          "price_high": 1092.83,
           "type": "forecast"
         }
       ]
@@ -1279,130 +1279,130 @@
       "to": "HAM",
       "cabin": "PREMIUM_ECONOMY",
       "departure": "2027-03-04",
-      "days_until_departure": 126,
-      "current_price_eur": 936.0,
+      "days_until_departure": 125,
+      "current_price_eur": 934.0,
       "trend": {
         "direction": "stable",
-        "weekly_change_pct": 0.06,
-        "data_points": 121
+        "weekly_change_pct": 0.04,
+        "data_points": 122
       },
       "booking_window": {
-        "factor_now": 0.984,
+        "factor_now": 0.983,
         "phase": "sehr früh (Preise können noch schwanken)",
         "optimal_days_before": "56–90"
       },
       "forecast": {
         "in_30_days": {
-          "expected": 929.98,
-          "low": 864.88,
-          "high": 1013.68
+          "expected": 927.51,
+          "low": 862.58,
+          "high": 1010.99
         },
         "in_60_days": {
-          "expected": 927.33,
-          "low": 862.42,
-          "high": 1047.89
+          "expected": 924.91,
+          "low": 860.17,
+          "high": 1045.15
         },
         "at_departure_if_wait": {
-          "expected": 1062.92,
-          "low": 988.51,
-          "high": 1328.65
+          "expected": 1058.93,
+          "low": 984.81,
+          "high": 1323.67
         },
-        "change_30d_pct": -0.6,
-        "change_to_departure_pct": 13.6
+        "change_30d_pct": -0.7,
+        "change_to_departure_pct": 13.4
       },
       "recommendation": "monitor",
       "recommendation_de": "Preise beobachten; täglicher Tracker zeigt, ob sich Warten lohnt.",
       "confidence": "high",
       "projection_curve": [
         {
-          "date": "2026-10-29",
-          "price_expected": 936.0,
-          "price_low": 870.48,
-          "price_high": 1020.24,
+          "date": "2026-10-30",
+          "price_expected": 934.0,
+          "price_low": 868.62,
+          "price_high": 1018.06,
           "type": "actual"
         },
         {
-          "date": "2026-11-05",
-          "price_expected": 934.6,
-          "price_low": 869.17,
-          "price_high": 1018.71,
+          "date": "2026-11-06",
+          "price_expected": 932.49,
+          "price_low": 867.21,
+          "price_high": 1016.41,
           "type": "forecast"
         },
         {
-          "date": "2026-11-12",
-          "price_expected": 933.19,
-          "price_low": 867.87,
-          "price_high": 1017.18,
+          "date": "2026-11-13",
+          "price_expected": 930.97,
+          "price_low": 865.8,
+          "price_high": 1014.76,
           "type": "forecast"
         },
         {
-          "date": "2026-11-19",
-          "price_expected": 931.79,
-          "price_low": 866.56,
-          "price_high": 1015.65,
+          "date": "2026-11-20",
+          "price_expected": 929.46,
+          "price_low": 864.4,
+          "price_high": 1013.11,
           "type": "forecast"
         },
         {
-          "date": "2026-11-26",
-          "price_expected": 930.38,
-          "price_low": 865.26,
-          "price_high": 1014.12,
+          "date": "2026-11-27",
+          "price_expected": 927.94,
+          "price_low": 862.99,
+          "price_high": 1011.46,
           "type": "forecast"
         },
         {
-          "date": "2026-12-03",
-          "price_expected": 928.98,
-          "price_low": 863.95,
-          "price_high": 1012.59,
+          "date": "2026-12-04",
+          "price_expected": 926.43,
+          "price_low": 861.58,
+          "price_high": 1046.86,
           "type": "forecast"
         },
         {
-          "date": "2026-12-10",
-          "price_expected": 927.95,
-          "price_low": 863.0,
-          "price_high": 1048.59,
+          "date": "2026-12-11",
+          "price_expected": 925.36,
+          "price_low": 860.58,
+          "price_high": 1045.65,
           "type": "forecast"
         },
         {
-          "date": "2026-12-17",
-          "price_expected": 926.99,
-          "price_low": 862.1,
-          "price_high": 1047.5,
+          "date": "2026-12-18",
+          "price_expected": 924.29,
+          "price_low": 859.59,
+          "price_high": 1044.44,
           "type": "forecast"
         },
         {
-          "date": "2026-12-24",
-          "price_expected": 926.03,
-          "price_low": 861.21,
-          "price_high": 1046.42,
+          "date": "2026-12-25",
+          "price_expected": 923.68,
+          "price_low": 859.02,
+          "price_high": 1043.76,
           "type": "forecast"
         },
         {
-          "date": "2026-12-31",
-          "price_expected": 928.31,
-          "price_low": 863.33,
-          "price_high": 1048.99,
+          "date": "2027-01-01",
+          "price_expected": 925.84,
+          "price_low": 861.03,
+          "price_high": 1046.19,
           "type": "forecast"
         },
         {
-          "date": "2027-01-07",
-          "price_expected": 930.58,
-          "price_low": 865.44,
-          "price_high": 1051.56,
+          "date": "2027-01-08",
+          "price_expected": 928.81,
+          "price_low": 863.79,
+          "price_high": 1049.55,
           "type": "forecast"
         },
         {
-          "date": "2027-01-14",
-          "price_expected": 938.56,
-          "price_low": 872.86,
-          "price_high": 1060.58,
+          "date": "2027-01-15",
+          "price_expected": 936.67,
+          "price_low": 871.1,
+          "price_high": 1058.43,
           "type": "forecast"
         },
         {
-          "date": "2027-01-21",
-          "price_expected": 946.54,
-          "price_low": 880.29,
-          "price_high": 1069.59,
+          "date": "2027-01-22",
+          "price_expected": 945.07,
+          "price_low": 878.91,
+          "price_high": 1077.99,
           "type": "forecast"
         }
       ]
