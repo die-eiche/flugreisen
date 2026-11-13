@@ -1,0 +1,44 @@
+name: Emirates Economy Raster HAM↔BKK
+
+on:
+  push:
+    branches:
+      - 'cursor/emirates-economy-matrix-*'
+    paths:
+      - 'scripts/emirates_economy_matrix.py'
+      - '.github/workflows/emirates-economy-matrix.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Abhängigkeiten installieren
+        run: pip install -r requirements.txt
+
+      - name: Emirates Economy-Raster abrufen
+        run: python scripts/emirates_economy_matrix.py
+
+      - name: Ergebnisse committen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/emirates-economy-matrix-2027-01.json
+          if git diff --staged --quiet; then
+            echo "Keine neuen Matrix-Daten"
+          else
+            git commit -m "Emirates Economy-Raster HAM↔BKK $(date -u +%Y-%m-%d)"
+            git push
+          fi
